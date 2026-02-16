@@ -1,10 +1,10 @@
 class wrt_seq_item extends uvm_sequence_item;
 
-  rand bit [31:0] S_AWADDR;
+  rand bit [ADDR_WIDTH-1:0] S_AWADDR;
   rand bit        S_AWVALID;
   rand bit        S_AWREADY;
 
-  rand bit [31:0] S_WDATA;
+  rand bit [DATA_WIDTH:0] S_WDATA;
   rand bit [3:0]  S_WSTRB;
   rand bit        S_WVALID;
   rand bit        S_WREADY;
