@@ -1,4 +1,4 @@
-class wrt_seq_item extends uvm_sequence_item;
+class axi_wrt_seq_item extends uvm_sequence_item;
 
   rand bit [ADDR_WIDTH-1:0] S_AWADDR;
   rand bit        S_AWVALID;
