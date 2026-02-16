@@ -1,4 +1,4 @@
-class rd_seq_item extends uvm_sequence_item;
+class axi_rd_seq_item extends uvm_sequence_item;
 
   rand bit [ADDR_WIDTH-1:0] S_ARADDR;
   rand bit        S_ARVALID;
