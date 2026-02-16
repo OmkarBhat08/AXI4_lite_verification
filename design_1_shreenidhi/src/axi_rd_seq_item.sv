@@ -1,12 +1,12 @@
 class rd_seq_item extends uvm_sequence_item;
 
-  rand bit [31:0] S_ARADDR;
+  rand bit [ADDR_WIDTH-1:0] S_ARADDR;
   rand bit        S_ARVALID;
   rand bit        S_ARREADY;
 
   rand bit        S_RREADY;
 
-  logic [31:0]    S_RDATA;
+  logic [DATA_WIDTH-1:0]    S_RDATA;
   logic           S_RVALID;
   logic [1:0]     S_RRESP;
 
