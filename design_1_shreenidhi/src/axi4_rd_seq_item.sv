@@ -1,4 +1,4 @@
-class axi_rd_seq_item extends uvm_sequence_item;
+class axi4_rd_seq_item extends uvm_sequence_item;
 
   rand bit [ADDR_WIDTH-1:0] S_ARADDR;
   rand bit        S_ARVALID;
@@ -14,7 +14,7 @@ class axi_rd_seq_item extends uvm_sequence_item;
   logic [7:0]     SEVENSEG_OUT;
   logic           IRQ_OUT;
 
-  `uvm_object_utils_begin(rd_seq_item)
+  `uvm_object_utils_begin(axi4_rd_seq_item)
 
     `uvm_field_int(S_ARADDR, UVM_ALL_ON)
     `uvm_field_int(S_ARVALID, UVM_ALL_ON)
@@ -32,7 +32,7 @@ class axi_rd_seq_item extends uvm_sequence_item;
 
   `uvm_object_utils_end
 
-  function new(string name = "rd_seq_item");
+  function new(string name = "");
     super.new(name);
   endfunction
 
