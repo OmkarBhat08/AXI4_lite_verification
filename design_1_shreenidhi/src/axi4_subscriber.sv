@@ -1,7 +1,7 @@
 class axi4_subscriber extends ucm_subscriber;
 
   uvm_tlm_analysis_fifo#(axi4_seq_item)inp_fifo;
-  ucm_tlm_analysis_fifo#(axi4_seq_item)op_fifo;
+  uvm_tlm_analysis_fifo#(axi4_seq_item)op_fifo;
 
   axi4_seq_item inp_item,op_item;
 
@@ -24,7 +24,7 @@ class axi4_subscriber extends ucm_subscriber;
     inp_fifo=new("inp_fifo",this);
     op_fifo=new("op_fifo",this);
     input_coverage=new();
-    output_coerage=new();
+    output_coverage=new();
   endfunction
 
   task run_phase(uvm_phase phase);
@@ -55,5 +55,7 @@ class axi4_subscriber extends ucm_subscriber;
     super.report_phase(phase);
     `uvm_info(get_type_name(),$sformatf("[INPUT_COVERAGE] Coverage -------> %0.2f%%", input_cov_res),UVM_LOW)
     `uvm_info(get_type_name(),$sformatf("[OUTPUT_COVERAGE] Coverage ------> %0.2f%%", output_cov_res),UVM_LOW)
+  endfunction
+    
 endclass
   
