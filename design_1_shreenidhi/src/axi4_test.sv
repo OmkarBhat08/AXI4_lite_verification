@@ -1,8 +1,8 @@
-class axi4_test extends uvm_test;
+class axi4_base_test extends uvm_test;
 
-  `uvm_component_utils(axi4_test)
+  `uvm_component_utils(axi4_base_test)
 
-  axi4_virtual_seq  v_seq;
+  axi4_base_seq     base_seq;
   axi4_environment  env;
 
   function new(string name = "", uvm_component parent);
@@ -21,8 +21,8 @@ class axi4_test extends uvm_test;
 
     phase.raise_objection(this);
 
-    v_seq = axi4_virtual_seq::type_id::create("v_seq");
-    v_seq.start(env.v_seqr);
+    base_seq = axi4_base_seq::type_id::create("base_seq");
+    base_seq.start(env.seqr);
 
     phase.drop_objection(this);
   endtask
