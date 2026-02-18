@@ -2,7 +2,7 @@
 `include "axi4_package.sv"
 `include "axi4_interface.sv"
 `include "axi4_assertions.sv"
-`include "design.v"
+`include "axi4_design.v"
 
 module top;
   
