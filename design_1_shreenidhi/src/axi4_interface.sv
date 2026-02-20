@@ -1,4 +1,4 @@
-`include define.sv
+`include "define.sv"
 interface inf(input bit ACLK, input bit ARESETn);
 
 // ---------------- WRITE ADDRESS CHANNEL ----------------
