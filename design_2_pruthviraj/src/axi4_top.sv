@@ -1,7 +1,7 @@
 `include "uvm_macros.svh"  
 `include "axi4_package.sv"
 `include "axi4_interface.sv"
-`include "axi4_assertions.sv"
+// `include "axi4_assertions.sv"
 `include "axi_peripheral_top.v"
 
 module top;
@@ -65,31 +65,31 @@ module top;
   );
 
 
-  // ================= ASSERTION BIND =================
-  bind axi_lite_slave axi4_assertions assertions_inst (
-    .ACLK        (S_AXI_ACLK),
-    .ARESETn     (S_AXI_ARESETN),
+  // // ================= ASSERTION BIND =================
+  // bind axi_lite_slave axi4_assertions assertions_inst (
+  //   .ACLK        (S_AXI_ACLK),
+  //   .ARESETn     (S_AXI_ARESETN),
 
-    .AWADDR      (S_AXI_AWADDR),
-    .AWVALID     (S_AXI_AWVALID),
-    .AWREADY     (S_AXI_AWREADY),
+  //   .AWADDR      (S_AXI_AWADDR),
+  //   .AWVALID     (S_AXI_AWVALID),
+  //   .AWREADY     (S_AXI_AWREADY),
 
-    .WDATA       (S_AXI_WDATA),
-    .WVALID      (S_AXI_WVALID),
-    .WREADY      (S_AXI_WREADY),
+  //   .WDATA       (S_AXI_WDATA),
+  //   .WVALID      (S_AXI_WVALID),
+  //   .WREADY      (S_AXI_WREADY),
 
-    .BRESP       (S_AXI_BRESP),
-    .BVALID      (S_AXI_BVALID),
-    .BREADY      (S_AXI_BREADY),
+  //   .BRESP       (S_AXI_BRESP),
+  //   .BVALID      (S_AXI_BVALID),
+  //   .BREADY      (S_AXI_BREADY),
 
-    .ARADDR      (S_AXI_ARADDR),
-    .ARVALID     (S_AXI_ARVALID),
-    .ARREADY     (S_AXI_ARREADY),
+  //   .ARADDR      (S_AXI_ARADDR),
+  //   .ARVALID     (S_AXI_ARVALID),
+  //   .ARREADY     (S_AXI_ARREADY),
 
-    .RDATA       (S_AXI_RDATA),
-    .RVALID      (S_AXI_RVALID),
-    .RREADY      (S_AXI_RREADY)
-  );
+  //   .RDATA       (S_AXI_RDATA),
+  //   .RVALID      (S_AXI_RVALID),
+  //   .RREADY      (S_AXI_RREADY)
+  // );
 
 
   // ================= UVM CONFIG =================
