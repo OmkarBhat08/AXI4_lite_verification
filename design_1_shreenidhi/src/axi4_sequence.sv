@@ -1,7 +1,7 @@
-class base_seq extends uvm_sequence #(axi4_seq_item);
-  `uvm_object_utils(base_seq)
+class axi4_base_seq extends uvm_sequence #(axi4_seq_item);
+  `uvm_object_utils(axi4_base_seq)
   
-  function new(string name="base_seq"); 
+  function new(string name=""); 
     super.new(name); 
   endfunction
   
