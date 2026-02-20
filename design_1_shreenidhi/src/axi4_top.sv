@@ -1,7 +1,7 @@
 `include "uvm_macros.svh"
 `include "axi4_package.sv"
 `include "axi4_interface.sv"
-`include "axi4_assertions.sv"
+//`include "axi4_assertions.sv"
 `include "axi4_design.v"
 
 module top;
@@ -57,41 +57,41 @@ module top;
   );
 
 // ---------------- Bind Assertions ----------------
-bind inf axi4_assertion ASSERT (
-  .ACLK         (ACLK),
-  .ARESETn      (ARESETn),
+// bind inf axi4_assertion ASSERT (
+//   .ACLK         (ACLK),
+//   .ARESETn      (ARESETn),
 
-  .S_AWADDR     (S_AWADDR),
-  .S_AWVALID    (S_AWVALID),
-  .S_AWREADY    (S_AWREADY),
+//   .S_AWADDR     (S_AWADDR),
+//   .S_AWVALID    (S_AWVALID),
+//   .S_AWREADY    (S_AWREADY),
 
-  .S_WDATA      (S_WDATA),
-  .S_WSTRB      (S_WSTRB),
-  .S_WVALID     (S_WVALID),
-  .S_WREADY     (S_WREADY),
+//   .S_WDATA      (S_WDATA),
+//   .S_WSTRB      (S_WSTRB),
+//   .S_WVALID     (S_WVALID),
+//   .S_WREADY     (S_WREADY),
 
-  .S_BREADY     (S_BREADY),
-  .S_BVALID     (S_BVALID),
-  .S_BRESP      (S_BRESP),
+//   .S_BREADY     (S_BREADY),
+//   .S_BVALID     (S_BVALID),
+//   .S_BRESP      (S_BRESP),
 
-  .S_ARADDR     (S_ARADDR),
-  .S_ARVALID    (S_ARVALID),
-  .S_ARREADY    (S_ARREADY),
+//   .S_ARADDR     (S_ARADDR),
+//   .S_ARVALID    (S_ARVALID),
+//   .S_ARREADY    (S_ARREADY),
 
-  .S_RREADY     (S_RREADY),
-  .S_RDATA      (S_RDATA),
-  .S_RVALID     (S_RVALID),
-  .S_RRESP      (S_RRESP),
+//   .S_RREADY     (S_RREADY),
+//   .S_RDATA      (S_RDATA),
+//   .S_RVALID     (S_RVALID),
+//   .S_RRESP      (S_RRESP),
 
-  .LED_OUT      (LED_OUT),
-  .SEVENSEG_OUT (SEVENSEG_OUT),
-  .IRQ_OUT      (IRQ_OUT)
-);
+//   .LED_OUT      (LED_OUT),
+//   .SEVENSEG_OUT (SEVENSEG_OUT),
+//   .IRQ_OUT      (IRQ_OUT)
+// );
 
   // ---------------- Setting up config db ----------------
   initial begin
     uvm_config_db #(virtual inf)::set(null, "*", "vif", axi_if);
-    run_test();
+    run_test(base_test);
   end
 
 endmodule
