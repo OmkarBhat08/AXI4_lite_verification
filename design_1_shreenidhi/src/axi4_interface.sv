@@ -37,6 +37,8 @@ interface inf(input bit ACLK, input bit ARESETn);
 // ================= CLOCKING BLOCK FOR DRIVER =================
 clocking drv_cb @(posedge ACLK);
 
+  default input #0 output #0;
+
   output S_AWADDR, S_AWVALID;
   input  S_AWREADY;
 
@@ -60,6 +62,8 @@ endclocking
 // ================= CLOCKING BLOCK FOR MONITOR =================
 clocking mon_cb @(posedge ACLK);
 
+  default input #0 output #0;
+  
   input S_AWADDR, S_AWVALID, S_AWREADY;
   input S_WDATA, S_WSTRB, S_WVALID, S_WREADY;
   input S_BREADY, S_BVALID, S_BRESP;
