@@ -31,7 +31,7 @@ class axi4_environment extends uvm_env;
     act_agent.a_mon_h.a_mon_port.connect(scb.active_fifo.analysis_export);
     pas_agent.p_mon_h.p_mon_port.connect(scb.passive_fifo.analysis_export);
 
-    // monitors to suscriber fifos
+    // monitors to subscriber fifos
     act_agent.a_mon_h.a_mon_port.connect(cov.inp_fifo.analysis_export);
     pas_agent.p_mon_h.p_mon_port.connect(cov.op_fifo.analysis_export);
 
