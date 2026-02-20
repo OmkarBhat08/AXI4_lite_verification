@@ -1,5 +1,5 @@
 
-class axi4_subscriber extends uvm_component;
+class axi4_subscriber extends uvm_subscriber#(axi4_seq_item);
 
   uvm_tlm_analysis_fifo #(axi4_seq_item) inp_fifo;
   uvm_tlm_analysis_fifo #(axi4_seq_item) op_fifo;
