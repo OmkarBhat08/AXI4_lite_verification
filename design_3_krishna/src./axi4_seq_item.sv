@@ -29,9 +29,6 @@ class axi4_seq_item extends uvm_sequence_item;
   logic            S_AXI_RVALID;
   rand bit         S_AXI_RREADY;
 
-  // ================= EXTERNAL INPUT =================
-  rand bit         EXT_IRQ_IN;
-
   // ================= EXTERNAL OUTPUTS =================
   logic [3:0]      LED;
   logic [6:0]      SEG_CATHODE;
