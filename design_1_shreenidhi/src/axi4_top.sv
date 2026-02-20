@@ -57,7 +57,7 @@ module top;
   );
 
 // ---------------- Bind Assertions ----------------
-// bind inf axi4_assertion ASSERT (
+// bind inf axi4_assertions ASSERT (
 //   .ACLK         (ACLK),
 //   .ARESETn      (ARESETn),
 
