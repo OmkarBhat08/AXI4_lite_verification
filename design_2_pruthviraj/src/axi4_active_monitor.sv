@@ -1,5 +1,3 @@
-// Active Monitor //
-
 class axi4_active_monitor extends uvm_monitor;
         uvm_component_utils(axi4_active_monitor)
         virtual axi_interface vif;
