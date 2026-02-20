@@ -2,12 +2,12 @@
 interface inf(input bit ACLK, input bit ARESETn);
 
 // ---------------- WRITE ADDRESS CHANNEL ----------------
-  bit  [ADDR_WIDTH-1:0]  S_AWADDR;
+  bit  [`ADDR_WIDTH-1:0]  S_AWADDR;
   bit                    S_AWVALID;
   logic                  S_AWREADY;
 
 // ---------------- WRITE DATA CHANNEL ----------------
-  bit  [DATA_WIDTH-1:0]  S_WDATA;
+  bit  [`DATA_WIDTH-1:0]  S_WDATA;
   bit  [3:0]             S_WSTRB;
   bit                    S_WVALID;
   logic                  S_WREADY;
@@ -18,13 +18,13 @@ interface inf(input bit ACLK, input bit ARESETn);
   logic [1:0]            S_BRESP;
 
 // ---------------- READ ADDRESS CHANNEL ----------------
-  bit  [ADDR_WIDTH-1:0]  S_ARADDR;
+  bit  [`ADDR_WIDTH-1:0]  S_ARADDR;
   bit                    S_ARVALID;
   logic                  S_ARREADY;
 
 // ---------------- READ DATA CHANNEL ----------------
   bit                    S_RREADY;
-  logic [DATA_WIDTH-1:0] S_RDATA;
+  logic [`DATA_WIDTH-1:0] S_RDATA;
   logic                  S_RVALID;
   logic [1:0]            S_RRESP;
 
