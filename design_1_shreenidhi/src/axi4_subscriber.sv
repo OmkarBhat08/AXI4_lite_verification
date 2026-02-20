@@ -25,6 +25,7 @@ class axi4_subscriber extends uvm_component;
                                                }
     S_AWREADY_CP: coverpoint inp_item.S_AWREADY { bins low ={0};
                                                  bins high ={1};
+                                                }
     // WRITE DATA
     S_WDATA_CP : coverpoint inp_item.S_WDATA {
       bins data_val[] = {[0:255]};
@@ -67,34 +68,34 @@ class axi4_subscriber extends uvm_component;
   //-----------------------------output coverage-----------------------------//
   covergroup output_coverage;
     // WRITE RESPONSE
-    S_BVALID_CP : coverpoint out_item.S_BVALID { bins low = {0};
+    S_BVALID_CP : coverpoint op_item.S_BVALID { bins low = {0};
                                           bins high = {1}; }
 
-    S_BRESP_CP : coverpoint out_item.S_BRESP {
+    S_BRESP_CP : coverpoint op_item.S_BRESP {
       bins OKAY  = {2'b00};
     }
 
         // READ DATA
-    S_RVALID_CP : coverpoint out_item.S_RVALID { bins low = {0}; 
+    S_RVALID_CP : coverpoint op_item.S_RVALID { bins low = {0}; 
                                          bins high = {1}; }
 
-    S_RDATA_CP : coverpoint out_item.S_RDATA {
+    S_RDATA_CP : coverpoint op_item.S_RDATA {
       bins data_val[] = {[0:255]};
     }
 
-    S_RRESP_CP : coverpoint .S_RRESP {
+    S_RRESP_CP : coverpoint op_item.S_RRESP {
       bins OKAY  = {2'b00};
     }
     // EXTERNAL OUTPUTS
-    LED_OUT_CP : coverpoint t.LED_OUT {
+    LED_OUT_CP : coverpoint op_item.LED_OUT {
       bins led_vals[] = {[0:255]};
     }
 
-    SEVENSEG_OUT_CP : coverpoint t.SEVENSEG_OUT {
+    SEVENSEG_OUT_CP : coverpoint op_item.SEVENSEG_OUT {
       bins seg_vals[] = {[0:255]};
     }
 
-    IRQ_OUT_CP : coverpoint t.IRQ_OUT {
+    IRQ_OUT_CP : coverpoint op_item.IRQ_OUT {
       bins low = {0};
       bins high = {1};
     }
