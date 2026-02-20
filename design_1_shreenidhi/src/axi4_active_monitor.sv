@@ -5,12 +5,13 @@ class axi4_active_monitor extends uvm_monitor;
   virtual inf vif;
   uvm_analysis_port #(axi4_seq_item) a_mon_port;
   axi4_seq_item in_item;
-  
+
+  //---------------------------new constructor------------------------------//
   function new(string name = "axi4_active_monitor",uvm_component parent = null);
     super.new(name, parent);
   endfunction
   
-  
+  //---------------------------build phase---------------------------------//
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
 
@@ -20,7 +21,7 @@ class axi4_active_monitor extends uvm_monitor;
       `uvm_fatal("ACTIVE_MONITOR","NO VIRTUAL INTERFACE IN ACTIVE MONITOR")
   endfunction
 
-
+//-------------------------------run phase--------------------------------//
   task run_phase(uvm_phase phase);
     repeat (3) @(vif.mon_cb);
 
