@@ -25,9 +25,8 @@ module top;
   // ================= INTERFACE =================
    inf axi_if (ACLK, ARESETn);
 
-
   // ================= DUT =================
-  axi_lite_slave dut (
+  axi_peripheral_top dut (
 
     .S_AXI_ACLK    (ACLK),
     .S_AXI_ARESETN (ARESETn),
