@@ -1,13 +1,14 @@
+`include "define.sv"
 class axi4_seq_item extends uvm_sequence_item;
 
   // ---------------- WRITE ADDRESS CHANNEL ----------------
-  rand bit [ADDR_WIDTH-1:0] S_AWADDR;
+  rand bit [`ADDR_WIDTH-1:0] S_AWADDR;
   rand bit                  S_AWVALID;
   rand bit                  S_AWREADY;
 
   // ---------------- WRITE DATA CHANNEL ----------------
   //INPUTS
-  rand bit [DATA_WIDTH-1:0] S_WDATA;
+  rand bit [`DATA_WIDTH-1:0] S_WDATA;
   rand bit [3:0]            S_WSTRB;
   rand bit                  S_WVALID;
   //OUTPUS
@@ -27,7 +28,7 @@ class axi4_seq_item extends uvm_sequence_item;
 
   // ---------------- READ DATA CHANNEL ----------------
   rand bit        S_RREADY;
-  logic [31:0]    S_RDATA;
+  logic [`DATA_WIDTH-1:0]    S_RDATA;
   logic           S_RVALID;
   logic [1:0]     S_RRESP;
 
