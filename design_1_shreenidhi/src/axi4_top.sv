@@ -91,7 +91,7 @@ module top;
   // ---------------- Setting up config db ----------------
   initial begin
     uvm_config_db #(virtual inf)::set(null, "*", "vif", axi_if);
-    run_test(base_test);
+    run_test(axi4_base_test);
   end
 
 endmodule
