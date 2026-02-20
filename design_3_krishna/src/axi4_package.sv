@@ -1,4 +1,5 @@
 `include "uvm_macros.svh"
+`include "define.sv"
 package axi4_pkg;
 import uvm_pkg::*;
 `include "axi4_seq_item.sv"
