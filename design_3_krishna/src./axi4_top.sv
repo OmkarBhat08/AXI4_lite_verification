@@ -29,11 +29,7 @@ module top;
 
 
   // ================= DUT =================
-  axi_lite_slave #(
-    .ADDR_WIDTH (`ADDR_WIDTH),
-    .DATA_WIDTH (`DATA_WIDTH)
-  ) dut (
-
+  axi_lite_slave dut (
     .S_AXI_ACLK    (ACLK),
     .S_AXI_ARESETN (ARESETn),
 
@@ -73,32 +69,32 @@ module top;
   // ================= ASSERTION BIND =================
   // bind axi_lite_slave axi4_assertions assertions_inst (
 
-  //   .ACLK          (S_AXI_ACLK),
-  //   .ARESETn       (S_AXI_ARESETN),
+  //   .ACLK          (ACLK),
+  //   .ARESETn       (ARESETN),
 
-  //   .AWADDR        (S_AXI_AWADDR),
-  //   .AWPROT        (S_AXI_AWPROT),
-  //   .AWVALID       (S_AXI_AWVALID),
-  //   .AWREADY       (S_AXI_AWREADY),
+  //   .AWADDR        (AWADDR),
+  //   .AWPROT        (AWPROT),
+  //   .AWVALID       (AWVALID),
+  //   .AWREADY       (AWREADY),
 
-  //   .WDATA         (S_AXI_WDATA),
-  //   .WSTRB         (S_AXI_WSTRB),
-  //   .WVALID        (S_AXI_WVALID),
-  //   .WREADY        (S_AXI_WREADY),
+  //   .WDATA         (WDATA),
+  //   .WSTRB         (WSTRB),
+  //   .WVALID        (WVALID),
+  //   .WREADY        (WREADY),
 
-  //   .BRESP         (S_AXI_BRESP),
-  //   .BVALID        (S_AXI_BVALID),
-  //   .BREADY        (S_AXI_BREADY),
+  //   .BRESP         (BRESP),
+  //   .BVALID        (BVALID),
+  //   .BREADY        (BREADY),
 
-  //   .ARADDR        (S_AXI_ARADDR),
-  //   .ARPROT        (S_AXI_ARPROT),
-  //   .ARVALID       (S_AXI_ARVALID),
-  //   .ARREADY       (S_AXI_ARREADY),
+  //   .ARADDR        (ARADDR),
+  //   .ARPROT        (ARPROT),
+  //   .ARVALID       (ARVALID),
+  //   .ARREADY       (ARREADY),
 
-  //   .RDATA         (S_AXI_RDATA),
-  //   .RRESP         (S_AXI_RRESP),
-  //   .RVALID        (S_AXI_RVALID),
-  //   .RREADY        (S_AXI_RREADY),
+  //   .RDATA         (RDATA),
+  //   .RRESP         (RRESP),
+  //   .RVALID        (RVALID),
+  //   .RREADY        (RREADY),
 
   //   .LED           (LED),
   //   .SEG_CATHODE   (SEG_CATHODE),
@@ -111,7 +107,7 @@ module top;
 
   // ================= UVM START =================
   initial begin
-    uvm_config_db #(virtual axi4_if)::set(null, "*", "vif", axi_if);
+    uvm_config_db #(virtual inf)::set(null, "*", "vif", axi_if);
     run_test("axi4_base_test");
   end
 
