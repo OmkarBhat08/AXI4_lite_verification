@@ -1,14 +1,14 @@
 interface inf(input bit ACLK,input bit ARESETN);
 
   // ================= WRITE ADDRESS CHANNEL =================
-  bit   [`ADDR_WIDTH-1:0]   S_AXI_AWADDR;
+  bit   [`ADDR_WIDTH-1:0]  S_AXI_AWADDR;
   bit   [2:0]              S_AXI_AWPROT;
   bit                      S_AXI_AWVALID;
   logic                    S_AXI_AWREADY;
 
   // ================= WRITE DATA CHANNEL =================
-  bit   [`DATA_WIDTH-1:0]   S_AXI_WDATA;
-  bit   [`DATA_WIDTH/8-1:0] S_AXI_WSTRB;
+  bit   [`DATA_WIDTH-1:0]  S_AXI_WDATA;
+  bit   [3:0]              S_AXI_WSTRB;
   bit                      S_AXI_WVALID;
   logic                    S_AXI_WREADY;
 
@@ -32,7 +32,7 @@ interface inf(input bit ACLK,input bit ARESETN);
   // ================= EXTERNAL SIGNALS =================
   bit                      EXT_IRQ_IN;
 
-  logic [`NUM_LEDS-1:0]     LED;
+  logic [3:0]              LED;
   logic [6:0]              SEG_CATHODE;
   logic [3:0]              SEG_ANODE;
   logic                    IRQ_OUT;
