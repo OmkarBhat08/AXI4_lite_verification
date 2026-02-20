@@ -8,8 +8,7 @@ class axi4_environment extends uvm_env;
   axi4_subscriber     cov;
 
 
-  function new(string name = "axi4_environment",
-               uvm_component parent = null);
+  function new(string name = "axi4_environment",uvm_component parent = null);
     super.new(name, parent);
   endfunction 
 
@@ -29,8 +28,8 @@ class axi4_environment extends uvm_env;
     super.connect_phase(phase);
 
     // monitors to scoreboard fifos
-    act_agent.a_mon_h.a_mon_port.connect(scb.read_fifo.analysis_export);
-    pas_agent.p_mon_h.p_mon_port.connect(scb.write_fifo.analysis_export);
+    act_agent.a_mon_h.a_mon_port.connect(scb.active_fifo.analysis_export);
+    pas_agent.p_mon_h.p_mon_port.connect(scb.passive_fifo.analysis_export);
 
     // monitors to suscriber fifos
     act_agent.a_mon_h.a_mon_port.connect(cov.inp_fifo.analysis_export);
