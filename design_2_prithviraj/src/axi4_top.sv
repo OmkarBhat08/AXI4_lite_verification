@@ -2,7 +2,7 @@
 `include "axi4_package.sv"
 `include "axi4_interface.sv"
 // `include "axi4_assertions.sv"
-`include "axi_peripheral_top.v"
+`include "../design/axi_peripheral_top.v"
 
 module top;
 
