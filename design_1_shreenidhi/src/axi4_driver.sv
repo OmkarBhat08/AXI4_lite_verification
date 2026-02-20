@@ -4,12 +4,12 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
 
   virtual inf vif;
 
-
+//---------------------------new constructor-------------------------//
   function new(string name = "axi4_driver",uvm_component parent = null);
     super.new(name, parent);
   endfunction 
 
-
+//----------------------------build phase-----------------------------//
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
 
@@ -18,7 +18,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
 
   endfunction 
 
-
+//------------------------------run pahse-----------------------------//
   task run_phase(uvm_phase phase);
 
     repeat (2) @(vif.drv_cb);
@@ -31,7 +31,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
 
   endtask 
 
-
+//----------------------------------task drive----------------------//
   task drive_task();
 
     `uvm_info("DRV", $sformatf("Driving transaction"), UVM_LOW)
