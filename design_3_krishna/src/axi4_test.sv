@@ -22,7 +22,7 @@ class axi4_base_test extends uvm_test;
     phase.raise_objection(this);
 
     base_seq = axi4_base_seq::type_id::create("base_seq");
-    base_seq.start(env.seqr);
+    base_seq.start(env.act_agent.sqr_h);
 
     phase.drop_objection(this);
   endtask

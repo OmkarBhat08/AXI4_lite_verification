@@ -2,7 +2,7 @@ class axi4_passive_monitor extends uvm_monitor;
 
   `uvm_component_utils(axi4_passive_monitor)
 
-  virtual inf vif;
+  virtual axi4_if vif;
   uvm_analysis_port #(axi4_seq_item) p_mon_port;
   axi4_seq_item out_item;
 
@@ -17,7 +17,7 @@ class axi4_passive_monitor extends uvm_monitor;
 
     p_mon_port = new("p_mon_port", this);
 
-    if (!(uvm_config_db #(virtual inf)::get(this, "", "vif", vif)))
+    if (!(uvm_config_db #(virtual axi4_if)::get(this, "", "vif", vif)))
       `uvm_fatal("PASSIVE_MONITOR","NO VIRTUAL INTERFACE IN PASSIVE MONITOR")
   endfunction
 

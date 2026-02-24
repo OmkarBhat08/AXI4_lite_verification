@@ -105,7 +105,7 @@ module top;
 
   // ================= UVM START =================
   initial begin
-    uvm_config_db #(virtual inf)::set(null, "*", "vif", axi_if);
+    uvm_config_db #(virtual axi4_if)::set(null, "*", "vif", axi_if);
     run_test("axi4_base_test");
   end
 

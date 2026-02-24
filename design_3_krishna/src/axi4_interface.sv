@@ -1,6 +1,6 @@
 `include "define.sv"
 
-interface inf (input bit ACLK,input bit ARESETn);
+interface axi4_if (input bit ACLK,input bit ARESETn);
 
   // ================= WRITE ADDRESS CHANNEL =================
   bit   [`ADDR_WIDTH-1:0]  AWADDR;
