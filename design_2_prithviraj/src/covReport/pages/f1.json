@@ -1,0 +1,62 @@
+var g_data = {
+f7:{
+scopes:[{link:'z.htm?f=0&s=7',val:'work.axi_lite_if'}]
+,FSMs:[{dummy:0}
+,{anchor:'cvg583',items:[{c:'R',p:'12.50',z:'write_state_reg'}
+,{cr:'c',s:'1',z:'W_IDLE',h:'3',c:'g'}
+,{cr:'m',z:'W_IDLE -> W_WAIT_ADDR',h:'0',c:'r'}
+,{cr:'m',z:'W_IDLE -> W_WAIT_DATA',h:'0',c:'r'}
+,{cr:'m',z:'W_IDLE -> W_RESPOND',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'W_WAIT_ADDR',h:'0',c:'r'}
+,{cr:'m',z:'W_WAIT_ADDR -> W_RESPOND',h:'0',c:'r'}
+,{cr:'m',z:'W_WAIT_ADDR -> W_IDLE',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'W_WAIT_DATA',h:'0',c:'r'}
+,{cr:'m',z:'W_WAIT_DATA -> W_RESPOND',h:'0',c:'r'}
+,{cr:'m',z:'W_WAIT_DATA -> W_IDLE',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'W_RESPOND',h:'0',c:'r'}
+,{cr:'m',z:'W_RESPOND -> W_IDLE',h:'0',c:'r'}
+]}
+,{anchor:'cvg586',items:[{c:'R',p:'16.66',z:'read_state_reg'}
+,{cr:'c',s:'1',z:'R_IDLE',h:'3',c:'g'}
+,{cr:'m',z:'R_IDLE -> R_WAIT_DATA',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'R_WAIT_DATA',h:'0',c:'r'}
+,{cr:'m',z:'R_WAIT_DATA -> R_RESPOND',h:'0',c:'r'}
+,{cr:'m',z:'R_WAIT_DATA -> R_IDLE',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'R_RESPOND',h:'0',c:'r'}
+,{cr:'m',z:'R_RESPOND -> R_IDLE',h:'0',c:'r'}
+]}
+
+],
+},
+f556:{
+scopes:[{s:'13',b:'1',val:'top'},{s:'200',b:'0',val:'dut'},{link:'z.htm?f=0&s=556',val:'u_axi_lite_if'}]
+,FSMs:[{dummy:0}
+,{anchor:'cvg583',items:[{c:'R',p:'12.50',z:'write_state_reg'}
+,{cr:'c',s:'1',z:'W_IDLE',h:'3',c:'g'}
+,{cr:'m',z:'W_IDLE -> W_WAIT_ADDR',h:'0',c:'r'}
+,{cr:'m',z:'W_IDLE -> W_WAIT_DATA',h:'0',c:'r'}
+,{cr:'m',z:'W_IDLE -> W_RESPOND',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'W_WAIT_ADDR',h:'0',c:'r'}
+,{cr:'m',z:'W_WAIT_ADDR -> W_RESPOND',h:'0',c:'r'}
+,{cr:'m',z:'W_WAIT_ADDR -> W_IDLE',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'W_WAIT_DATA',h:'0',c:'r'}
+,{cr:'m',z:'W_WAIT_DATA -> W_RESPOND',h:'0',c:'r'}
+,{cr:'m',z:'W_WAIT_DATA -> W_IDLE',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'W_RESPOND',h:'0',c:'r'}
+,{cr:'m',z:'W_RESPOND -> W_IDLE',h:'0',c:'r'}
+]}
+,{anchor:'cvg586',items:[{c:'R',p:'16.66',z:'read_state_reg'}
+,{cr:'c',s:'1',z:'R_IDLE',h:'3',c:'g'}
+,{cr:'m',z:'R_IDLE -> R_WAIT_DATA',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'R_WAIT_DATA',h:'0',c:'r'}
+,{cr:'m',z:'R_WAIT_DATA -> R_RESPOND',h:'0',c:'r'}
+,{cr:'m',z:'R_WAIT_DATA -> R_IDLE',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'R_RESPOND',h:'0',c:'r'}
+,{cr:'m',z:'R_RESPOND -> R_IDLE',h:'0',c:'r'}
+]}
+
+],
+},
+dummyEnd:0
+};
+processFsmData(g_data);

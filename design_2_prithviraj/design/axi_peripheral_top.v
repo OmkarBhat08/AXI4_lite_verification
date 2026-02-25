@@ -1,3 +1,9 @@
+`include "axi_lite_if.v"
+`include "reg_bank.v"
+`include "led_driver.v"
+`include "irq_ctrl.v"
+`include "sevenseg_mux.v"
+
 module axi_peripheral_top #(
     parameter integer C_S_AXI_DATA_WIDTH = 32,
     parameter integer C_S_AXI_ADDR_WIDTH = 32,

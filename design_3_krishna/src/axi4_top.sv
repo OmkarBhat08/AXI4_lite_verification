@@ -1,5 +1,5 @@
 `include "uvm_macros.svh"  
-`include "axi4_package.sv"
+`include "axi_package.sv"
 `include "axi4_interface.sv"
 // `include "axi4_assertions.sv"
 `include "../design/axi4_design.v"

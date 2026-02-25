@@ -1,0 +1,779 @@
+# vsim -vopt work.top -voptargs="+acc=npr" -assertdebug -l simulation.log -coverage -c -do "coverage save -onexit -assert -directive -cvg -codeAll coverage.ucdb; run -all; exit" 
+# Start time: 16:43:55 on Feb 25,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Note: (vopt-143) Recognized 2 FSMs in module "axi_lite_if(fast)".
+# ** Warning: axi4_sequence.sv(14): (vopt-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
+# //  Questa Sim
+# //  Version 10.6c linux Jul 25 2017
+# //
+# //  Copyright 1991-2017 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.axi4_if(fast)
+# Loading mtiUvm.uvm_pkg
+# Loading work.axi4_pkg(fast)
+# Loading work.top(fast)
+# Loading work.axi4_if(fast)
+# Loading work.axi_peripheral_top(fast)
+# Loading work.axi_lite_if(fast)
+# Loading work.reg_bank(fast)
+# Loading work.led_driver(fast)
+# Loading work.sevenseg_mux(fast)
+# Loading work.irq_ctrl(fast)
+# Loading mtiUvm.questa_uvm_pkg(fast)
+# ** Warning: (vsim-3015) top.sv(29): [PCDPC] - Port size (8) does not match connection size (4) for port 'leds'. The port definition is at: ../design/axi_peripheral_top.v(48).
+#    Time: 0 ns  Iteration: 0  Instance: /top/dut File: ../design/axi_peripheral_top.v
+# Loading /tools/mentor/questasim_10.6c/questasim/uvm-1.1d/linux/uvm_dpi.so
+# coverage save -onexit -assert -directive -cvg -codeAll coverage.ucdb
+#  run -all
+# ----------------------------------------------------------------
+# UVM-1.1d
+# (C) 2007-2013 Mentor Graphics Corporation
+# (C) 2007-2013 Cadence Design Systems, Inc.
+# (C) 2006-2013 Synopsys, Inc.
+# (C) 2011-2013 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
+# UVM_INFO @ 0: reporter [RNTST] Running test axi4_base_test...
+# UVM_INFO axi4_sequence.sv(10) @ 0: uvm_test_top.env.act_agent.sqr_h@@seq [base_seq]  ------ Base Sequence ------ 
+# UVM_INFO axi4_driver.sv(37) @ 15: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_driver.sv(37) @ 25: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 35: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 35: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 35: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 35: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 35: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 35: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 35: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 45: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 45: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 45: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 45: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 45: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 45: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 45: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 55: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 55: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 55: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 55: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 55: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 55: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 55: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 65: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 65: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 65: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 65: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 65: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 65: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 65: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 75: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 75: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 75: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 75: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 75: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 75: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 75: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 85: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 85: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 85: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 85: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 85: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 85: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 85: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 95: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 95: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 95: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 95: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 95: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 95: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 95: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 105: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 105: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 105: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 105: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 105: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 105: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 105: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 115: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 115: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 115: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 115: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 115: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 115: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 115: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 125: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 125: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 125: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 125: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 125: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 125: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 125: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 135: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 135: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 135: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 135: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 135: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 135: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 135: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 145: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 145: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 145: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 145: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 145: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 145: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 145: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 155: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 155: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 155: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 155: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 155: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 155: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 155: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 165: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 165: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 165: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 165: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 165: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 165: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 165: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 175: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 175: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 175: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 175: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 175: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 175: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 175: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 185: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 185: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 185: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 185: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 185: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 185: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 185: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 195: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 195: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 195: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 195: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 195: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 195: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 195: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 205: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 205: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 205: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 205: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 205: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 205: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 205: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 215: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 215: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 215: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 215: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 215: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 215: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 215: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 225: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 225: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 225: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 225: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 225: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 225: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 225: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 235: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 235: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 235: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 235: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 235: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 235: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 235: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 245: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 245: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 245: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 245: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 245: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 245: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 245: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 255: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 255: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 255: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 255: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 255: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 255: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 255: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 265: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 265: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 265: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 265: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 265: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 265: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 265: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 275: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 275: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 275: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 275: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 275: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 275: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 275: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 285: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 285: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 285: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 285: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 285: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 285: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 285: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 295: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 295: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 295: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 295: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 295: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 295: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 295: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 305: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 305: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 305: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 305: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 305: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 305: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 305: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 315: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 315: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 315: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 315: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 315: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 315: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 315: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 325: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 325: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 325: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 325: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 325: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 325: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 325: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 335: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 335: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 335: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 335: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 335: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 335: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 335: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 345: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 345: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 345: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 345: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 345: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 345: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 345: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 355: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 355: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 355: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 355: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 355: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 355: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 355: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 365: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 365: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 365: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 365: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 365: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 365: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 365: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 375: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 375: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 375: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 375: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 375: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 375: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 375: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 385: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 385: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 385: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 385: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 385: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 385: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 385: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 395: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 395: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 395: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 395: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 395: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 395: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 395: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 405: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 405: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 405: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 405: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 405: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 405: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 405: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 415: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 415: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 415: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 415: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 415: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 415: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 415: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 425: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 425: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 425: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 425: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 425: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 425: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 425: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 435: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 435: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 435: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 435: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 435: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 435: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 435: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 445: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 445: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 445: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 445: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 445: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 445: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 445: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 455: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 455: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 455: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 455: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 455: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 455: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 455: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 465: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 465: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 465: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 465: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 465: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 465: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 465: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 475: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 475: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 475: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 475: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 475: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 475: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 475: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 485: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 485: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 485: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 485: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 485: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 485: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 485: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 495: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 495: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 495: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 495: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 495: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 495: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 495: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 505: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 505: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 505: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 505: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 505: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 505: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 505: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 515: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 515: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 515: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 515: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 515: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 515: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 515: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 525: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 525: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 525: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 525: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 525: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 525: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 525: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 535: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 535: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 535: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 535: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 535: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 535: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 535: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 545: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 545: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 545: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 545: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 545: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 545: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 545: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 555: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 555: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 555: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 555: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 555: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 555: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 555: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 565: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 565: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 565: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 565: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 565: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 565: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 565: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 575: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 575: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 575: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 575: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 575: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 575: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 575: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 585: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 585: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 585: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 585: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 585: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 585: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 585: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 595: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 595: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 595: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 595: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 595: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 595: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 595: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 605: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 605: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 605: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 605: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 605: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 605: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 605: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 615: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 615: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 615: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 615: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 615: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 615: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 615: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 625: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 625: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 625: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 625: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 625: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 625: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 625: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 635: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 635: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 635: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 635: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 635: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 635: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 635: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 645: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 645: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 645: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 645: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 645: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 645: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 645: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 655: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 655: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 655: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 655: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 655: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 655: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 655: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 665: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 665: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 665: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 665: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 665: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 665: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 665: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 675: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 675: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 675: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 675: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 675: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 675: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 675: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 685: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 685: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 685: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 685: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 685: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 685: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 685: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 695: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 695: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 695: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 695: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 695: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 695: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 695: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 705: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 705: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 705: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 705: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 705: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 705: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 705: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 715: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 715: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 715: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 715: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 715: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 715: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 715: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 725: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 725: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 725: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 725: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 725: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 725: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 725: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 735: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 735: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 735: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 735: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 735: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 735: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 735: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 745: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 745: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 745: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 745: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 745: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 745: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 745: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 755: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 755: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 755: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 755: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 755: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 755: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 755: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 765: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 765: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 765: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 765: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 765: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 765: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 765: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 775: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 775: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 775: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 775: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 775: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 775: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 775: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 785: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 785: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 785: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 785: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 785: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 785: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 785: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 795: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 795: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 795: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 795: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 795: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 795: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 795: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 805: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 805: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 805: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 805: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 805: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 805: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 805: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 815: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 815: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 815: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 815: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 815: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 815: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 815: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 825: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 825: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 825: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 825: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 825: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 825: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 825: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 835: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 835: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 835: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 835: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 835: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 835: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 835: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 845: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 845: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 845: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 845: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 845: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 845: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 845: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 855: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 855: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 855: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 855: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 855: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 855: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 855: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 865: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 865: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 865: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 865: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 865: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 865: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 865: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 875: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 875: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 875: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 875: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 875: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 875: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 875: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 885: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 885: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 885: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 885: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 885: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 885: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 885: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 895: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 895: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 895: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 895: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 895: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 895: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 895: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 905: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 905: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 905: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 905: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 905: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 905: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 905: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 915: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 915: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 915: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 915: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 915: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 915: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 915: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 925: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 925: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 925: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 925: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 925: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 925: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 925: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 935: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 935: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 935: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 935: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 935: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 935: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 935: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 945: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 945: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 945: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 945: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 945: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 945: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 945: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 955: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 955: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 955: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 955: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 955: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 955: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 955: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 965: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 965: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 965: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 965: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 965: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 965: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 965: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 975: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 975: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 975: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 975: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 975: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 975: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 975: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 985: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 985: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 985: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 985: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 985: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 985: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 985: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 995: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 995: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 995: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 995: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 995: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 995: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 995: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 1005: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 1005: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 1005: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 1005: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 1005: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 1005: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO axi4_driver.sv(37) @ 1005: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
+# UVM_INFO axi4_passive_monitor.sv(69) @ 1015: uvm_test_top.env.pas_agent.p_mon_h [MON] [write addr channel] captured : AWADDR=0 | AWVALID=0 | AWREADY=0
+# UVM_INFO axi4_passive_monitor.sv(71) @ 1015: uvm_test_top.env.pas_agent.p_mon_h [MON] [write data channel] captured : WVALID=0 | WSTRB=0 | WDATA=0 WREADY=0
+# UVM_INFO axi4_passive_monitor.sv(73) @ 1015: uvm_test_top.env.pas_agent.p_mon_h [MON] [write resp channel] captured : BRESP=0 | BVALID=0 | BREADY=0
+# UVM_INFO axi4_passive_monitor.sv(75) @ 1015: uvm_test_top.env.pas_agent.p_mon_h [MON] [read addr channel] captured : ARADDR=0 | ARVALID=0 | ARREADY=0
+# UVM_INFO axi4_passive_monitor.sv(77) @ 1015: uvm_test_top.env.pas_agent.p_mon_h [MON] [read data channel] captured : RVALID=0 | RDATA=0 | RRESP=0 | RREADY = 0 
+# UVM_INFO axi4_passive_monitor.sv(79) @ 1015: uvm_test_top.env.pas_agent.p_mon_h [MON] [external signals] captured : ext_irq_in=0 | leds=0 | seg_cathode=64 | seg_anode = 14 | irq_out = 0 
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1268) @ 1015: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO axi4_subscriber.sv(64) @ 1015: uvm_test_top.env.cov [axi4_subscriber] [INPUT_COVERAGE] Coverage -------> 0.00%
+# UVM_INFO axi4_subscriber.sv(65) @ 1015: uvm_test_top.env.cov [axi4_subscriber] [OUTPUT_COVERAGE] Coverage ------> 0.00%
+# 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :  701
+# UVM_WARNING :    0
+# UVM_ERROR :    0
+# UVM_FATAL :    0
+# ** Report counts by id
+# [DRV]   100
+# [MON]   594
+# [Questa UVM]     2
+# [RNTST]     1
+# [TEST_DONE]     1
+# [axi4_subscriber]     2
+# [base_seq]     1
+# ** Note: $finish    : /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
+#    Time: 1015 ns  Iteration: 62  Instance: /top
+# Saving coverage database on exit...
+# End time: 16:43:59 on Feb 25,2026, Elapsed time: 0:00:04
+# Errors: 0, Warnings: 2

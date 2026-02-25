@@ -2,7 +2,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
 
   `uvm_component_utils(axi4_driver)
 
-  virtual inf vif;
+  virtual axi4_if vif;
 
 //-----------------------new constructor---------------------------//
   function new(string name = "axi4_driver",uvm_component parent = null);
@@ -13,7 +13,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
 
-      if (!(uvm_config_db #(virtual inf)::get(this, "", "vif", vif)))
+      if (!(uvm_config_db #(virtual axi4_if)::get(this, "", "vif", vif)))
       `uvm_fatal("DRIVER", "NO VIRTUAL INTERFACE IN DRIVER")
 
   endfunction 

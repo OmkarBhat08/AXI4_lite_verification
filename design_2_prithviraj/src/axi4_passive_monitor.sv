@@ -2,7 +2,7 @@ class axi4_passive_monitor extends uvm_monitor;
 
   `uvm_component_utils(axi4_passive_monitor)
 
-  virtual inf vif;
+  virtual axi4_if vif;
   uvm_analysis_port #(axi4_seq_item)p_mon_port;
   axi4_seq_item out_item;
 
@@ -17,7 +17,7 @@ class axi4_passive_monitor extends uvm_monitor;
 
     p_mon_port = new("p_mon_port", this);
 
-    if (!(uvm_config_db #(virtual inf)::get(this, "", "vif", vif)))
+    if (!(uvm_config_db #(virtual axi4_if)::get(this, "", "vif", vif)))
       `uvm_fatal("PASSIVE_MONITOR","NO VIRTUAL INTERFACE IN PASSIVE MONITOR")
   endfunction
 
@@ -60,7 +60,7 @@ class axi4_passive_monitor extends uvm_monitor;
         
         // extrnal op and inp //
         
-        out_item.extra_irq_in = vif.mon_cb.extra_irq_in;
+        out_item.ext_irq_in = vif.mon_cb.ext_irq_in;
         out_item.leds = vif.mon_cb.leds;
         out_item.seg_cathode = vif.mon_cb.seg_cathode;
         out_item.seg_anode = vif.mon_cb.seg_anode;
@@ -76,7 +76,7 @@ class axi4_passive_monitor extends uvm_monitor;
         
         `uvm_info("MON",$sformatf("[read data channel] captured : RVALID=%0b | RDATA=%0d | RRESP=%0b | RREADY = %0b ",out_item.RVALID,out_item.RDATA,out_item.RRESP,out_item.RREADY),UVM_LOW)
         
-        `uvm_info("MON",$sformatf("[external signals] captured : extra_irq_in=%0b | leds=%0d | seg_cathode=%0d | seg_anode = %0d | irq_out = %0b ",out_item.extra_irq_in,out_item.leds,out_item.seg_cathode,out_item.seg_anode,out_item.irq_out),UVM_LOW)
+        `uvm_info("MON",$sformatf("[external signals] captured : ext_irq_in=%0b | leds=%0d | seg_cathode=%0d | seg_anode = %0d | irq_out = %0b ",out_item.ext_irq_in,out_item.leds,out_item.seg_cathode,out_item.seg_anode,out_item.irq_out),UVM_LOW)
         
         p_mon_port.write(out_item);
         
