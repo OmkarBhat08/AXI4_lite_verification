@@ -1,5 +1,5 @@
 # vsim -vopt work.top -voptargs="+acc=npr" -assertdebug -l simulation.log -coverage -c -do "coverage save -onexit -assert -directive -cvg -codeAll coverage.ucdb; run -all; exit" 
-# Start time: 21:46:10 on Feb 24,2026
+# Start time: 16:49:46 on Feb 25,2026
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Note: (vopt-143) Recognized 2 FSMs in module "axi_lite_if(fast)".
 # ** Warning: axi4_sequence.sv(14): (vopt-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
@@ -56,6 +56,8 @@
 # UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
 # UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
 # UVM_INFO @ 0: reporter [RNTST] Running test axi4_base_test...
+# UVM_INFO axi4_scoreboard.sv(51) @ 0: uvm_test_top.env.scb [SCB_INIT] Scoreboard Run Phase Started. AXI Protocol Checks Active.
+# UVM_INFO axi4_sequence.sv(10) @ 0: uvm_test_top.env.act_agent.sqr_h@@seq [base_seq]  ------ Base Sequence ------ 
 # UVM_INFO axi4_driver.sv(37) @ 15000: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
 # UVM_INFO axi4_driver.sv(37) @ 25000: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
 # UVM_INFO axi4_driver.sv(37) @ 35000: uvm_test_top.env.act_agent.drv_h [DRV] Driving transaction
@@ -163,7 +165,7 @@
 # --- UVM Report Summary ---
 # 
 # ** Report counts by severity
-# UVM_INFO :  106
+# UVM_INFO :  108
 # UVM_WARNING :    0
 # UVM_ERROR :    0
 # UVM_FATAL :    0
@@ -171,10 +173,12 @@
 # [DRV]   100
 # [Questa UVM]     2
 # [RNTST]     1
+# [SCB_INIT]     1
 # [TEST_DONE]     1
 # [axi4_subscriber]     2
+# [base_seq]     1
 # ** Note: $finish    : /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
 #    Time: 1015 ns  Iteration: 62  Instance: /top
 # Saving coverage database on exit...
-# End time: 21:46:14 on Feb 24,2026, Elapsed time: 0:00:04
+# End time: 16:49:50 on Feb 25,2026, Elapsed time: 0:00:04
 # Errors: 0, Warnings: 1

@@ -255,7 +255,7 @@ class irq_seq_1 extends uvm_sequence#(axi4_seq_item);
   task body();
     `uvm_info(get_type_name(), $sformatf(" ------ Interrupt High ------ "), UVM_LOW)
     repeat(3) begin
-      `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB[0] == 1; req.WDATA[0] == 1; req.WVALID == 1; req.BREADY == 1; req.ext_irq_in == 1;})
+      `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB[0] == 1; req.WDATA[0] == 1; req.WVALID == 1; req.BREADY == 1; req.EXT_IRQ_IN == 1;})
       #1000000;
       `uvm_do_with(req, {req.ARADDR == 8; req.ARVALID == 1; req.RREADY == 1;})
     end
@@ -275,9 +275,9 @@ class irq_seq_2 extends uvm_sequence#(axi4_seq_item);
   task body();
     `uvm_info(get_type_name(), " ------ Interrupt High ------ ", UVM_LOW)
     repeat(4) begin
-      `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB[0] == 1; req.WDATA[0] == 1; req.WVALID == 1; req.BREADY == 1; req.ext_irq_in == 1;})
+      `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB[0] == 1; req.WDATA[0] == 1; req.WVALID == 1; req.BREADY == 1; req.EXT_IRQ_IN == 1;})
       #10_000;
-      `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB[0] == 1; req.WDATA[0] == 1; req.WVALID == 1; req.BREADY == 1; req.ext_irq_in == 0;})
+      `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB[0] == 1; req.WDATA[0] == 1; req.WVALID == 1; req.BREADY == 1; req.EXT_IRQ_IN == 0;})
     end
   endtask
 endclass
