@@ -7,7 +7,7 @@ class axi4_active_monitor extends uvm_monitor;
   axi4_seq_item out_item;
 
 //---------------------------------new constructor----------------------------//
-  function new(string name = "axi4_passive_monitor", uvm_component parent = null);
+  function new(string name = "", uvm_component parent = null);
     super.new(name, parent);
   endfunction
 
