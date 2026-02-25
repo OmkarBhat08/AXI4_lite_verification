@@ -1,10 +1,16 @@
-work/
+# Ignore 'work' directories anywhere in the repo
+**/work/
 
-covReport/*
+# Ignore all contents of any 'covReport' directory
+**/covReport/*
 
-!covReport/index.html
-!covReport/covsummary.html
+# Allow only these two specific files inside any 'covReport' directory
+!**/covReport/index.html
+!**/covReport/covsummary.html
 
+# Ignore all log files anywhere
 *.log
-transcript
+
+# Ignore 'transcript' files or directories anywhere
+**/transcript
 *.ucdb
