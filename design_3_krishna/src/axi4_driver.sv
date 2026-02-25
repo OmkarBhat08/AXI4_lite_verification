@@ -2,7 +2,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
 
   `uvm_component_utils(axi4_driver)
 
-  virtual axi4_if.DRV vif;
+  virtual axi4_if vif;
 
   static int i;
   static bit rd_addr_done;
@@ -26,7 +26,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
 
-    if (!(uvm_config_db #(virtual inf)::get(this, "", "vif", vif)))
+    if (!(uvm_config_db #(virtual axi4_if)::get(this, "", "vif", vif)))
     begin
       `uvm_fatal("DRIVER", "NO VIRTUAL INTERFACE IN DRIVER")
     end
@@ -73,7 +73,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
     vif.drv_cb.RREADY<=req.RREADY;
     
     //---interuppt input------//
-    vif.drv_cb.EXTRA_IRQ_IN<=req.EXTRA_IRQ_IN;
+    vif.drv_cb.EXT_IRQ_IN<=req.EXT_IRQ_IN;
     
     `uvm_info("DRV",$sformatf("--------------------------DRIVER - %0d Driving-------------------",i),UVM_LOW)
     
@@ -82,7 +82,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
     `uvm_info("DRV",$sformatf("Write response channel : BREADY = %0b", req.BREADY),UVM_LOW)
     `uvm_info("DRV",$sformatf("Read address channel :ARADDR = 0x%0h, ARVALID = %0b",req.ARADDR, req.ARVALID),UVM_LOW)
     `uvm_info("DRV",$sformatf("Read data channel : RREADY = %0b", req.RREADY),UVM_LOW)
-    `uvm_info("DRV",$sformatf("Extra irq input : EXT_IRQ_IN = %0b", req.EXTRA_IRQ_IN),UVM_LOW)
+    `uvm_info("DRV",$sformatf("Extra irq input : EXT_IRQ_IN = %0b", req.EXT_IRQ_IN),UVM_LOW)
     
     `uvm_info("DRV",$sformatf("-------------------------------------------------------------------"),UVM_LOW)
     

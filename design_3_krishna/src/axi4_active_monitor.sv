@@ -2,7 +2,7 @@ class axi4_active_monitor extends uvm_monitor;
 
   `uvm_component_utils(axi4_active_monitor)
 
-  virtual axi4_if.MON vif;
+  virtual axi4_if vif;
   uvm_analysis_port #(axi4_seq_item)a_mon_port;
   axi4_seq_item out_item;
 
@@ -15,9 +15,9 @@ class axi4_active_monitor extends uvm_monitor;
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
 
-    p_mon_port = new("p_mon_port", this);
+    a_mon_port = new("p_mon_port", this);
 
-    if (!(uvm_config_db #(virtual inf)::get(this, "", "vif", vif)))
+    if (!(uvm_config_db #(virtual axi4_if)::get(this, "", "vif", vif)))
       `uvm_fatal("PASSIVE_MONITOR","NO VIRTUAL INTERFACE IN PASSIVE MONITOR")
   endfunction
 
@@ -60,11 +60,11 @@ class axi4_active_monitor extends uvm_monitor;
         
         // extrnal op and inp //
         
-        out_item.extra_irq_in = vif.mon_cb.EXTRA_IRQ_IN;
-        out_item.leds = vif.mon_cb.LED;
-        out_item.seg_cathode = vif.mon_cb.SEG_CATHODE;
-        out_item.seg_anode = vif.mon_cb.SEG_ANODE;
-        out_item.irq_out = vif.mon_cb.IRQ_OUT;
+        out_item.EXT_IRQ_IN = vif.mon_cb.EXT_IRQ_IN;
+        out_item.LED = vif.mon_cb.LED;
+        out_item.SEG_CATHODE = vif.mon_cb.SEG_CATHODE;
+        out_item.SEG_ANODE = vif.mon_cb.SEG_ANODE;
+        out_item.IRQ_OUT = vif.mon_cb.IRQ_OUT;
         
         
         
@@ -78,7 +78,7 @@ class axi4_active_monitor extends uvm_monitor;
         
         `uvm_info("MON",$sformatf("[read data channel] captured : RVALID=%0b | RDATA=%0d | RRESP=%0b | RREADY = %0b ",out_item.RVALID,out_item.RDATA,out_item.RRESP,out_item.RREADY),UVM_LOW)
         
-        `uvm_info("MON",$sformatf("[external signals] captured : extra_irq_in=%0b | leds=%0d | seg_cathode=%0d | seg_anode = %0d | irq_out = %0b ",out_item.EXTRA_IRQ_IN,out_item.LED,out_item.SEG_CATHODE,out_item.SEG_ANODE,out_item.IRQ_OUT),UVM_LOW)
+        `uvm_info("MON",$sformatf("[external signals] captured : EXT_IRQ_IN=%0b | LED=%0d | SEG_CATHODE=%0d | SEG_ANODE = %0d | IRQ_OUT = %0b ",out_item.EXT_IRQ_IN,out_item.LED,out_item.SEG_CATHODE,out_item.SEG_ANODE,out_item.IRQ_OUT),UVM_LOW)
         
         a_mon_port.write(out_item);
         

@@ -1,0 +1,68 @@
+var g_data = {
+f7:{
+scopes:[{link:'z.htm?f=0&s=7',val:'work.axi_lite_if'}]
+,FSMs:[{dummy:0}
+,{anchor:'cvg398',items:[{c:'R',p:'40.00',z:'write_state'}
+,{cr:'c',s:'1',z:'W_IDLE',h:'2',c:'g'}
+,{cr:'m',z:'W_IDLE -> W_DATA',h:'0',c:'r'}
+,{cr:'m',z:'W_IDLE -> W_ADDR',h:'0',c:'r'}
+,{cr:'c',z:'W_IDLE -> W_BOTH',h:'1',c:'g'}
+,{cr:'m',s:'1',z:'W_DATA',h:'0',c:'r'}
+,{cr:'m',z:'W_DATA -> W_BOTH',h:'0',c:'r'}
+,{cr:'m',z:'W_DATA -> W_IDLE',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'W_ADDR',h:'0',c:'r'}
+,{cr:'m',z:'W_ADDR -> W_BOTH',h:'0',c:'r'}
+,{cr:'m',z:'W_ADDR -> W_IDLE',h:'0',c:'r'}
+,{cr:'c',s:'1',z:'W_BOTH',h:'1',c:'g'}
+,{cr:'c',z:'W_BOTH -> W_RESP',h:'1',c:'g'}
+,{cr:'m',z:'W_BOTH -> W_IDLE',h:'0',c:'r'}
+,{cr:'c',s:'1',z:'W_RESP',h:'1',c:'g'}
+,{cr:'m',z:'W_RESP -> W_IDLE',h:'0',c:'r'}
+]}
+,{anchor:'cvg401',items:[{c:'Y',p:'87.50',z:'read_state'}
+,{cr:'c',s:'1',z:'R_IDLE',h:'6273',c:'g'}
+,{cr:'c',z:'R_IDLE -> R_ADDR',h:'6272',c:'g'}
+,{cr:'c',s:'1',z:'R_ADDR',h:'6272',c:'g'}
+,{cr:'c',z:'R_ADDR -> R_DATA',h:'6272',c:'g'}
+,{cr:'m',z:'R_ADDR -> R_IDLE',h:'0',c:'r'}
+,{cr:'c',s:'1',z:'R_DATA',h:'6272',c:'g'}
+,{cr:'c',z:'R_DATA -> R_IDLE',h:'6271',c:'g'}
+]}
+
+],
+},
+f384:{
+scopes:[{s:'13',b:'1',val:'top'},{s:'144',b:'0',val:'dut'},{link:'z.htm?f=0&s=384',val:'u_axi_if'}]
+,FSMs:[{dummy:0}
+,{anchor:'cvg398',items:[{c:'R',p:'40.00',z:'write_state'}
+,{cr:'c',s:'1',z:'W_IDLE',h:'2',c:'g'}
+,{cr:'m',z:'W_IDLE -> W_DATA',h:'0',c:'r'}
+,{cr:'m',z:'W_IDLE -> W_ADDR',h:'0',c:'r'}
+,{cr:'c',z:'W_IDLE -> W_BOTH',h:'1',c:'g'}
+,{cr:'m',s:'1',z:'W_DATA',h:'0',c:'r'}
+,{cr:'m',z:'W_DATA -> W_BOTH',h:'0',c:'r'}
+,{cr:'m',z:'W_DATA -> W_IDLE',h:'0',c:'r'}
+,{cr:'m',s:'1',z:'W_ADDR',h:'0',c:'r'}
+,{cr:'m',z:'W_ADDR -> W_BOTH',h:'0',c:'r'}
+,{cr:'m',z:'W_ADDR -> W_IDLE',h:'0',c:'r'}
+,{cr:'c',s:'1',z:'W_BOTH',h:'1',c:'g'}
+,{cr:'c',z:'W_BOTH -> W_RESP',h:'1',c:'g'}
+,{cr:'m',z:'W_BOTH -> W_IDLE',h:'0',c:'r'}
+,{cr:'c',s:'1',z:'W_RESP',h:'1',c:'g'}
+,{cr:'m',z:'W_RESP -> W_IDLE',h:'0',c:'r'}
+]}
+,{anchor:'cvg401',items:[{c:'Y',p:'87.50',z:'read_state'}
+,{cr:'c',s:'1',z:'R_IDLE',h:'6273',c:'g'}
+,{cr:'c',z:'R_IDLE -> R_ADDR',h:'6272',c:'g'}
+,{cr:'c',s:'1',z:'R_ADDR',h:'6272',c:'g'}
+,{cr:'c',z:'R_ADDR -> R_DATA',h:'6272',c:'g'}
+,{cr:'m',z:'R_ADDR -> R_IDLE',h:'0',c:'r'}
+,{cr:'c',s:'1',z:'R_DATA',h:'6272',c:'g'}
+,{cr:'c',z:'R_DATA -> R_IDLE',h:'6271',c:'g'}
+]}
+
+],
+},
+dummyEnd:0
+};
+processFsmData(g_data);

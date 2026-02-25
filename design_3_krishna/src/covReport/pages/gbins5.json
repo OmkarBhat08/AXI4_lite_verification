@@ -1,0 +1,8 @@
+var g_data = {
+c2449:[4,'WSTRB_CP',[],,'2445',2,1,'\\/axi4_pkg::axi4_subscriber::input_coverage ','2430','/axi4_pkg/axi4_subscriber',[[],[0,'1','0',1,'SINGLE_BIT'],[0,'1','0',1,'TWO_BITS'],[0,'1','0',1,'THREE_BITS'],[0,'1','1',,'ALL_ZEROS'],[0,'1','0',1,'ALL_ONES']],[]],
+c2450:[4,'ARADDR_CP',[],,'2445',2,1,'\\/axi4_pkg::axi4_subscriber::input_coverage ','2430','/axi4_pkg/axi4_subscriber',[[],[0,'1','0',1,'LED_CONTROL_REGISTER'],[0,'1','0',1,'DATA_REGISTER'],[0,'1','0',1,'IRQ_STATUS_REGISTER'],[0,'1','0',1,'RESERVED']],[]],
+c2451:[4,'ARPROT_CP',[],,'2445',2,1,'\\/axi4_pkg::axi4_subscriber::input_coverage ','2430','/axi4_pkg/axi4_subscriber',[[],[2,'--','0',,'INSTR_SECURE_UNPRIV'],[2,'--','0',,'INSTR_SECURE_PRIV'],[2,'--','0',,'INSTR_NONSECURE_UNPRIV'],[2,'--','0',,'INSTR_NONSECURE_PRIV'],[0,'1','1',,'DATA_SECURE_UNPRIV'],[0,'1','0',1,'DATA_SECURE_PRIV'],[0,'1','0',1,'DATA_NONSECURE_UNPRIV'],[0,'1','0',1,'DATA_NONSECURE_PRIV']],[]],
+c2452:[4,'EXT_IRQ_CP',[],,'2445',2,1,'\\/axi4_pkg::axi4_subscriber::input_coverage ','2430','/axi4_pkg/axi4_subscriber',[[],[0,'1','1',,'LOW'],[0,'1','0',1,'HIGH']],[]],
+dummyEnd:0
+};
+processCovergroupsData(g_data);

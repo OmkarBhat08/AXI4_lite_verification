@@ -7,3 +7,4 @@ covReport/*
 
 *.log
 transcript
+*.ucdb
