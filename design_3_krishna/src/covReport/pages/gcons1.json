@@ -1,7 +1,0 @@
-var g_db_data = [
-{dummy:0},
-{name:'input_coverage',f:1,type:6,id:2412,tb:'327711',h:'0',m:'327711',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','auto(true)']],hdlPath:'/axi4_pkg/axi4_subscriber',parent:'2407'},
-{name:'output_coverage',f:1,type:6,id:2432,tb:'55',h:'0',m:'55',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','auto(true)']],hdlPath:'/axi4_pkg/axi4_subscriber',parent:'2407'},
-{name:'input_coverage',f:1,type:6,id:3324,tb:'327711',h:'0',m:'327711',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','true']],hdlPath:'work.axi4_pkg::axi4_subscriber',parent:'3319'},
-{name:'output_coverage',f:1,type:6,id:3344,tb:'55',h:'0',m:'55',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','true']],hdlPath:'work.axi4_pkg::axi4_subscriber',parent:'3319'}];
-processConsCovergroupsData(g_db_data);
