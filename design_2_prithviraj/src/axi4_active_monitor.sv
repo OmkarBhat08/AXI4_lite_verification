@@ -1,13 +1,13 @@
-class axi4_passive_monitor extends uvm_monitor;
+class axi4_active_monitor extends uvm_monitor;
 
-  `uvm_component_utils(axi4_passive_monitor)
+  `uvm_component_utils(axi4_active_monitor)
 
   virtual axi4_if.MON vif;
   uvm_analysis_port #(axi4_seq_item)a_mon_port;
   axi4_seq_item out_item;
 
 //---------------------------------new constructor----------------------------//
-  function new(string name = "axi4_passive_monitor", uvm_component parent = null);
+  function new(string name = "", uvm_component parent = null);
     super.new(name, parent);
   endfunction
 
