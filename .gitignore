@@ -1,0 +1,9 @@
+work/
+
+covReport/*
+
+!covReport/index.html
+!covReport/covsummary.html
+
+*.log
+transcript
