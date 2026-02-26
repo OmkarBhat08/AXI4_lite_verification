@@ -1,0 +1,39 @@
+class axi4_scoreboard extends uvm_scoreboard;
+
+	`uvm_component_utils(axi4_scoreboard)
+
+	axi4_seq_item monitor_txn;
+
+	//----Analysis FIFO's for collecting transactions---//
+	uvm_tlm_analysis_fifo #(axi4_seq_item) monitor_fifo;
+
+	//--------------new constructor-------------------//
+	function new(string name = "", uvm_component parent);
+		super.new(name, parent);
+
+		monitor_fifo  = new("monitor_fifo", this);
+	endfunction
+
+
+	//------------------run phase----------------------//
+	task run_phase(uvm_phase phase);
+		super.run_phase(phase);
+
+		forever begin
+			fork
+					active_fifo.get(active_txn);
+					assign_expected(active_txn, passive_txn);
+			join
+		end
+	endtask
+
+	//------------------- Input processing ------------------//
+	task input_processing (axi4_seq_item input packet);
+
+	endtask
+
+	//------------------- comparison------------------//
+	task assign_expected(axi4_seq_item exp_txn,axi4_seq_item actual_txn);
+	endtask
+
+endclass
