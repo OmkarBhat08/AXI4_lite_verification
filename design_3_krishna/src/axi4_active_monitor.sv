@@ -15,7 +15,7 @@ class axi4_active_monitor extends uvm_monitor;
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
 
-    a_mon_port = new("p_mon_port", this);
+    a_mon_port = new("a_mon_port", this);
 
     if (!(uvm_config_db #(virtual axi4_if)::get(this, "", "vif", vif)))
       `uvm_fatal("PASSIVE_MONITOR","NO VIRTUAL INTERFACE IN PASSIVE MONITOR")
