@@ -56,14 +56,14 @@ class axi4_scoreboard extends uvm_scoreboard;
       join
       seven_segment_driver();
       led_driver();
-      checker();
+      transaction_checker();
     end
   endtask : run_phase
 
   //------------------- Write Operation ------------------//
-  task write_operation(monitor_txn);
+  task write_operation(axi4_seq_item monitor_txn);
     `uvm_info(get_type_name(), $sformatf("--------------------Scoreboard @ %0t-----------------------------", $time), UVM_MEDIUM)
-    if((monitor_txn.ARESETn)
+    if(monitor_txn.ARESETn)
     begin
       `uvm_info("All Write Channels","Reset Applied", UVM_MEDIUM)
       write_states = 0;
@@ -89,7 +89,7 @@ class axi4_scoreboard extends uvm_scoreboard;
         begin
           if(monitor_txn.WSTRB[0])
           begin
-            mem[exp_txn.AWADDR] = {`DATA_WIDTH-8{1'b0}, monitor_txn.WDATA[7:0]};
+            mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-8){1'b0}}, monitor_txn.WDATA[7:0]};
             `uvm_info("W Channel", $sformatf("Writing WDATA = %0h to LED when WVALID = %b and WREADY = %b", monitor_txn.WDATA, monitor_txn.WVALID, monitor_txn.WREADY), UVM_MEDIUM)
           end
         end
@@ -109,7 +109,7 @@ class axi4_scoreboard extends uvm_scoreboard;
             end
           end
           masked_data = (mem[exp_txn.AWADDR] & (~mask)) | (monitor_txn.WDATA & mask);
-          mem[exp_txn.AWADDR] = {`DATA_WIDTH-16{1'b0}, masked_data[15:0]};
+          mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-16){1'b0}}, masked_data[15:0]};
           `uvm_info("W Channel", $sformatf("Writing WDATA = %0h to 7 segment when WVALID = %b and WREADY = %b", monitor_txn.WDATA, monitor_txn.WVALID, monitor_txn.WREADY), UVM_MEDIUM)
         end
         else if(exp_txn.AWADDR == 8) // IRQ_EN
@@ -117,7 +117,7 @@ class axi4_scoreboard extends uvm_scoreboard;
           if(monitor_txn.WSTRB[0])
           begin
             `uvm_info("W Channel", "Accessing IRQ_EN", UVM_MEDIUM)
-            mem[exp_txn.AWADDR] = {`DATA_WIDTH-2{1'b1},monitor_txn.WDATA[0]};
+            mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-2){1'b1}},monitor_txn.WDATA[0]};
           end
         end
         else if(exp_txn.AWADDR == 12) // IRQ_STATUS
@@ -169,9 +169,9 @@ class axi4_scoreboard extends uvm_scoreboard;
   endtask : write_operation
 
   //------------------- Read Operation ------------------//
-  task read_operation(monitor_txn);
+  task read_operation(axi4_seq_item monitor_txn);
     `uvm_info(get_type_name(), $sformatf("--------------------Scoreboard @ %0t-----------------------------", $time), UVM_MEDIUM)
-    if((monitor_txn.ARESETn)
+    if(monitor_txn.ARESETn)
     begin
       read_states = 0;
       exp_txn = new();
@@ -197,7 +197,7 @@ class axi4_scoreboard extends uvm_scoreboard;
         begin
           if(monitor_txn.RREADY)
           begin
-            exp_txn.RDATA = mem[exp_txn.RWADDR];
+            exp_txn.RDATA = mem[exp_txn.ARADDR];
             exp_txn.RRESP = monitor_txn.RRESP;
 
             //Printing
@@ -209,6 +209,7 @@ class axi4_scoreboard extends uvm_scoreboard;
           end
         end
       end
+		end //Added
   endtask : read_operation
 
   //------------------- Seven Segment driver ------------------//
@@ -240,7 +241,7 @@ class axi4_scoreboard extends uvm_scoreboard;
       exp_txn.seg_anode = 4'b1111;
     end
     segment_counter++;
-  endtask : seven_segment_drive
+  endtask : seven_segment_driver
 
   //------------------- 7 segment decoder------------------//
   function bit [6:0] decode_7_segment(bit[3:0] val);
@@ -271,7 +272,7 @@ class axi4_scoreboard extends uvm_scoreboard;
   endtask : led_driver
 
   //------------------- checker ------------------//
-  task checker();
+  task transaction_checker();
     `uvm_info(get_type_name(), $sformatf("--------------------CHECKER Scoreboard @ %0t-----------------------------", $time), UVM_MEDIUM)
     if(exp_txn.AWREADY !== monitor_txn.AWREADY)
       `uvm_error("CHECKER", "CHECKER FAILED : AWREADY")
@@ -332,6 +333,6 @@ class axi4_scoreboard extends uvm_scoreboard;
       `uvm_error("CHECKER", $sformatf("CHECKER FAILED : irq_out\n Expected: %b \n Received: %b",exp_txn.irq_out, monitor_txn.irq_out))
     else
       `uvm_info("CHECKER", $sformatf("CHECKER PASSED : irq_out\n Expected: %b \n Received: %b",exp_txn.irq_out, monitor_txn.irq_out), UVM_MEDIUM)
-  endtask : checker
+  endtask : transaction_checker
 
 endclass

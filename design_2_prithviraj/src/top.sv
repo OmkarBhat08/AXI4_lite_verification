@@ -7,7 +7,7 @@
 module top;
 
   import uvm_pkg::*;
-  import axi4_pkg::*;
+  import axi4_package::*;
   // ================= CLOCK & RESET =================
   bit ACLK;
   bit ARESETn;
