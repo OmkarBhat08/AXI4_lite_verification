@@ -34,8 +34,7 @@ class simple_write_test extends axi4_base_test;
     super.new(name, parent);
   endfunction
 
-  virtual task run_phase(uvm_phase phase);
-    super.run_phase(phase);
+  task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
     seq = simple_write::type_id::create("seq");
@@ -54,8 +53,7 @@ class simple_read_test extends axi4_base_test;
     super.new(name, parent);
   endfunction
 
-  virtual task run_phase(uvm_phase phase);
-    super.run_phase(phase);
+  task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
     seq = simple_read::type_id::create("seq");
@@ -74,8 +72,7 @@ class read_followed_by_write_test extends axi4_base_test;
     super.new(name, parent);
   endfunction
 
-  virtual task run_phase(uvm_phase phase);
-    super.run_phase(phase);
+  task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
     seq = read_followed_by_write::type_id::create("seq");
@@ -94,8 +91,7 @@ class parallel_read_write_test extends axi4_base_test;
     super.new(name, parent);
   endfunction
 
-  virtual task run_phase(uvm_phase phase);
-    super.run_phase(phase);
+  task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
     seq = parallel_read_write::type_id::create("seq");
@@ -114,8 +110,7 @@ class data_before_addr_test extends axi4_base_test;
     super.new(name, parent);
   endfunction
 
-  virtual task run_phase(uvm_phase phase);
-    super.run_phase(phase);
+  task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
     seq = data_before_addr::type_id::create("seq");
@@ -134,8 +129,7 @@ class addr_before_data_test extends axi4_base_test;
     super.new(name, parent);
   endfunction
 
-  virtual task run_phase(uvm_phase phase);
-    super.run_phase(phase);
+  task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
     seq = addr_before_data::type_id::create("seq");
@@ -154,8 +148,7 @@ class data_with_addr_test extends axi4_base_test;
     super.new(name, parent);
   endfunction
 
-  virtual task run_phase(uvm_phase phase);
-    super.run_phase(phase);
+  task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
     seq = data_with_addr::type_id::create("seq");
@@ -174,8 +167,7 @@ class continuous_write_test extends axi4_base_test;
     super.new(name, parent);
   endfunction
 
-  virtual task run_phase(uvm_phase phase);
-    super.run_phase(phase);
+  task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
     seq = continuous_write::type_id::create("seq");
@@ -194,8 +186,7 @@ class write_strobe_select_1_test extends axi4_base_test;
     super.new(name, parent);
   endfunction
 
-  virtual task run_phase(uvm_phase phase);
-    super.run_phase(phase);
+  task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
     seq = write_strobe_select_1::type_id::create("seq");
@@ -214,8 +205,7 @@ class write_strobe_select_2_test extends axi4_base_test;
     super.new(name, parent);
   endfunction
 
-  virtual task run_phase(uvm_phase phase);
-    super.run_phase(phase);
+  task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
     seq = write_strobe_select_2::type_id::create("seq");
@@ -236,7 +226,6 @@ class invalid_addr_test extends axi4_base_test;
   endfunction
 
   task run_phase(uvm_phase phase);
-    super.run_phase(phase);
 
     phase.raise_objection(this);
     seq = invalid_addr::type_id::create("seq");
@@ -256,7 +245,6 @@ class irq_test_1 extends axi4_base_test;
   endfunction
 
   task run_phase(uvm_phase phase);
-    super.run_phase(phase);
 
     phase.raise_objection(this);
     seq = irq_seq_1::type_id::create("seq");
@@ -276,7 +264,6 @@ class irq_test_2 extends axi4_base_test;
   endfunction
 
   task run_phase(uvm_phase phase);
-    super.run_phase(phase);
 
     phase.raise_objection(this);
     seq = irq_seq_2::type_id::create("seq");
