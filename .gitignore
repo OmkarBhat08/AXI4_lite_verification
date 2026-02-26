@@ -5,8 +5,8 @@
 **/covReport/*
 
 # Allow only these two specific files inside any 'covReport' directory
-!**/covReport/index.html
-!**/covReport/covsummary.html
+#!**/covReport/index.html
+#!**/covReport/covsummary.html
 
 # Ignore all log files anywhere
 *.log
