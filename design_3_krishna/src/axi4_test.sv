@@ -245,13 +245,13 @@ class invalid_addr_test extends axi4_base_test;
   endtask
 endclass
 
-// -----------------------------------------------------------------
-class irq_test extends axi4_base_test;
-  `uvm_component_utils(irq_test)
+// ----------------------------------------------------------------- irq_seq_2
+class irq_test_1 extends axi4_base_test;
+  `uvm_component_utils(irq_test_1)
 
   irq_seq_1 seq;
 
-  function new(string name = "irq_test", uvm_component parent = null);
+  function new(string name = "irq_test_1", uvm_component parent = null);
     super.new(name, parent);
   endfunction
 
@@ -265,4 +265,23 @@ class irq_test extends axi4_base_test;
   endtask
 endclass
 
+// -----------------------------------------------------------------
+class irq_test_2 extends axi4_base_test;
+  `uvm_component_utils(irq_test_2)
+
+  irq_seq_2 seq;
+
+  function new(string name = "irq_test_2", uvm_component parent = null);
+    super.new(name, parent);
+  endfunction
+
+  task run_phase(uvm_phase phase);
+    super.run_phase(phase);
+
+    phase.raise_objection(this);
+    seq = irq_seq_2::type_id::create("seq");
+    seq.start(env.act_agent.sqr_h);
+    phase.drop_objection(this);
+  endtask
+endclass
 
