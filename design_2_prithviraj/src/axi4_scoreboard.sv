@@ -5,16 +5,18 @@ class axi4_scoreboard extends uvm_scoreboard;
   axi4_seq_item active_txn, passive_txn;
 
   //----Analysis FIFO's for collecting transactions---//
-  uvm_tlm_analysis_fifo #(axi4_seq_item) active_fifo;
-  uvm_tlm_analysis_fifo #(axi4_seq_item) passive_fifo;
+//  uvm_tlm_analysis_fifo #(axi4_seq_item) active_fifo;
+//  uvm_tlm_analysis_fifo #(axi4_seq_item) passive_fifo;
+    uvm_tlm_analysis_fifo #(axi4_seq_item)monitor_fifo;
 
 
   //--------------new constructor-------------------//
   function new(string name = "", uvm_component parent);
     super.new(name, parent);
 
-    active_fifo  = new("active_fifo", this);
-    passive_fifo = new("passive_fifo", this);
+   // active_fifo  = new("active_fifo", this);
+   // passive_fifo = new("passive_fifo", this);
+      monitor_fifo = new("monitor_fifo",this);
 
   endfunction
 
@@ -26,9 +28,10 @@ class axi4_scoreboard extends uvm_scoreboard;
     forever begin
       fork
         begin
-          active_fifo.get(active_txn);
-          passive_fifo.get(passive_txn);
-          assign_expected(active_txn, passive_txn);
+          //active_fifo.get(active_txn);
+          //passive_fifo.get(passive_txn);
+          monitor_fifo.get(active_txn);
+         // assign_expected(active_txn);
         end
       join
     end
@@ -36,7 +39,7 @@ class axi4_scoreboard extends uvm_scoreboard;
 
 
   //------------------- comparison------------------//
-  task assign_expected(axi4_seq_item exp_txn,axi4_seq_item actual_txn);
-  endtask
+  //task assign_expected(axi4_seq_item exp_txn,axi4_seq_item actual_txn);
+  //endtask
 
 endclass

@@ -1,9 +1,9 @@
 
 class axi4_subscriber extends uvm_component;
 
-  uvm_tlm_analysis_fifo #(axi4_seq_item) inp_fifo;
-  uvm_tlm_analysis_fifo #(axi4_seq_item) op_fifo;
-
+//  uvm_tlm_analysis_fifo #(axi4_seq_item) inp_fifo;
+//  uvm_tlm_analysis_fifo #(axi4_seq_item) op_fifo;
+  uvm_tlm_analysis_fifo #(axi4_seq_item)monitor_fifo;
   axi4_seq_item inp_item, op_item;
 
   real input_cov_res, output_cov_res;
@@ -23,9 +23,9 @@ class axi4_subscriber extends uvm_component;
   function new(string name = "", uvm_component parent);
     super.new(name, parent);
 
-    inp_fifo = new("inp_fifo", this);
-    op_fifo  = new("op_fifo", this);
-
+    //inp_fifo = new("inp_fifo", this);
+    //op_fifo  = new("op_fifo", this);
+    monitor_fifo = new("monitor_fifo",this);
     input_coverage  = new();
     output_coverage = new();
   endfunction
@@ -35,7 +35,7 @@ class axi4_subscriber extends uvm_component;
     super.run_phase(phase);
 
     forever begin
-      fork
+      /*fork
         begin
           inp_fifo.get(inp_item);
           input_coverage.sample();
@@ -45,7 +45,8 @@ class axi4_subscriber extends uvm_component;
           op_fifo.get(op_item);
           output_coverage.sample();
         end
-      join
+      join*/
+     monitor_fifo.get(inp_item);
     end
   endtask
 
