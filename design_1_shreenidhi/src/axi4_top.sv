@@ -4,7 +4,7 @@ import uvm_pkg::*;
 `include "uvm_macros.svh"
 `include "axi4_package.sv"
 `include "axi4_interface.sv"
-//`include "axi4_design.v"
+`include "axi4_design.v"
 
 module top;
 
