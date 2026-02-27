@@ -6,6 +6,7 @@ class axi4_scoreboard extends uvm_scoreboard;
   axi4_seq_item exp_txn;
 
   bit [3:0] write_states, read_states;
+	bit read_done;
   bit [3:0] wstrb;
   int index;
   bit [(`DATA_WIDTH)-1:0] temp_data, mask, masked_data;
@@ -30,6 +31,7 @@ class axi4_scoreboard extends uvm_scoreboard;
   function new(string name = "", uvm_component parent);
     super.new(name, parent);
 
+    exp_txn = new();
     monitor_fifo  = new("monitor_fifo", this);
   endfunction : new
 
@@ -40,7 +42,7 @@ class axi4_scoreboard extends uvm_scoreboard;
 
     forever
     begin
-      active_fifo.get(monitor_txn);
+      monitor_fifo.get(monitor_txn);
       // IRQ_STATUS updation
       if(monitor_txn.ext_irq_in)
         irq_counter++;
@@ -162,6 +164,7 @@ class axi4_scoreboard extends uvm_scoreboard;
             exp_txn.BRESP = monitor_txn.BRESP;
             `uvm_info("B Channel", $sformatf("Received BRESP = %b when BVALID = %b and BREADY = %b", monitor_txn.BRESP, monitor_txn.BVALID, monitor_txn.BREADY), UVM_MEDIUM)
             write_states = 0;
+            `uvm_info("B Channel", "Write handshake completed", UVM_MEDIUM)
           end
         end
       end
@@ -199,6 +202,8 @@ class axi4_scoreboard extends uvm_scoreboard;
           begin
             exp_txn.RDATA = mem[exp_txn.ARADDR];
             exp_txn.RRESP = monitor_txn.RRESP;
+            `uvm_info("B Channel", "Read handshake completed", UVM_MEDIUM)
+						read_done = 1;
 
             //Printing
             `uvm_info("R Channel", "Writing RDATA", UVM_MEDIUM)
@@ -209,7 +214,7 @@ class axi4_scoreboard extends uvm_scoreboard;
           end
         end
       end
-		end //Added
+		end
   endtask : read_operation
 
   //------------------- Seven Segment driver ------------------//
@@ -314,6 +319,24 @@ class axi4_scoreboard extends uvm_scoreboard;
     else
       `uvm_info("CHECKER", "CHECKER PASSED : RVALID", UVM_MEDIUM)
 
+		if((exp_txn.RDATA === monitor_txn.RDATA) && (monitor_txn.RRESP == 0) && (monitor_txn.RVALID == 1))
+		begin
+			if(read_done)
+			begin
+				$display("##############################################################################################################################");
+				$display("Read transaction PASSED with correct output");
+      	`uvm_info("CHECKER", $sformatf("CHECKER PASSED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA), UVM_MEDIUM)
+				read_done = 0;
+			end
+			else
+			begin
+				$display("##############################################################################################################################");
+				`uvm_error("CHECKER", "Read transaction FAILED");
+      	`uvm_ERROR("CHECKER", $sformatf("CHECKER FAILED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA))
+				read_done = 0;
+		end
+
+		
     if(exp_txn.leds !== monitor_txn.leds)
       `uvm_error("CHECKER", $sformatf("CHECKER FAILED : leds\n Expected: %b \n Received: %b",exp_txn.leds, monitor_txn.leds))
     else
