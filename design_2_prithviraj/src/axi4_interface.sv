@@ -35,7 +35,7 @@ interface axi4_if (input bit ACLK,input bit ARESETn);
   bit                     ext_irq_in;
 
   // ================= OUTPUTS =================
-  bit [3:0]               leds;
+  bit [7:0]               leds;
   bit  [6:0]              seg_cathode;
   bit  [3:0]              seg_anode;
   bit                     irq_out;

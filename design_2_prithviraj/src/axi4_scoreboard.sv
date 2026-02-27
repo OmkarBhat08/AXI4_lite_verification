@@ -6,7 +6,7 @@ class axi4_scoreboard extends uvm_scoreboard;
   axi4_seq_item exp_txn;
 
   bit [3:0] write_states, read_states;
-	bit read_done;
+	bit write_done, read_done;
   bit [3:0] wstrb;
   int index;
   bit [(`DATA_WIDTH)-1:0] temp_data, mask, masked_data;
@@ -164,7 +164,10 @@ class axi4_scoreboard extends uvm_scoreboard;
             exp_txn.BRESP = monitor_txn.BRESP;
             `uvm_info("B Channel", $sformatf("Received BRESP = %b when BVALID = %b and BREADY = %b", monitor_txn.BRESP, monitor_txn.BVALID, monitor_txn.BREADY), UVM_MEDIUM)
             write_states = 0;
+						write_done = 1;
             `uvm_info("B Channel", "Write handshake completed", UVM_MEDIUM)
+						$display("#######################################################################################################################################################################");
+            `uvm_info("get_type_name()", "SUCCESSFULLY WRITTEN INTO THE REGISTER BANK", UVM_MEDIUM)
           end
         end
       end
@@ -357,6 +360,7 @@ class axi4_scoreboard extends uvm_scoreboard;
       `uvm_error("CHECKER", $sformatf("CHECKER FAILED : irq_out\n Expected: %b \n Received: %b",exp_txn.irq_out, monitor_txn.irq_out))
     else
       `uvm_info("CHECKER", $sformatf("CHECKER PASSED : irq_out\n Expected: %b \n Received: %b",exp_txn.irq_out, monitor_txn.irq_out), UVM_MEDIUM)
+		$display("#######################################################################################################################################################################");
   endtask : transaction_checker
 
 endclass

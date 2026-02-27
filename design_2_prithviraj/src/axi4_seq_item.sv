@@ -35,7 +35,7 @@ class axi4_seq_item extends uvm_sequence_item;
   rand bit                              ext_irq_in;
 
   // ================= OUTPUTS =================
-  bit [3:0]                             leds;
+  bit [7:0]                             leds;
   bit [6:0]                             seg_cathode;
   bit [3:0]                             seg_anode;
   bit                                   irq_out;

@@ -94,7 +94,8 @@ module top;
   // ================= UVM CONFIG =================
   initial begin
     uvm_config_db #(virtual axi4_if)::set(null, "*", "vif", axi_if);
-    run_test("simple_write_test");
+    //run_test("simple_write_test");
+		run_test("read_followed_by_write_test");
   end
 
 endmodule
