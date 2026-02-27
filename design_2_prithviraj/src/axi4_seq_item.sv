@@ -1,42 +1,44 @@
 class axi4_seq_item extends uvm_sequence_item;
+  // ================= GLOBAL SIGNALS =================
+	logic ARESETn;
 
   // ================= WRITE ADDRESS =================
-  rand bit [`ADDR_WIDTH-1:0]     AWADDR;
+  rand bit [`ADDR_WIDTH-1:0]            AWADDR;
   rand bit [2:0]                        AWPROT;
   rand bit                              AWVALID;
-  logic                                 AWREADY;
+  bit                                   AWREADY;
 
   // ================= WRITE DATA =================
   rand bit [`DATA_WIDTH-1:0]            WDATA;
   rand bit [3:0]                        WSTRB;
   rand bit                              WVALID;
-  logic                                 WREADY;
+  bit                                    WREADY;
 
   // ================= WRITE RESPONSE =================
-  logic [1:0]                           BRESP;
-  logic                                 BVALID;
+  bit [1:0]                             BRESP;
+  bit                                   BVALID;
   rand bit                              BREADY;
 
   // ================= READ ADDRESS =================
   rand bit [`ADDR_WIDTH-1:0]            ARADDR;
   rand bit [2:0]                        ARPROT;
   rand bit                              ARVALID;
-  logic                                 ARREADY;
+  bit                                   ARREADY;
 
   // ================= READ DATA =================
-  logic [`DATA_WIDTH-1:0]               RDATA;
-  logic [1:0]                           RRESP;
-  logic                                 RVALID;
+  bit [`DATA_WIDTH-1:0]                 RDATA;
+  bit [1:0]                             RRESP;
+  bit                                   RVALID;
   rand bit                              RREADY;
 
   // ================= EXTERNAL INTERRUPT =================
   rand bit                              ext_irq_in;
 
   // ================= OUTPUTS =================
-  logic [3:0]                           leds;
-  logic [6:0]                           seg_cathode;
-  logic [3:0]                           seg_anode;
-  logic                                 irq_out;
+  bit [3:0]                             leds;
+  bit [6:0]                             seg_cathode;
+  bit [3:0]                             seg_anode;
+  bit                                   irq_out;
 
 
   `uvm_object_utils_begin(axi4_seq_item)

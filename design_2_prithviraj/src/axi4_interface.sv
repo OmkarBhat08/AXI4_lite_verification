@@ -4,41 +4,41 @@ interface axi4_if (input bit ACLK,input bit ARESETn);
 
   // ================= WRITE ADDRESS =================
   bit   [`ADDR_WIDTH-1:0] AWADDR;
-  bit   [2:0]            AWPROT;
-  bit                    AWVALID;
-  logic                  AWREADY;
+  bit   [2:0]             AWPROT;
+  bit                     AWVALID;
+  bit                     AWREADY;
 
   // ================= WRITE DATA =================
   bit   [`DATA_WIDTH-1:0] WDATA;
-  bit   [3:0]            WSTRB;
-  bit                    WVALID;
-  logic                  WREADY;
+  bit   [3:0]             WSTRB;
+  bit                     WVALID;
+  bit                     WREADY;
 
   // ================= WRITE RESPONSE =================
-  logic [1:0]            BRESP;
-  logic                  BVALID;
-  bit                    BREADY;
+  bit [1:0]               BRESP;
+  bit                     BVALID;
+  bit                     BREADY;
 
   // ================= READ ADDRESS =================
   bit   [`ADDR_WIDTH-1:0] ARADDR;
-  bit   [2:0]            ARPROT;
-  bit                    ARVALID;
-  logic                  ARREADY;
+  bit   [2:0]             ARPROT;
+  bit                     ARVALID;
+  bit                     ARREADY;
 
   // ================= READ DATA =================
-  logic [`DATA_WIDTH-1:0] RDATA;
-  logic [1:0]            RRESP;
-  logic                  RVALID;
-  bit                    RREADY;
+  bit [`DATA_WIDTH-1:0]   RDATA;
+  bit [1:0]               RRESP;
+  bit                     RVALID;
+  bit                     RREADY;
 
   // ================= EXTERNAL INTERRUPT =================
-  bit                    ext_irq_in;
+  bit                     ext_irq_in;
 
   // ================= OUTPUTS =================
-  logic [3:0]            leds;
-  logic [6:0]            seg_cathode;
-  logic [3:0]            seg_anode;
-  logic                  irq_out;
+  bit [3:0]               leds;
+  bit  [6:0]              seg_cathode;
+  bit  [3:0]              seg_anode;
+  bit                     irq_out;
 
 
   // ================= DRIVER CLOCKING BLOCK =================
