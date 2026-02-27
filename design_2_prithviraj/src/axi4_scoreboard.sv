@@ -332,7 +332,7 @@ class axi4_scoreboard extends uvm_scoreboard;
 			begin
 				$display("##############################################################################################################################");
 				`uvm_error("CHECKER", "Read transaction FAILED");
-      	`uvm_ERROR("CHECKER", $sformatf("CHECKER FAILED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA))
+      	`uvm_error("CHECKER", $sformatf("CHECKER FAILED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA))
 				read_done = 0;
 		end
 

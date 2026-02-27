@@ -30,7 +30,7 @@ view:
 	firefox ./covReport/index.html
 
 compile:
-	vlog -sv axi4_top.sv
+	vlog -sv top.sv
 
 simulate:
 	vsim -c top +UVM_VERBOSITY=UVM_MEDIUM -do "run -all;exit"
