@@ -81,4 +81,3 @@ modport DRV (clocking drv_cb);
 modport MON (clocking mon_cb);
 
 endinterface
-
