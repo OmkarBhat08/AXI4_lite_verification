@@ -7,32 +7,32 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
   static int i;
   static bit rd_addr_done;
   static bit wrt_data_done, wrt_addr_done;
+  static bit wrt_addr_wait,wrt_data_wait,rd_addr_wait;
 
   //-----------------------new constructor---------------------------//
   function new(string name = "axi4_driver", uvm_component parent = null);
     super.new(name, parent);
 
     i = 0;
-
-    rd_addr_done   = 0;
+    rd_addr_done  = 0;
+    wrt_data_done = 0;
+    wrt_addr_done = 0;
     
-    wrt_data_done  = 0;
-    wrt_addr_done  = 0;
+    wrt_addr_wait = 0;
+    wrt_data_wait = 0;
+    rd_addr_wait  = 0;
 
   endfunction
-
 
   //---------------------build phase------------------------------//
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-
+    
     if (!(uvm_config_db #(virtual axi4_if)::get(this, "", "vif", vif)))
     begin
       `uvm_fatal("DRIVER", "NO VIRTUAL INTERFACE IN DRIVER")
     end
-
   endfunction
-
 
   //---------------------run phase-----------------------------//
   task run_phase(uvm_phase phase);
@@ -52,22 +52,12 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
 
   //----------------------task drive-------------------------//
   task drive();
+
     
-    //----write address channel------//
-    vif.drv_cb.AWADDR<=req.AWADDR;
-    vif.drv_cb.AWVALID<=req.AWVALID;
-    
-    //----write data channel-------//
-    vif.drv_cb.WDATA<=req.WDATA;
-    vif.drv_cb.WSTRB<=req.WSTRB;
-    vif.drv_cb.WVALID<=req.WVALID;
+
    
     //----write response channel---//
     vif.drv_cb.BREADY<=req.BREADY;
-    
-    //----read address channel----//
-    vif.drv_cb.ARADDR<=req.ARADDR;
-    vif.drv_cb.ARVALID<=req.ARVALID;
     
     //-----read data channel---//
     vif.drv_cb.RREADY<=req.RREADY;
@@ -76,21 +66,17 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
     vif.drv_cb.ext_irq_in<=req.ext_irq_in;
     
     `uvm_info("DRV",$sformatf("--------------------------DRIVER - %0d Driving-------------------",i),UVM_LOW)
-    
-    `uvm_info("DRV",$sformatf("Write address channel : AWADDR = 0x%0h | AWVALID = %0b ",req.AWADDR, req.AWVALID),UVM_LOW)
-    `uvm_info("DRV",$sformatf("Write data channel : WDATA = 0x%0h | WSTRB = 0x%0d | WVALID = %0b",req.WDATA, req.WSTRB, req.WVALID),UVM_LOW)
     `uvm_info("DRV",$sformatf("Write response channel : BREADY = %0b", req.BREADY),UVM_LOW)
-    `uvm_info("DRV",$sformatf("Read address channel :ARADDR = 0x%0h, ARVALID = %0b",req.ARADDR, req.ARVALID),UVM_LOW)
     `uvm_info("DRV",$sformatf("Read data channel : RREADY = %0b", req.RREADY),UVM_LOW)
     `uvm_info("DRV",$sformatf("Extra irq input : EXT_IRQ_IN = %0b", req.ext_irq_in),UVM_LOW)
-    
-    `uvm_info("DRV",$sformatf("-------------------------------------------------------------------"),UVM_LOW)
-    
+        
     fork
       // write
       fork
-        check_wrt_addr(); 
-        check_wrt_data(); 
+        if(!wrt_addr_wait)
+          check_wrt_addr(); 
+        if(!wrt_data_wait)
+          check_wrt_data(); 
         check_wrt_resp(); 
       join
 
@@ -99,29 +85,32 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
         check_rd_addr(); 
       join
       
-    join
-    
+    join_any
+    `uvm_info("DRV",$sformatf("---------------------------------------------------------------------------------------"),UVM_LOW)
+
   endtask
 
   //read address handshake
 
   task check_rd_addr();
+    `uvm_info("DRV",$sformatf("Read address channel :ARADDR = 0x%0h, ARVALID = %0b",req.ARADDR, req.ARVALID),UVM_LOW)
+    vif.drv_cb.ARADDR<=req.ARADDR;
+    vif.drv_cb.ARVALID<=req.ARVALID;
     if (rd_addr_done == 0) 
       begin 
 
         if(req.ARVALID == 1) 
           begin
+            
+            rd_addr_wait=1;
             wait(vif.drv_cb.ARREADY);
-            `uvm_info("RD-ADDR-DRV", $sformatf("[DRIVER-%0d] : Slave asserted ARREADY, read address handshake completed", i),UVM_LOW)
             rd_addr_done=1;
+            rd_addr_wait=0;
+            
             repeat(1) @(vif.drv_cb);
+            vif.drv_cb.ARVALID<=0;
             check_rd_data();
         end
-      else 
-        begin
-          `uvm_info("RD-ADDR-DRV", $sformatf("[DRIVER-%0d] : ARVALID is not asserted yet", i), UVM_LOW)
-        end
-      
     end
     else 
       begin
@@ -133,52 +122,48 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
 
   // read data handshake
   task check_rd_data();
-
     if (req.RREADY == 1) 
       begin
         wait(vif.drv_cb.RVALID);
-        `uvm_info("RD-DATA-DRV",$sformatf("[DRIVER-%0d] : Slave asserted RVALID, read data handshake completed", i),UVM_LOW)
         rd_addr_done=0;
-      end
-    else 
-      begin
-        `uvm_info("RD-DATA-DRV", $sformatf("[DRIVER-%0d] : RREADY is not asserted yet", i),UVM_LOW)
       end
   endtask
   
   //write address handshake
   task check_wrt_addr();
+    vif.drv_cb.AWADDR<=req.AWADDR;
+    vif.drv_cb.AWVALID<=req.AWVALID;
+    `uvm_info("DRV",$sformatf("Write address channel : AWADDR = 0x%0h | AWVALID = %0b ",req.AWADDR, req.AWVALID),UVM_LOW)
     if(wrt_addr_done==0)
       begin
         if(req.AWVALID==1)
           begin
+            wrt_addr_wait=1;
             wait(vif.drv_cb.AWREADY);
-            `uvm_info("WRT-ADDR-DRV",$sformatf("[DRIVER-%0d] Slave asserted AWREADY, Write address handshake done",i),UVM_LOW)
+            wrt_addr_wait=0;
             wrt_addr_done=1;
           end
-        else
-          begin
-            `uvm_info("WRT-ADDR-DRV",$sformatf("[DRIVER-%0d] AWALID is not asserted yet",i),UVM_LOW)
-          end
-        
       end
   endtask
   
   //write data handshake
   
   task check_wrt_data();
-    
+    vif.drv_cb.WDATA<=req.WDATA;
+    vif.drv_cb.WSTRB<=req.WSTRB;
+    vif.drv_cb.WVALID<=req.WVALID;
+    `uvm_info("DRV",$sformatf("Write data channel : WDATA = 0x%0h | WSTRB = 0x%0d | WVALID = %0b",req.WDATA, req.WSTRB, req.WVALID),UVM_LOW)
     if(wrt_data_done==0)
       begin
         if(req.WVALID==1)
           begin 
+            wrt_data_wait=1;
             wait(vif.drv_cb.WREADY);
             `uvm_info("WRT-DATA-DRV",$sformatf("[DRIVER-%0d] Slave asserted WREADY, Write data handshake done",i),UVM_LOW)
             wrt_data_done=1;
-          end
-        else
-          begin
-            `uvm_info("WRT-DATA-DRV",$sformatf("[DRIVER-%0d] WVALID is not asserted yet",i),UVM_LOW)
+            wrt_data_wait=0;
+            repeat(1) @(vif.drv_cb);
+            vif.drv_cb.WVALID<=0;
           end
       end
          
@@ -189,23 +174,12 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
   task check_wrt_resp();
     if(wrt_data_done && wrt_addr_done)
       begin
-        if(req.BREADY==1)
+        if(req.BREADY==1 && vif.drv_cb.BVALID==1)
           begin
-            wait(vif.drv_cb.BVALID);
-            `uvm_info("WRT-RESP-DRV",$sformatf("[DRIVER-%0d] Slave asserted BVALID, Write response handshake done",i),UVM_LOW)
             wrt_data_done=0;
             wrt_addr_done=0;
           end
-        else
-          begin
-            `uvm_info("WRT-RESP-DRV",$sformatf("[DRIVER-%0d] BREADY is not asserted yet",i),UVM_LOW)
-          end
-      end
-    else
-      begin
-        `uvm_info("WRT-RSP-DRV",$sformatf("[DRIVER-%0d] waiting for completion of write data/addr handshake",i),UVM_LOW)
-      end
-            
+      end   
   endtask
 
 endclass
