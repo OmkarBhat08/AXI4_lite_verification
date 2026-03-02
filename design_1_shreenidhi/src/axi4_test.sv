@@ -34,6 +34,7 @@ class axi4_reset_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     reset_seq = axi4_reset_seq::type_id::create("reset_seq");
     reset_seq.start(env.agent_h.sqr_h);
     phase.drop_objection(this);
@@ -51,10 +52,11 @@ class axi4_valid_write_handshake_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,1000);
     valid_write_handshake_seq =
       axi4_valid_write_handshake_seq::type_id::create("valid_write_handshake_seq");
     valid_write_handshake_seq.start(env.agent_h.sqr_h);
-    #200;
+    
     phase.drop_objection(this);
   endtask
 endclass
@@ -70,10 +72,10 @@ class axi4_address_before_data_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     address_before_data_seq =
       axi4_address_before_data_seq::type_id::create("address_before_data_seq");
     address_before_data_seq.start(env.agent_h.sqr_h);
-    #200;
     phase.drop_objection(this);
   endtask
 endclass
@@ -89,14 +91,13 @@ class axi4_data_before_address_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     data_before_adress_seq =
       axi4_data_before_adress_seq::type_id::create("data_before_adress_seq");
     data_before_adress_seq.start(env.agent_h.sqr_h);
-   // #500;
     phase.drop_objection(this);
   endtask
 endclass
-
 
 
 class axi4_response_check_test extends axi4_base_test;
@@ -109,10 +110,10 @@ class axi4_response_check_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     response_check_seq =
       axi4_response_check_seq::type_id::create("response_check_seq");
     response_check_seq.start(env.agent_h.sqr_h);
-    #500;
     phase.drop_objection(this);
   endtask
 endclass
@@ -128,6 +129,7 @@ class axi4_BVALID_hold_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     BVALID_hold_seq =
       axi4_BVALID_hold_seq::type_id::create("BVALID_hold_seq");
     BVALID_hold_seq.start(env.agent_h.sqr_h);
@@ -146,6 +148,7 @@ class axi4_back_to_back_write_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     back_to_back_write_seq =
       axi4_back_to_back_write_seq::type_id::create("back_to_back_write_seq");
     back_to_back_write_seq.start(env.agent_h.sqr_h);
@@ -164,6 +167,7 @@ class axi4_multiple_outstanding_write_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     multiple_outstanding_write_seq =
       axi4_multiple_outstanding_write_seq::type_id::create("multiple_outstanding_write_seq");
     multiple_outstanding_write_seq.start(env.agent_h.sqr_h);
@@ -182,6 +186,7 @@ class axi4_invalid_address_write_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     invalid_address_write_seq =
       axi4_invalid_address_write_seq::type_id::create("invalid_address_write_seq");
     invalid_address_write_seq.start(env.agent_h.sqr_h);
@@ -200,6 +205,7 @@ class axi4_unaligned_address_write_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     unaligned_address_write_seq =
       axi4_unaligned_address_write_seq::type_id::create("unaligned_address_write_seq");
     unaligned_address_write_seq.start(env.agent_h.sqr_h);
@@ -222,6 +228,7 @@ class axi4_valid_read_handshake_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     valid_read_handshake_seq =
       axi4_valid_read_handshake_seq::type_id::create("valid_read_handshake_seq");
     valid_read_handshake_seq.start(env.agent_h.sqr_h);
@@ -240,6 +247,7 @@ class axi4_RVALID_hold_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     RVALID_hold_seq =
       axi4_RVALID_hold_seq::type_id::create("RVALID_hold_seq");
     RVALID_hold_seq.start(env.agent_h.sqr_h);
@@ -258,6 +266,7 @@ class axi4_back_to_back_read_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     back_to_back_read_seq =
       axi4_back_to_back_read_seq::type_id::create("back_to_back_read_seq");
     back_to_back_read_seq.start(env.agent_h.sqr_h);
@@ -276,6 +285,7 @@ class axi4_multiple_outstanding_read_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     multiple_outstanding_read_seq =
       axi4_multiple_outstanding_read_seq::type_id::create("multiple_outstanding_read_seq");
     multiple_outstanding_read_seq.start(env.agent_h.sqr_h);
@@ -294,10 +304,10 @@ class axi4_invalid_address_read_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     invalid_address_read_seq =
       axi4_invalid_address_read_seq::type_id::create("invalid_address_read_seq");
     invalid_address_read_seq.start(env.agent_h.sqr_h);
-    #200;
     phase.drop_objection(this);
   endtask
 endclass
@@ -313,6 +323,7 @@ class axi4_unaligned_address_read_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     unaligned_address_read_seq =
       axi4_unaligned_address_read_seq::type_id::create("unaligned_address_read_seq");
     unaligned_address_read_seq.start(env.agent_h.sqr_h);
@@ -335,6 +346,7 @@ class axi4_concurrent_write_read_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     concurrent_write_read_seq =
       axi4_concurrent_write_read_seq::type_id::create("concurrent_write_read_seq");
     concurrent_write_read_seq.start(env.agent_h.sqr_h);
@@ -357,6 +369,7 @@ class axi4_led_write_read_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     led_write_read_seq =
       axi4_led_write_read_seq::type_id::create("led_write_read_seq");
     led_write_read_seq.start(env.agent_h.sqr_h);
@@ -376,6 +389,7 @@ class axi4_segment_write_read_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     segment_write_read_seq =
       axi4_segment_write_read_seq::type_id::create("segment_write_read_seq");
     segment_write_read_seq.start(env.agent_h.sqr_h);
@@ -394,6 +408,7 @@ class axi4_interrupt_assert_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     interrupt_assert_seq =
       axi4_interrupt_assert_seq::type_id::create("interrupt_assert_seq");
     interrupt_assert_seq.start(env.agent_h.sqr_h);
@@ -412,8 +427,10 @@ class axi4_interrupt_deassert_test extends axi4_base_test;
 
   virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this,100);
     interrupt_deassert_seq =
-      axi4_interrupt_deassert_seq::type_id::create("interrupt_deassert_seq");
+    
+ axi4_interrupt_deassert_seq::type_id::create("interrupt_deassert_seq");
     interrupt_deassert_seq.start(env.agent_h.sqr_h);
     phase.drop_objection(this);
   endtask
@@ -437,11 +454,12 @@ class axi4_regression_test extends axi4_base_test;
   virtual task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
-
+    phase.phase_done.set_drain_time(this,100);
     regression_seq =
       axi4_regression_seq::type_id::create("regression_seq");
 
     regression_seq.start(env.agent_h.sqr_h);
+    
 
     phase.drop_objection(this);
 

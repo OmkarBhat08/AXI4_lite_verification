@@ -35,7 +35,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
         if(!AW_waiting) drive_write_addr();
         if(!W_waiting) drive_write_data();
         if(!AR_waiting) drive_read_addr();
-      join_any
+      join
       repeat (1) @(vif.drv_cb);
       seq_item_port.item_done();
     end
@@ -55,7 +55,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
       got_addr = 1;
     end
 
-    `uvm_info("DRV", $sformatf("Driving write addr transaction complete"), UVM_LOW)
+   // `uvm_info("DRV", $sformatf("Driving write addr transaction complete"), UVM_LOW)
 
   endtask 
     
@@ -67,12 +67,12 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
     if(req.S_WVALID)begin
       W_waiting = 1;
       wait(vif.S_WREADY == 1);
-      wait(got_addr && (vif.S_BRESP == 2'b00));
+      wait(got_addr && vif.S_BVALID && vif.S_BREADY && (vif.S_BRESP == 2'b00));
       AW_waiting = 0;
       W_waiting = 0;
     end
 
-//      `uvm_info("DRV", $sformatf("Driving write data transaction complete"), UVM_LOW)
+   //  `uvm_info("DRV", $sformatf("Driving write data transaction complete"), UVM_LOW)
 
   endtask
     
@@ -87,7 +87,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
       AR_waiting = 0;
     end
 
-//     `uvm_info("DRV", $sformatf("Driving read addr transaction complete"), UVM_LOW)
+    //`uvm_info("DRV", $sformatf("Driving read addr transaction complete"), UVM_LOW)
 
   endtask 
     
