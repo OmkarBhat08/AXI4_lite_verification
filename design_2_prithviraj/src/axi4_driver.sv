@@ -191,14 +191,11 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
   
   //write response handshake
   task check_wrt_resp();
-    if(wrt_data_done && wrt_addr_done)
-      begin
         if(req.BREADY==1 && vif.drv_cb.BVALID==1)
           begin
             wrt_data_done=0;
-            wrt_addr_done=0;
+            wrt_addr_done=0;       
           end
-      end   
   endtask
 
 endclass
