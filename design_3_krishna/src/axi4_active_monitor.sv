@@ -70,15 +70,15 @@ class axi4_active_monitor extends uvm_monitor;
         
         `uvm_info("MON",$sformatf("[write addr channel] captured : AWADDR=%0h | AWVALID=%0b | AWREADY=%0b",out_item.AWADDR,out_item.AWVALID,out_item.AWREADY),UVM_LOW)
         
-        `uvm_info("MON",$sformatf("[write data channel] captured : WVALID=%0b | WSTRB=%0d | WDATA=%0d WREADY=%0b",out_item.WVALID,out_item.WSTRB,out_item.WDATA,out_item.WREADY),UVM_LOW)
+        `uvm_info("MON",$sformatf("[write data channel] captured : WVALID=%0b | WSTRB=%0d | WDATA=%0h | WREADY=%0b",out_item.WVALID,out_item.WSTRB,out_item.WDATA,out_item.WREADY),UVM_LOW)
         
         `uvm_info("MON",$sformatf("[write resp channel] captured : BRESP=%0b | BVALID=%0b | BREADY=%0b",out_item.BRESP,out_item.BVALID,out_item.BREADY),UVM_LOW)
         
         `uvm_info("MON",$sformatf("[read addr channel] captured : ARADDR=%0h | ARVALID=%0b | ARREADY=%0b",out_item.ARADDR,out_item.ARVALID,out_item.ARREADY),UVM_LOW)
         
-        `uvm_info("MON",$sformatf("[read data channel] captured : RVALID=%0b | RDATA=%0d | RRESP=%0b | RREADY = %0b ",out_item.RVALID,out_item.RDATA,out_item.RRESP,out_item.RREADY),UVM_LOW)
+        `uvm_info("MON",$sformatf("[read data channel] captured : RVALID=%0b | RDATA=%0h | RRESP=%0b | RREADY = %0b ",out_item.RVALID,out_item.RDATA,out_item.RRESP,out_item.RREADY),UVM_LOW)
         
-        `uvm_info("MON",$sformatf("[external signals] captured : EXT_IRQ_IN=%0b | LED=%0d | SEG_CATHODE=%0d | SEG_ANODE = %0d | IRQ_OUT = %0b ",out_item.EXT_IRQ_IN,out_item.LED,out_item.SEG_CATHODE,out_item.SEG_ANODE,out_item.IRQ_OUT),UVM_LOW)
+        `uvm_info("MON",$sformatf("[external signals] captured : EXT_IRQ_IN=%0b | LED=%0h | SEG_CATHODE=%0h | SEG_ANODE = %0h | IRQ_OUT = %0b ",out_item.EXT_IRQ_IN,out_item.LED,out_item.SEG_CATHODE,out_item.SEG_ANODE,out_item.IRQ_OUT),UVM_LOW)
         
         a_mon_port.write(out_item);
         
