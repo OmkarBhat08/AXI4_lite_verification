@@ -86,8 +86,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
       join
       
     join_any
-    `uvm_info("DRV",$sformatf("---------------------------------------------------------------------------------------"),UVM_LOW)
-
+@(vif.drv_cb);
   endtask
 
   //read address handshake
@@ -159,7 +158,6 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
           begin 
             wrt_data_wait=1;
             wait(vif.drv_cb.WREADY);
-            `uvm_info("WRT-DATA-DRV",$sformatf("[DRIVER-%0d] Slave asserted WREADY, Write data handshake done",i),UVM_LOW)
             wrt_data_done=1;
             wrt_data_wait=0;
             repeat(1) @(vif.drv_cb);
