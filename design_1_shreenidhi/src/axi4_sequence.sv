@@ -38,7 +38,8 @@ class axi4_valid_write_handshake_seq extends axi4_base_seq;
   endfunction
   
   task body();
-    `uvm_do_with(req,{req.S_AWADDR == 32'h0;req.S_AWVALID == 1;req.S_WDATA == 32'h10;req.S_WVALID == 1;req.S_WSTRB == 15;req.S_BREADY == 1;req.S_ARADDR == 32'h04;req.S_ARVALID == 0;req.S_RREADY == 0;})
+   `uvm_do_with(req,{req.S_AWADDR == 32'h0;req.S_AWVALID == 1;req.S_WDATA == 32'h10;req.S_WVALID == 1;req.S_WSTRB == 15;req.S_BREADY == 1;req.S_ARADDR == 32'h04;req.S_ARVALID == 0;req.S_RREADY == 0;})
+     `uvm_do_with(req,{req.S_AWADDR == 32'h100;req.S_AWVALID == 1;req.S_WDATA == 32'h10;req.S_WVALID == 1;req.S_WSTRB == 15;req.S_BREADY == 1;req.S_ARADDR == 32'h04;req.S_ARVALID == 0;req.S_RREADY == 0;})
     `uvm_do_with(req,{req.S_AWVALID == 0;req.S_WVALID == 0;req.S_BREADY == 0;req.S_ARADDR == 32'h0;req.S_ARVALID == 1;req.S_RREADY == 1;})
   endtask
 endclass
@@ -93,7 +94,7 @@ class axi4_BVALID_hold_seq extends axi4_base_seq;
   
   task body();
     `uvm_do_with(req,{req.S_AWADDR == 32'h0;req.S_AWVALID == 1;req.S_WVALID == 1;req.S_WSTRB == 15;req.S_BREADY == 0;req.S_ARADDR == 32'h04;req.S_ARVALID == 0;req.S_RREADY == 0;})//valid address || valid data but bready = 0 for more than one cycle
-    repeat(5)begin
+    repeat(10)begin
     `uvm_do_with(req,{req.S_AWVALID == 0;req.S_BREADY == 0;req.S_ARVALID == 0;req.S_RREADY == 0;})//holding BVALID =0
     end
     `uvm_do_with(req,{req.S_AWVALID == 0;req.S_BREADY == 1;req.S_ARVALID == 0;req.S_RREADY == 0;})//ready to accept the response
