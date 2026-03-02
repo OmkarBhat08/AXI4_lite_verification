@@ -233,7 +233,7 @@ end
       end
 
       32'h4: begin
-        expected = sevenseg_reg;
+        expected = sevenseg_reg[7:0];
         actual   = txn.SEVENSEG_OUT;
       end
 
