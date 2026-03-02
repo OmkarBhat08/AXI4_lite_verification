@@ -84,7 +84,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
         check_rd_addr(); 
       join
       
-    join_any
+    join
 @(vif.drv_cb);
   endtask
 
