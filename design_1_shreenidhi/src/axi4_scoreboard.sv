@@ -75,37 +75,34 @@ class axi4_scoreboard extends uvm_scoreboard;
     else begin
 
       
-      // WRITE ADDRESS
-     if(txn.S_AWVALID && txn.S_AWREADY) begin
+// WRITE ADDRESS
+if(txn.S_AWVALID && txn.S_AWREADY) begin
   wr_addr_q     = txn.S_AWADDR;
   wr_addr_valid = 1;
-   end
+end
 
-      // WRITE DATA
-  
-      if(txn.S_WVALID && txn.S_WREADY) begin
+// WRITE DATA
+if(txn.S_WVALID && txn.S_WREADY) begin
   wr_data_q     = txn.S_WDATA;
   wr_strb_q     = txn.S_WSTRB;
   wr_data_valid = 1;
-
-  if(wr_addr_valid) begin
-    update_model(wr_addr_q, wr_data_q, wr_strb_q);
-    check_write(txn);
-
-    wr_addr_valid = 0;
-    wr_data_valid = 0;
-  end
 end
 
-    
-      // WRITE COMPLETE
-     
+// WRITE rsp
 if(txn.S_BVALID && txn.S_BREADY) begin
+
   if(txn.S_BRESP != 2'b00) begin
     fail_count++;
     `uvm_error("WRITE_FAIL_BRESP",
       $sformatf("BRESP error: %0b", txn.S_BRESP));
   end
+  else if(wr_addr_valid && wr_data_valid) begin
+    update_model(wr_addr_q, wr_data_q, wr_strb_q);
+    check_write(txn);
+  end
+
+  wr_addr_valid = 0;
+  wr_data_valid = 0;
 end
 
     
@@ -308,7 +305,7 @@ end
       32'h0: expected = led_reg;
       32'h4: expected = sevenseg_reg;
       32'h8: expected = irq_status_reg;
-      default: expected = 0;
+      default: expected =32'hDEADBEEF;
     endcase
 
     if(rdata === expected) begin
