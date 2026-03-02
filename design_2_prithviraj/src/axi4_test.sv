@@ -216,6 +216,44 @@ endclass
 
 
 // -----------------------------------------------------------------
+class bvalid_hold_test extends axi4_base_test;
+  `uvm_component_utils(bvalid_hold_test)
+
+  bvalid_hold_seq seq;
+
+  function new(string name = "bvalid_hold_test", uvm_component parent = null);
+    super.new(name, parent);
+  endfunction
+
+  task run_phase(uvm_phase phase);
+
+    phase.raise_objection(this);
+    seq = bvalid_hold_seq::type_id::create("seq");
+    seq.start(env.act_agent.sqr_h);
+    phase.drop_objection(this);
+  endtask
+endclass
+
+// -----------------------------------------------------------------
+class rvalid_hold_test extends axi4_base_test;
+  `uvm_component_utils(rvalid_hold_test)
+
+  rvalid_hold_seq seq;
+
+  function new(string name = "rvalid_hold_test", uvm_component parent = null);
+    super.new(name, parent);
+  endfunction
+
+  task run_phase(uvm_phase phase);
+
+    phase.raise_objection(this);
+    seq = rvalid_hold_seq::type_id::create("seq");
+    seq.start(env.act_agent.sqr_h);
+    phase.drop_objection(this);
+  endtask
+endclass
+
+// -----------------------------------------------------------------
 class invalid_addr_test extends axi4_base_test;
   `uvm_component_utils(invalid_addr_test)
 
@@ -234,7 +272,7 @@ class invalid_addr_test extends axi4_base_test;
   endtask
 endclass
 
-// ----------------------------------------------------------------- irq_seq_2
+// ----------------------------------------------------------------- 
 class irq_test_1 extends axi4_base_test;
   `uvm_component_utils(irq_test_1)
 
