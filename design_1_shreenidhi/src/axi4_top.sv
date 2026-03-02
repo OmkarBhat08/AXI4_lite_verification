@@ -4,7 +4,7 @@ import uvm_pkg::*;
 `include "uvm_macros.svh"
 `include "axi4_package.sv"
 `include "axi4_interface.sv"
-`include "axi4_design.v"
+//`include "axi4_design.v"
 
 module top;
 
@@ -97,19 +97,20 @@ module top;
   // ---------------- Setting up config db ----------------
   initial begin
     uvm_config_db #(virtual inf)::set(null, "*", "vif", axi_if);
- // run_test("axi4_regression_test");
+  //run_test("axi4_regression_test");
 //     run_test("axi4_base_test");
 //     run_test("axi4_reset_test");
-   //run_test("axi4_valid_write_handshake_test");
-//     run_test("axi4_address_before_data_test");
-//       run_test("axi4_data_before_address_test");
-       run_test("axi4_invalid_address_read_test");
-//        run_test("axi4_BVALID_hold_test");
-//        run_test("axi4_back_to_back_write_test");
-//        run_test("axi4_multiple_outstanding_write_test");
-//        run_test("axi4_invalid_address_write_test");
+    run_test("axi4_valid_write_handshake_test");
+   //  run_test("axi4_address_before_data_test");
+//        run_test("axi4_data_before_address_test");
+     //run_test("axi4_response_check_test");
+ //   run_test("axi4_BVALID_hold_test");
+      //run_test("axi4_back_to_back_write_test");
+        //un_test("axi4_multiple_outstanding_write_test");
+//      run_test("axi4_invalid_address_write_test");
 //        run_test("axi4_unaligned_address_write_test");
     //      run_test("axi4_led_write_read_test");
+   // run_test("axi4_concurrent_write_read_test");
   end
 
 endmodule
