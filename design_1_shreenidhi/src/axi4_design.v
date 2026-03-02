@@ -151,26 +151,36 @@ module axi_ledseg_irq #(
                 W_DATA: begin
                     S_WREADY <= 1;
                     if (S_WVALID) begin
-                        case (write_addr_reg[5:2])
-                            4'h0: begin
+                        case (write_addr_reg)
+                            32'h0: begin
                                 if (S_WSTRB[0]) led_reg[7:0] <= S_WDATA[7:0]; 
                                 if (S_WSTRB[1]) led_reg[15:8] <= S_WDATA[15:8]; 
                                 if (S_WSTRB[2]) led_reg[23:16] <= S_WDATA[23:16]; 
                                 if (S_WSTRB[3]) led_reg[31:24] <= S_WDATA[31:24];
-                                LED_OUT <= S_WDATA[7:0];
+                               // LED_OUT <= S_WDATA[7:0];
                             end
-                            4'h1: begin
+                            32'h4: begin
                                 if (S_WSTRB[0]) sevenseg_reg[7:0] <= S_WDATA[7:0]; 
                                 if (S_WSTRB[1]) sevenseg_reg[15:8] <= S_WDATA[15:8]; 
                                 if (S_WSTRB[2]) sevenseg_reg[23:16] <= S_WDATA[23:16]; 
                                 if (S_WSTRB[3]) sevenseg_reg[31:24] <= S_WDATA[31:24];
-                                SEVENSEG_OUT <= S_WDATA[7:0];
+                                //SEVENSEG_OUT <= S_WDATA[7:0];
                             end
-                            4'h2: begin
+                            32'h8: begin
                                 if (S_WDATA[0])
-                                    irq_status_reg[0] <= 1'b0; // clearing IRQ when S_WDATA = 1
+                                    irq_status_reg[0] <= 1'b0; // clear IRQ
+                            end
+                            
+                            default : begin
+                                led_reg <= 0;
+                                sevenseg_reg <= 0;
+                                irq_status_reg <= 0;
+//                                LED_OUT <= 0;
+//                                SEVENSEG_OUT <= 0;
                             end
                         endcase
+                        LED_OUT <= led_reg[7:0];
+                        SEVENSEG_OUT <= sevenseg_reg[7:0];
                     end
                 end
 
@@ -196,10 +206,10 @@ module axi_ledseg_irq #(
                 R_DATA: begin
                     S_RVALID <= 1;
                     S_RRESP  <= 2'b00;
-                    case (read_addr_reg[5:2])
-                        4'h0: S_RDATA <= led_reg;
-                        4'h1: S_RDATA <= sevenseg_reg;
-                        4'h2: S_RDATA <= irq_status_reg;
+                    case (read_addr_reg)
+                        32'h0: S_RDATA <= led_reg;
+                        32'h4: S_RDATA <= sevenseg_reg;
+                        32'h8: S_RDATA <= irq_status_reg;
                         default: S_RDATA <= 32'hDEADBEEF;
                     endcase
                 end
@@ -208,7 +218,7 @@ module axi_ledseg_irq #(
             //  IRQ LOGIC 
             led_prev <= led_reg[7:0];
             if (led_reg[7:0] == 8'hFF && led_prev != 8'hFF)
-                irq_status_reg[0] <= 1'b1;                   // IRQ triggered when all LEDs are high (8'hFF)
+                irq_status_reg[0] <= 1'b1;
 
             IRQ_OUT <= irq_status_reg[0];
         end
