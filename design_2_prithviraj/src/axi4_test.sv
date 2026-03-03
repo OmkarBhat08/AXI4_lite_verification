@@ -291,7 +291,7 @@ class irq_test_1 extends axi4_base_test;
   endtask
 endclass
 
-// -----------------------------------------------------------------
+// ----------------------------------------------------------------- 
 class irq_test_2 extends axi4_base_test;
   `uvm_component_utils(irq_test_2)
 
@@ -305,6 +305,44 @@ class irq_test_2 extends axi4_base_test;
 
     phase.raise_objection(this);
     seq = irq_seq_2::type_id::create("seq");
+    seq.start(env.act_agent.sqr_h);
+    phase.drop_objection(this);
+  endtask
+endclass
+
+// ----------------------------------------------------------------- 
+class seven_seg_test extends axi4_base_test;
+  `uvm_component_utils(seven_seg_test)
+
+  seven_seg_seq seq;
+
+  function new(string name = "seven_seg_test", uvm_component parent = null);
+    super.new(name, parent);
+  endfunction
+
+  task run_phase(uvm_phase phase);
+
+    phase.raise_objection(this);
+    seq = seven_seg_seq::type_id::create("seq");
+    seq.start(env.act_agent.sqr_h);
+    phase.drop_objection(this);
+  endtask
+endclass
+
+// ----------------------------------------------------------------- 
+class regression_test extends axi4_base_test;
+  `uvm_component_utils(regression_test)
+
+  regression seq;
+
+  function new(string name = "seven_seg_test", uvm_component parent = null);
+    super.new(name, parent);
+  endfunction
+
+  task run_phase(uvm_phase phase);
+
+    phase.raise_objection(this);
+    seq = regression::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
   endtask
