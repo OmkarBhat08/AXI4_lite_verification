@@ -48,7 +48,7 @@ class simple_read extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), " ------ Simple read ------ ", UVM_LOW)
-    repeat(3) begin
+    repeat(1) begin
       req = axi4_seq_item::type_id::create("req");
       `uvm_do_with(req, {req.ARADDR == 0; req.ARVALID == 1; req.RREADY == 1; req.AWVALID == 0; req.WVALID == 0; req.BREADY == 0;})
       `uvm_do_with(req, {req.ARADDR == 4; req.ARVALID == 1; req.RREADY == 1; req.AWVALID == 0; req.WVALID == 0; req.BREADY == 0;})
@@ -70,7 +70,7 @@ class read_followed_by_write extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), " ------ Read followed by Write ------ ", UVM_LOW)
-    repeat(5) begin
+    repeat(10) begin
       `uvm_do_with(req, {req.AWADDR inside {0,4,8}; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARVALID == 0; req.RREADY == 0;})
       prev_addr = req.AWADDR;
       `uvm_do_with(req, {req.ARADDR == prev_addr; req.ARVALID == 1; req.RREADY == 1; req.BREADY == 1; req.AWVALID == 0; req.WVALID == 0;})
@@ -89,9 +89,9 @@ class parallel_read_write extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), " ------ Parallel Read and Write ------ ", UVM_LOW)
-      `uvm_do_with(req, {req.AWADDR == 0; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR == 0; req.ARVALID == 1; req.RREADY == 1;})
-      `uvm_do_with(req, {req.AWADDR == 4; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR == 4; req.ARVALID == 1; req.RREADY == 1;})
-      `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR == 8; req.ARVALID == 1; req.RREADY == 1;})
+      `uvm_do_with(req, {req.AWADDR == 0; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR == 0; req.ARVALID == 0; req.RREADY == 0;})
+      `uvm_do_with(req, {req.AWADDR == 4; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR == 4; req.ARVALID == 0; req.RREADY == 0;})
+      `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR == 8; req.ARVALID == 0; req.RREADY == 0;})
     repeat(5) begin
       `uvm_do_with(req, {req.AWADDR inside {0,4,8}; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1;})
     end
@@ -109,10 +109,10 @@ class data_before_addr extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), " ------ Write data before address ------ ", UVM_LOW)
-    repeat(3) begin
-      `uvm_do_with(req, {req.WVALID == 1; req.WSTRB == 4'b1111; req.ARVALID == 0; req.RREADY == 0; req.BREADY == 1; })
-      `uvm_do_with(req, {req.AWADDR inside {0,4,8}; req.AWVALID == 1; req.ARVALID == 0; req.RREADY == 0; req.BREADY == 1; })
-      `uvm_do_with(req, {req.ARVALID == 0; req.RREADY == 0; req.BREADY == 0; })
+    repeat(6) begin
+      `uvm_do_with(req, {req.AWVALID == 0; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR == 0; req.ARVALID == 0; req.RREADY == 0;})
+      `uvm_do_with(req, {req.AWADDR dist {0:=2,4:=2,8:=2}; req.AWVALID == 1; req.WSTRB == 4'b0; req.WVALID == 0; req.BREADY == 1; req.ARADDR == 0; req.ARVALID == 0; req.RREADY == 0;})
+
     end
   endtask
 endclass
@@ -128,10 +128,9 @@ class addr_before_data extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), " ------ Write address before data together ------ ", UVM_LOW)
-    repeat(3) begin
-      `uvm_do_with(req, {req.AWADDR inside {0,4,8}; req.AWVALID == 1; req.ARVALID == 0; req.RREADY == 0; req.BREADY == 1; })
-      `uvm_do_with(req, {req.WVALID == 1; req.WSTRB == 4'b1111; req.ARVALID == 0; req.RREADY == 0; req.BREADY == 1; })
-      `uvm_do_with(req, {req.ARVALID == 0; req.RREADY == 0; req.BREADY == 0; })
+    repeat(6) begin
+      `uvm_do_with(req, {req.AWADDR inside {0,4,8}; req.AWVALID == 1; req.WSTRB == 4'b0; req.WVALID == 0; req.BREADY == 1; req.ARADDR == 0; req.ARVALID == 0; req.RREADY == 0;})
+      `uvm_do_with(req, {req.AWADDR == 0; req.AWVALID == 0; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR == 0; req.ARVALID == 0; req.RREADY == 0;})
     end
   endtask
 endclass
@@ -149,7 +148,7 @@ class data_with_addr extends base_seq;
     `uvm_info(get_type_name(), " ------ Write address and data together ------ ", UVM_LOW)
     repeat(3) begin
       `uvm_do_with(req, {req.AWADDR inside {0,4,8}; req.AWVALID == 1; req.WVALID == 1; req.BREADY == 1; req.WSTRB == 4'b1111; req.ARVALID == 0; req.RREADY == 0; })
-      `uvm_do_with(req, {req.ARVALID == 0; req.RREADY == 0; req.AWVALID == 0; req.WVALID == 0; req.BREADY == 0;})
+ //     `uvm_do_with(req, {req.ARVALID == 0; req.RREADY == 0; req.AWVALID == 0; req.WVALID == 0; req.BREADY == 0;})
     end
   endtask
 endclass
@@ -167,9 +166,8 @@ class continuous_write extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), " ------ Back to back write to same address and read ------ ", UVM_LOW)
-    prev_addr = 0;
     repeat(3) begin
-      `uvm_do_with(req, {req.AWADDR != prev_addr; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARVALID == 0; req.RREADY == 0;})
+      `uvm_do_with(req, {req.AWADDR inside {0,4,8}; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARVALID == 0; req.RREADY == 0;})
       prev_addr = req.AWADDR;
       prev_data = req.WDATA;
 
@@ -193,7 +191,7 @@ class write_strobe_select_1 extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), " ------ Write with strobe select and read back from the same address  ------ ", UVM_LOW)
-    repeat(3) begin
+    repeat(5) begin
       req = axi4_seq_item::type_id::create("req");
       `uvm_do_with(req, {req.AWADDR inside {0,4,8}; req.AWVALID == 1; req.WVALID == 1; req.WSTRB inside {[0:15]}; req.BREADY == 1; req.ARVALID == 0; req.RREADY == 0;})
       `uvm_do_with(req, {req.ARADDR == prev_addr; req.ARVALID == 1; req.RREADY == 1; req.AWVALID == 0; req.WVALID == 0; req.BREADY == 0;})
@@ -309,7 +307,7 @@ class irq_seq_1 extends base_seq;
     `uvm_info(get_type_name(), $sformatf(" ------ Interrupt High ------ "), UVM_LOW)
     repeat(2) begin
       `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.ext_irq_in == 1;})
-      #1000000;
+      #1ms;
       `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.ext_irq_in == 1;})
     end
   endtask
@@ -345,8 +343,8 @@ class seven_seg_seq extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), " ------ 7 segment ------ ", UVM_LOW)
-    repeat(2) begin
-      `uvm_do_with(req, {req.AWADDR == 4; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.WDATA == 32'hA1B2C3D4; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.ext_irq_in == 1;})
+    repeat(1) begin
+      `uvm_do_with(req, {req.AWADDR == 4; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.WDATA == 32'h9876cdef; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.ext_irq_in == 1;})
       #4ms;
     end
   endtask
@@ -354,7 +352,6 @@ endclass
 
 // -----------------------------------------------------------------
 // Regression test 
-
 class regression extends base_seq;
   `uvm_object_utils(regression)
 

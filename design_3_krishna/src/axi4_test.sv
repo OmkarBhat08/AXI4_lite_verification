@@ -75,6 +75,7 @@ class read_followed_by_write_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = read_followed_by_write::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -113,6 +114,7 @@ class data_before_addr_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = data_before_addr::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -132,6 +134,7 @@ class addr_before_data_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = addr_before_data::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -151,6 +154,7 @@ class data_with_addr_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = data_with_addr::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -170,6 +174,7 @@ class continuous_write_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = continuous_write::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -189,6 +194,7 @@ class write_strobe_select_1_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = write_strobe_select_1::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -208,6 +214,7 @@ class write_strobe_select_2_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = write_strobe_select_2::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -228,6 +235,7 @@ class bvalid_hold_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = bvalid_hold_seq::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -247,6 +255,7 @@ class rvalid_hold_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = rvalid_hold_seq::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -266,6 +275,7 @@ class invalid_addr_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = invalid_addr::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
