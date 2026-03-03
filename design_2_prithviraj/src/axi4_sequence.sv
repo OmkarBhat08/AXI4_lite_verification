@@ -344,7 +344,7 @@ class seven_seg_seq extends base_seq;
   endfunction
 
   task body();
-    `uvm_info(get_type_name(), " ------ Interrupt High ------ ", UVM_LOW)
+    `uvm_info(get_type_name(), " ------ 7 segment ------ ", UVM_LOW)
     repeat(2) begin
       `uvm_do_with(req, {req.AWADDR == 4; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.WDATA == 32'hA1B2C3D4; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.ext_irq_in == 1;})
       #4ms;
