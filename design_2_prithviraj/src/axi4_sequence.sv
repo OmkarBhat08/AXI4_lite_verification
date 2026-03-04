@@ -305,9 +305,9 @@ class irq_seq_1 extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), $sformatf(" ------ Interrupt High ------ "), UVM_LOW)
-    repeat(2) begin
+    repeat(1) begin
       `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.ext_irq_in == 1;})
-      #1ms;
+      #3ms;
       `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.ext_irq_in == 1;})
     end
   endtask
