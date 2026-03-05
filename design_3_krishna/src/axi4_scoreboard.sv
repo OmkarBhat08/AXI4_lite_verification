@@ -28,13 +28,6 @@ class axi4_scoreboard extends uvm_scoreboard;
   bit [31:0] prev_RDATA;
   bit [1:0]  prev_RRESP;
 
-  int CLK_FREQ_HZ = 100_000_000;
-  int REFRESH_RATE_HZ = 1000;
-  int DEBOUNCE_MS = 20;
-
-  int COUNTER_MAX = (CLK_FREQ_HZ / (REFRESH_RATE_HZ * 4)) - 1;// 24999
-  int IRQ_COUNTER_MAX = (CLK_FREQ_HZ / 1000) * DEBOUNCE_MS - 1;// 1999999
-
   int seg_counter = 0;
   bit [1:0] seg_digit_sel = 2'b00;
   bit [3:0] exp_led = 4'h0;
@@ -78,7 +71,6 @@ class axi4_scoreboard extends uvm_scoreboard;
     reg_seg = 32'h0;
     reg_irq = 32'h0;
 
-    // Clear pipelines
     foreach(reg_led_arr[i]) reg_led_arr[i] = 32'h0;
     foreach(reg_seg_arr[i]) reg_seg_arr[i] = 32'h0;
     foreach(reg_irq_arr[i]) reg_irq_arr[i] = 32'h0;
@@ -180,7 +172,7 @@ class axi4_scoreboard extends uvm_scoreboard;
   function void update_peripheral_timers(axi4_seq_item txn);
     exp_led = reg_led_arr[4][3:0];
 
-    if(seg_counter == COUNTER_MAX) begin
+    if(seg_counter == `COUNTER_MAX) begin
       seg_counter = 0;
       seg_digit_sel = seg_digit_sel + 2'b01;
     end
@@ -194,7 +186,7 @@ class axi4_scoreboard extends uvm_scoreboard;
       debounce_counter = 0;
     end
     else begin
-      if(debounce_counter == IRQ_COUNTER_MAX) begin
+      if(debounce_counter == `IRQ_COUNTER_MAX) begin
         ext_irq_stable = ext_irq_sync[1];
         debounce_counter = 0;
       end
