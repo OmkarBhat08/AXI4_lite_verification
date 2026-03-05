@@ -121,7 +121,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
       begin
         wait(vif.drv_cb.RVALID);
         rd_addr_done=0;
-        vif.drv_cb.RVALID<=0;
+        vif.drv_cb.RREADY<=0;
         @(vif.drv_cb);
       end
   endtask
