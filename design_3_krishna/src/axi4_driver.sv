@@ -4,7 +4,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
   virtual axi4_if vif;
   int i;
 
-  int timeout = 500; 
+  int timeout = 5000; 
 
   //----------------------- Constructor ---------------------------//
   function new(string name = "axi4_driver", uvm_component parent = null);

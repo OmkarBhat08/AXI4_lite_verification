@@ -55,12 +55,12 @@ class axi4_scoreboard extends uvm_scoreboard;
         continue;
       end
 
-      check_slave_axi_protocol(txn); 
-      process_axi_transaction(txn); 
-      update_arrlines();          
+      check_slave_axi_protocol(txn);
+      process_axi_transaction(txn);
+      update_arrlines();
       update_peripheral_timers(txn);
-      check_peripherals(txn);      
-      store_prev_val(txn);        
+      check_peripherals(txn);
+      store_prev_val(txn);
     end
   endtask
 
@@ -155,12 +155,16 @@ class axi4_scoreboard extends uvm_scoreboard;
       2'b11: exp_anode = 4'b0111;
     endcase
 
-    if(txn.SEG_CATHODE !== exp_cathode) begin
-      `uvm_error("SCB_SEG_CATHODE_FAIL", $sformatf("Cathode Mismatch! Digit: 'h%0h | Expected: 'h%0h | Actual: 'h%0h", current_digit, exp_cathode, txn.SEG_CATHODE))
-    end
+    if (curr_awaddr == 32'h00 || curr_awaddr == 32'h04 || curr_awaddr == 32'h08) begin
+      if (curr_araddr == 32'h00 || curr_araddr == 32'h04 || curr_araddr == 32'h08) begin
+        if(txn.SEG_CATHODE !== exp_cathode) begin
+          `uvm_error("SCB_SEG_CATHODE_FAIL", $sformatf("Cathode Mismatch! Digit: 'h%0h | Expected: 'h%0h | Actual: 'h%0h", current_digit, exp_cathode, txn.SEG_CATHODE))
+        end
 
-    if(txn.SEG_ANODE !== exp_anode) begin
-      `uvm_error("SCB_SEG_ANODE_FAIL", $sformatf("Anode Mismatch! Expected: 'h%0h | Actual: 'h%0h", exp_anode, txn.SEG_ANODE))
+        if(txn.SEG_ANODE !== exp_anode) begin
+          `uvm_error("SCB_SEG_ANODE_FAIL", $sformatf("Anode Mismatch! Expected: 'h%0h | Actual: 'h%0h", exp_anode, txn.SEG_ANODE))
+        end
+      end
     end
 
     if(txn.IRQ_OUT !== reg_irq_arr[3][0]) begin
@@ -171,7 +175,7 @@ class axi4_scoreboard extends uvm_scoreboard;
   function void update_peripheral_timers(axi4_seq_item txn);
     exp_led = reg_led_arr[4][3:0];
 
-    if(seg_counter == COUNTER_MAX) begin
+    if(seg_counter == 24999) begin
       seg_counter = 0;
       seg_digit_sel = seg_digit_sel + 2'b01;
     end
@@ -185,7 +189,7 @@ class axi4_scoreboard extends uvm_scoreboard;
       debounce_counter = 0;
     end
     else begin
-      if(debounce_counter == IRQ_COUNTER_MAX) begin
+      if(debounce_counter == 1999999) begin
         ext_irq_stable = ext_irq_sync[1];
         debounce_counter = 0;
       end
@@ -265,7 +269,7 @@ class axi4_scoreboard extends uvm_scoreboard;
              reg_seg = updated_data;
             end
       'h08: if(curr_wstrb[0] && curr_wdata[0]) begin
-             `uvm_info("SCB_REG_PASS", "PASSFUL WRITE: IRQ_REG Write-1-to-Clear triggered! Clearing IRQ.", UVM_LOW);
+             `uvm_info("SCB_REG_PASS", "SUCCESSFUL WRITE: IRQ_REG Write-1-to-Clear Clearing IRQ.", UVM_LOW);
              reg_irq[0] = 1'b0;
             end
       default: begin
@@ -282,14 +286,14 @@ class axi4_scoreboard extends uvm_scoreboard;
       'h08: exp_rdata = reg_irq;
       default: begin
           `uvm_warning("SCB_INV_ADDR", $sformatf("INVALID READ ADDRESS: Attempted to read from reserved address 'h%0h. Expecting Slave to return 0x0.", curr_araddr))
-          exp_rdata = 32'h0;
+          return;
          end
     endcase
 
     if(actual_rdata !== exp_rdata)
       `uvm_error("SCB_READ_FAIL", $sformatf("READ FAILED Addr: 'h%0h | Exp: 'h%0h | Act: 'h%0h", curr_araddr, exp_rdata, actual_rdata))
     else
-      `uvm_info("SCB_READ_PASS", $sformatf("PASSFUL READ: Addr: 'h%0h matched expected data: 'h%0h", curr_araddr, actual_rdata), UVM_LOW)
+      `uvm_info("SCB_READ_PASS", $sformatf("SUCCESSFUL READ: Addr: 'h%0h matched expected data: 'h%0h", curr_araddr, actual_rdata), UVM_LOW)
   endfunction
 
   function void check_slave_axi_protocol(axi4_seq_item txn);

@@ -1,5 +1,5 @@
 `timescale 1ns / 1ns
-`include "define.sv"
+//`include "define.sv"
 
 interface axi4_if (input bit ACLK,input bit ARESETn);
 
