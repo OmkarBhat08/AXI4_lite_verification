@@ -14,3 +14,4 @@
 # Ignore 'transcript' files or directories anywhere
 **/transcript
 *.ucdb
+**/vsim.wlf

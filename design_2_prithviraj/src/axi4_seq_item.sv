@@ -1,6 +1,6 @@
 class axi4_seq_item extends uvm_sequence_item;
   // ================= GLOBAL SIGNALS =================
-	logic ARESETn;
+	bit ARESETn;
 
   // ================= WRITE ADDRESS =================
   rand bit [`ADDR_WIDTH-1:0]            AWADDR;

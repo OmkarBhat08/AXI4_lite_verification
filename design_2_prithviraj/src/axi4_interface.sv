@@ -71,6 +71,8 @@ interface axi4_if (input bit ACLK,input bit ARESETn);
     
     default input #0 output #0;
 
+		input ARESETn;
+
     input AWADDR, AWPROT, AWVALID, AWREADY;
     input WDATA, WSTRB, WVALID, WREADY;
     input BRESP, BVALID, BREADY;

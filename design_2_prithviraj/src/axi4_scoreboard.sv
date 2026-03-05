@@ -10,12 +10,14 @@ class axi4_scoreboard extends uvm_scoreboard;
   bit [3:0] wstrb;
   int index;
   bit [(`DATA_WIDTH)-1:0] temp_data, mask, masked_data;
+	int write_pass_count, write_fail_count, read_pass_count, read_fail_count, led_fail_count, seg_anode_fail_count, seg_cathode_fail_count, irq_out_fail_count;
 
   // Register bank
-  bit [(`DATA_WIDTH)-1:0] mem [0:(2**`ADDR_WIDTH)-1];
+  bit [(`DATA_WIDTH)-1:0] mem [0:25];
 
   // For 7 segment driver
   bit [(`DATA_WIDTH)-1:0] segment_data;
+	bit [6:0] temp_seg_cathode;
   longint segment_counter;
 
   // For LED driver
@@ -52,6 +54,7 @@ class axi4_scoreboard extends uvm_scoreboard;
       if(irq_counter == 1_00_001)
           mem[12] = 1;
 
+    	`uvm_info(get_type_name(), $sformatf("\n--------------------------------------------Scoreboard @ %0t---------------------------------------------", $time), UVM_MEDIUM)
       fork
         write_operation(monitor_txn);
         read_operation(monitor_txn);
@@ -64,13 +67,13 @@ class axi4_scoreboard extends uvm_scoreboard;
 
   //------------------- Write Operation ------------------//
   task write_operation(axi4_seq_item monitor_txn);
-    `uvm_info(get_type_name(), $sformatf("--------------------Scoreboard @ %0t-----------------------------", $time), UVM_MEDIUM)
-    if(monitor_txn.ARESETn)
+    if(!monitor_txn.ARESETn)
     begin
       `uvm_info("All Write Channels","Reset Applied", UVM_MEDIUM)
       write_states = 0;
       read_states = 0;
       exp_txn = new();
+      `uvm_info("SCOREBOARD", "SCOREBOARD in reset", UVM_MEDIUM)
     end
     else
     begin
@@ -162,14 +165,20 @@ class axi4_scoreboard extends uvm_scoreboard;
           begin
             `uvm_info("B Channel", $sformatf("Received BRESP = %b when BVALID = %b and BREADY = %b", monitor_txn.BRESP, monitor_txn.BVALID, monitor_txn.BREADY), UVM_MEDIUM)
 						if(monitor_txn.BRESP === 0)
+						begin
       				`uvm_info("CHECKER", $sformatf("CHECKER PASSED : BRESP\n Expected: 0 \n Received: %0d", monitor_txn.BRESP), UVM_MEDIUM)
+							write_pass_count++;
+						end
     				else
+						begin
       				`uvm_error("CHECKER", $sformatf("CHECKER FAILED : BRESP\n Expected: 0 \n Received: %0d", monitor_txn.BRESP))
+							write_fail_count++;
+						end
 
             write_states = 0;
 						write_done = 1;
             `uvm_info("B Channel", "Write handshake completed", UVM_MEDIUM)
-            `uvm_info("get_type_name()", "SUCCESSFULLY WRITTEN INTO THE REGISTER BANK", UVM_MEDIUM)
+            `uvm_info(get_type_name(), "SUCCESSFULLY WRITTEN INTO THE REGISTER BANK", UVM_MEDIUM)
           end
         end
       end
@@ -178,11 +187,11 @@ class axi4_scoreboard extends uvm_scoreboard;
 
   //------------------- Read Operation ------------------//
   task read_operation(axi4_seq_item monitor_txn);
-    `uvm_info(get_type_name(), $sformatf("--------------------Scoreboard @ %0t-----------------------------", $time), UVM_MEDIUM)
-    if(monitor_txn.ARESETn)
+    if(!monitor_txn.ARESETn)
     begin
       read_states = 0;
       exp_txn = new();
+      `uvm_info("SCOREBOARD", "SCOREBOARD in reset", UVM_MEDIUM)
     end
     else
     begin
@@ -217,9 +226,9 @@ class axi4_scoreboard extends uvm_scoreboard;
             $display("RRESP \t %0h", monitor_txn.RRESP);
 
     				if(monitor_txn.RDATA === exp_txn.RDATA)
-      				`uvm_info("CHECKER", $sformatf("CHECKER PASSED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA), UVM_MEDIUM)
+      				`uvm_info("CHECKER", $sformatf("CHECKER PASSED : RDATA\n Expected: %0h \n Received: %0h",exp_txn.RDATA, monitor_txn.RDATA), UVM_MEDIUM)
     				else
-      				`uvm_error("CHECKER", $sformatf("CHECKER FAILED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA))
+      				`uvm_error("CHECKER", $sformatf("CHECKER FAILED : RDATA\n Expected: %0h \n Received: %0h",exp_txn.RDATA, monitor_txn.RDATA))
 
     				if(monitor_txn.RRESP === 0)
       				`uvm_info("CHECKER", $sformatf("CHECKER PASSED : RRESP\n Expected: 0 \n Received: %0d", monitor_txn.RRESP), UVM_MEDIUM)
@@ -227,9 +236,15 @@ class axi4_scoreboard extends uvm_scoreboard;
       				`uvm_error("CHECKER", $sformatf("CHECKER FAILED : RRESP\n Expected: 0 \n Received: %0d", monitor_txn.RRESP))
 
 						if((exp_txn.RDATA === monitor_txn.RDATA) && (monitor_txn.RRESP == 0))
+						begin
 							$display("Read transaction PASSED");
+							read_pass_count++;
+						end
 						else
+						begin
 							$display("Read transaction FAILED");
+							read_fail_count++;
+						end
           end
         end
       end
@@ -238,30 +253,42 @@ class axi4_scoreboard extends uvm_scoreboard;
 
   //------------------- Seven Segment driver ------------------//
   task seven_segment_driver();
+		$display("segment_counter: %0d", segment_counter);
     segment_data = mem[4];
-    if(segment_counter < 25000) // Digit 1
+		if(!monitor_txn.ARESETn || segment_counter==0)
+		begin
+      exp_txn.seg_cathode = decode_7_segment(0);
+			temp_seg_cathode = decode_7_segment(segment_data[3:0]);
+      exp_txn.seg_anode = 4'b1110;
+		end	
+		else if(segment_counter < 25000) // Digit 1
     begin
-      exp_txn.seg_cathode = decode_7_segment(segment_data[3:0]);
+      exp_txn.seg_cathode = temp_seg_cathode;
+			temp_seg_cathode = decode_7_segment(segment_data[3:0]);
       exp_txn.seg_anode = 4'b1110;
     end
     else if((segment_counter > 25000) && (segment_counter < 50000)) // Digit 2
     begin
-      exp_txn.seg_cathode = decode_7_segment(segment_data[7:4]);
+      exp_txn.seg_cathode = temp_seg_cathode;
+      temp_seg_cathode = decode_7_segment(segment_data[7:4]);
       exp_txn.seg_anode = 4'b1101;
     end
     else if((segment_counter > 50000) && (segment_counter < 75000)) // Digit 3
     begin
-      exp_txn.seg_cathode = decode_7_segment(segment_data[11:8]);
+      exp_txn.seg_cathode = temp_seg_cathode;
+      temp_seg_cathode = decode_7_segment(segment_data[11:8]);
       exp_txn.seg_anode = 4'b1011;
     end
     else if(segment_counter > 75000)  // Digit 4
     begin
-      exp_txn.seg_cathode = decode_7_segment(segment_data[15:12]);
+      exp_txn.seg_cathode = temp_seg_cathode;
+      temp_seg_cathode = decode_7_segment(segment_data[15:12]);
       exp_txn.seg_anode = 4'b0111;
     end
     else  // ALl off
     begin
-      exp_txn.seg_cathode =  7'hFF;
+      exp_txn.seg_cathode = temp_seg_cathode;
+      temp_seg_cathode =  7'hFF;
       exp_txn.seg_anode = 4'b1111;
     end
     segment_counter++;
@@ -270,23 +297,23 @@ class axi4_scoreboard extends uvm_scoreboard;
   //------------------- 7 segment decoder------------------//
   function bit [6:0] decode_7_segment(bit[3:0] val);
     case (val)
-        4'h0: return(7'b1000000);  // 0
-        4'h1: return(7'b1111001);  // 1
-        4'h2: return(7'b0100100);  // 2
-        4'h3: return(7'b0110000);  // 3
-        4'h4: return(7'b0011001);  // 4
-        4'h5: return(7'b0010010);  // 5
-        4'h6: return(7'b0000010);  // 6
-        4'h7: return(7'b1111000);  // 7
-        4'h8: return(7'b0000000);  // 8
-        4'h9: return(7'b0010000);  // 9
-        4'hA: return(7'b0001000);  // A
-        4'hB: return(7'b0000011);  // B
-        4'hC: return(7'b1000110);  // C
-        4'hD: return(7'b0100001);  // D
-        4'hE: return(7'b0000110);  // E
-        4'hF: return(7'b0001110);  // F
-        default: return(7'b1111111);  // All off
+        4'h0: return(7'b1000000);  // 0  hex  40
+        4'h1: return(7'b1111001);  // 1  hex  79
+        4'h2: return(7'b0100100);  // 2  hex  24 
+        4'h3: return(7'b0110000);  // 3  hex  30
+        4'h4: return(7'b0011001);  // 4  hex  19
+        4'h5: return(7'b0010010);  // 5  hex  12
+        4'h6: return(7'b0000010);  // 6  hex  2
+        4'h7: return(7'b1111000);  // 7  hex  78
+        4'h8: return(7'b0000000);  // 8  hex  0
+        4'h9: return(7'b0010000);  // 9  hex  10
+        4'hA: return(7'b0001000);  // A  hex  8 
+        4'hB: return(7'b0000011);  // B  hex  3
+        4'hC: return(7'b1000110);  // C  hex  46 
+        4'hD: return(7'b0100001);  // D  hex  21
+        4'hE: return(7'b0000110);  // E  hex  6
+        4'hF: return(7'b0001110);  // F  hex  e
+        default: return(7'b1111111);  // hex  7F
     endcase
   endfunction : decode_7_segment
   //------------------- LED driver ------------------//
@@ -297,27 +324,52 @@ class axi4_scoreboard extends uvm_scoreboard;
 
   //------------------- checker ------------------//
   task transaction_checker();
+			$display("ARESETn:  %b", monitor_txn.ARESETn);
+			$display("Expected ARADDR:  %0h", exp_txn.ARADDR);
+		
+		foreach(mem[i])
+			$display("Address:  %0h |  Data: %0h", i, mem[i]);
+
     `uvm_info(get_type_name(), $sformatf("--------------------CHECKER Scoreboard @ %0t-----------------------------", $time), UVM_MEDIUM)
 
     if(exp_txn.leds !== monitor_txn.leds)
+		begin
       `uvm_error("CHECKER", $sformatf("CHECKER FAILED : leds\n Expected: %b \n Received: %b",exp_txn.leds, monitor_txn.leds))
+			led_fail_count++;
+		end
     else
       `uvm_info("CHECKER", $sformatf("CHECKER PASSED : leds\n Expected: %b \n Received: %b",exp_txn.leds, monitor_txn.leds), UVM_MEDIUM)
 
     if(exp_txn.seg_cathode !== monitor_txn.seg_cathode)
-      `uvm_error("CHECKER", $sformatf("CHECKER FAILED : seg_cathode\n Expected: %b \n Received: %b",exp_txn.seg_cathode, monitor_txn.seg_cathode))
+		begin
+      `uvm_error("CHECKER", $sformatf("CHECKER FAILED : seg_cathode\n Expected: %0h \n Received: %0h",exp_txn.seg_cathode, monitor_txn.seg_cathode))
+			seg_cathode_fail_count++;
+		end
     else
-      `uvm_info("CHECKER", $sformatf("CHECKER PASSED : seg_cathode\n Expected: %b \n Received: %b",exp_txn.seg_cathode, monitor_txn.seg_cathode), UVM_MEDIUM)
+      `uvm_info("CHECKER", $sformatf("CHECKER PASSED : seg_cathode\n Expected: %0h \n Received: %0h",exp_txn.seg_cathode, monitor_txn.seg_cathode), UVM_MEDIUM)
 
     if(exp_txn.seg_anode !== monitor_txn.seg_anode)
-      `uvm_error("CHECKER", $sformatf("CHECKER FAILED : seg_anode\n Expected: %b \n Received: %b",exp_txn.seg_anode, monitor_txn.seg_anode))
+		begin
+      `uvm_error("CHECKER", $sformatf("CHECKER FAILED : seg_anode\n Expected: %0h \n Received: %0h",exp_txn.seg_anode, monitor_txn.seg_anode))
+			seg_anode_fail_count++;
+		end
     else
-      `uvm_info("CHECKER", $sformatf("CHECKER PASSED : seg_anode\n Expected: %b \n Received: %b",exp_txn.seg_anode, monitor_txn.seg_anode), UVM_MEDIUM)
+      `uvm_info("CHECKER", $sformatf("CHECKER PASSED : seg_anode\n Expected: %0h \n Received: %0h",exp_txn.seg_anode, monitor_txn.seg_anode), UVM_MEDIUM)
 
     if(exp_txn.irq_out !== monitor_txn.irq_out)
+		begin
       `uvm_error("CHECKER", $sformatf("CHECKER FAILED : irq_out\n Expected: %b \n Received: %b",exp_txn.irq_out, monitor_txn.irq_out))
+			irq_out_fail_count++;
+		end
     else
       `uvm_info("CHECKER", $sformatf("CHECKER PASSED : irq_out\n Expected: %b \n Received: %b",exp_txn.irq_out, monitor_txn.irq_out), UVM_MEDIUM)
+
+		$display("TOTAL WRITE TESTS: %0d | Passed: %0d | Failed: %0d", write_pass_count+write_fail_count, write_pass_count, write_fail_count);
+		$display("TOTAL READ TESTS: %0d | Passed: %0d | Failed: %0d", read_pass_count+read_fail_count, read_pass_count, read_fail_count);
+		$display("LED failure count: %0d", led_fail_count);
+		$display("seg_cathode failure count: %0d", seg_cathode_fail_count);
+		$display("seg_anode failure count: %0d", seg_anode_fail_count);
+		$display("irq_out failure count: %0d", irq_out_fail_count);
 		$display("#########################################################################################################################################################################");
   endtask : transaction_checker
 
