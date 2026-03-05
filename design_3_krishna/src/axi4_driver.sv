@@ -1,191 +1,138 @@
 class axi4_driver extends uvm_driver #(axi4_seq_item);
-
   `uvm_component_utils(axi4_driver)
 
-  virtual axi4_if.DRV vif;
+  virtual axi4_if vif;
+  int i;
 
-  static int i;
-  static bit rd_addr_done;
-  static bit wrt_data_done, wrt_addr_done;
+  int timeout = 500; 
 
-  //-----------------------new constructor---------------------------//
+  //----------------------- Constructor ---------------------------//
   function new(string name = "axi4_driver", uvm_component parent = null);
     super.new(name, parent);
-
     i = 0;
-
-    rd_addr_done   = 0;
-    
-    wrt_data_done  = 0;
-    wrt_addr_done  = 0;
-
   endfunction
 
-
-  //---------------------build phase------------------------------//
+  //--------------------- Build Phase ------------------------------//
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-
-    if (!(uvm_config_db #(virtual axi4_if)::get(this, "", "vif", vif)))
-    begin
+    if (!(uvm_config_db #(virtual axi4_if)::get(this, "", "vif", vif))) begin
       `uvm_fatal("DRIVER", "NO VIRTUAL INTERFACE IN DRIVER")
     end
-
   endfunction
 
-
-  //---------------------run phase-----------------------------//
+  //--------------------- Run Phase -----------------------------//
   task run_phase(uvm_phase phase);
+    vif.drv_cb.AWVALID <= 0;
+    vif.drv_cb.WVALID  <= 0;
+    vif.drv_cb.BREADY  <= 0;
+    vif.drv_cb.ARVALID <= 0;
+    vif.drv_cb.RREADY  <= 0;
 
+    wait(vif.ARESETn === 1'b1); 
     repeat (3) @(vif.drv_cb);
-
-    forever 
-      begin
-        seq_item_port.get_next_item(req);
-        drive();
-        seq_item_port.item_done();
-        i++;
+    
+    forever begin
+      seq_item_port.get_next_item(req);
+      drive();
+      @(vif.drv_cb);
+      seq_item_port.item_done();
+      i++;
     end
-
   endtask
 
-
-  //----------------------task drive-------------------------//
   task drive();
+    `uvm_info("DRV",$sformatf("------------------------------DRIVER - %0d Driving-----------------------",i),UVM_LOW)
     
-    //----write address channel------//
-    vif.drv_cb.AWADDR<=req.AWADDR;
-    vif.drv_cb.AWVALID<=req.AWVALID;
-    
-    //----write data channel-------//
-    vif.drv_cb.WDATA<=req.WDATA;
-    vif.drv_cb.WSTRB<=req.WSTRB;
-    vif.drv_cb.WVALID<=req.WVALID;
-   
-    //----write response channel---//
-    vif.drv_cb.BREADY<=req.BREADY;
-    
-    //----read address channel----//
-    vif.drv_cb.ARADDR<=req.ARADDR;
-    vif.drv_cb.ARVALID<=req.ARVALID;
-    
-    //-----read data channel---//
-    vif.drv_cb.RREADY<=req.RREADY;
-    
-    //---interuppt input------//
-    vif.drv_cb.EXT_IRQ_IN<=req.EXT_IRQ_IN;
-    
-    `uvm_info("DRV",$sformatf("--------------------------DRIVER - %0d Driving-------------------",i),UVM_LOW)
-    
-    `uvm_info("DRV",$sformatf("Write address channel : AWADDR = 0x%0h | AWVALID = %0b ",req.AWADDR, req.AWVALID),UVM_LOW)
-    `uvm_info("DRV",$sformatf("Write data channel : WDATA = 0x%0h | WSTRB = 0x%0d | WVALID = %0b",req.WDATA, req.WSTRB, req.WVALID),UVM_LOW)
-    `uvm_info("DRV",$sformatf("Write response channel : BREADY = %0b", req.BREADY),UVM_LOW)
-    `uvm_info("DRV",$sformatf("Read address channel :ARADDR = 0x%0h, ARVALID = %0b",req.ARADDR, req.ARVALID),UVM_LOW)
-    `uvm_info("DRV",$sformatf("Read data channel : RREADY = %0b", req.RREADY),UVM_LOW)
-    `uvm_info("DRV",$sformatf("Extra irq input : EXT_IRQ_IN = %0b", req.EXT_IRQ_IN),UVM_LOW)
-    
-    `uvm_info("DRV",$sformatf("-------------------------------------------------------------------"),UVM_LOW)
-    
+    vif.drv_cb.EXT_IRQ_IN <= req.EXT_IRQ_IN;
+
     fork
-      // write
-      check_wrt_addr(); 
-      check_wrt_data(); 
-      check_wrt_resp(); 
-      // read
-      check_rd_addr(); 
+      if (req.AWVALID) check_wrt_addr(req);
+      if (req.WVALID)  check_wrt_data(req);
+      if (req.AWVALID || req.WVALID) check_wrt_resp(req);
+      
+      if (req.ARVALID) check_rd_addr(req);
+      if (req.ARVALID) check_rd_data(req);
     join
     
+    `uvm_info("DRV",$sformatf("-------------------------------------------------------------------------------------"),UVM_LOW)
   endtask
 
-  //read address handshake
-  task check_rd_addr();
-    if (rd_addr_done == 0) 
-      begin 
-
-        if(req.ARVALID == 1) 
-          begin
-            
-            wait(vif.drv_cb.ARREADY);
-            rd_addr_done=1;
-            
-            repeat(1) @(vif.drv_cb);
-            vif.drv_cb.ARVALID<=0;
-            check_rd_data();
-        end
-    end
-    else 
-      begin
-        check_rd_data();
-      end
-
-  endtask
-
-  // read data handshake
-  task check_rd_data();
-    if (req.RREADY == 1) 
-      begin
-        wait(vif.drv_cb.RVALID);
-        rd_addr_done=0;
-      end
+  task check_wrt_addr(axi4_seq_item req);
+    int timer = 0;
+    `uvm_info("DRV", $sformatf("Write Addr Ch : AWADDR = 0x%0h | AWVALID = 1", req.AWADDR), UVM_HIGH)
+    vif.drv_cb.AWADDR  <= req.AWADDR;
+    vif.drv_cb.AWVALID <= 1'b1;
+    
+    do begin
+      @(vif.drv_cb);
+      timer++;
+      if (timer > timeout) `uvm_fatal("DRV","Slave never asserted AWREADY")
+    end while (!vif.drv_cb.AWREADY);
+    
+    vif.drv_cb.AWVALID <= 1'b0;
   endtask
   
-  //write address handshake
-  task check_wrt_addr();
+  // Write Data Handshake
+  task check_wrt_data(axi4_seq_item req);
+    int timer = 0;
+    `uvm_info("DRV", $sformatf("Write Data Ch : WDATA = 0x%0h | WSTRB = 0x%0h | WVALID = 1", req.WDATA, req.WSTRB), UVM_HIGH)
+    vif.drv_cb.WDATA  <= req.WDATA;
+    vif.drv_cb.WSTRB  <= req.WSTRB;
+    vif.drv_cb.WVALID <= 1'b1;
 
-    if(wrt_addr_done==0)
-      begin
-        if(req.AWVALID==1)
-          begin
-            wait(vif.drv_cb.AWREADY);
-            wrt_addr_done=1;
-            
-            fork
-              if(wrt_data_done && wrt_addr_done)
-                check_wrt_resp();
-            
-              @(vif.drv_cb)
-              begin
-                vif.drv_cb.AWVALID<=0;
-              end
-              
-            join
-            
-          end
-      end
+    do begin
+      @(vif.drv_cb);
+      timer++;
+      if (timer > timeout) `uvm_fatal("DRV", "Slave never asserted WREADY")
+    end while (!vif.drv_cb.WREADY);
+    
+    vif.drv_cb.WVALID <= 1'b0;
   endtask
   
-  //write data handshake
-  task check_wrt_data();
-    if(wrt_data_done==0)
-      begin
-        if(req.WVALID==1)
-          begin 
-            wait(vif.drv_cb.WREADY);
-            wrt_data_done=1;
-            
-            fork 
-              if(wrt_data_done && wrt_addr_done)
-                check_wrt_resp();
-              
-              @(vif.drv_cb)
-              begin
-                vif.drv_cb.WVALID<=0;
-              end
-            join
-            
-          end
-      end
-         
-  endtask
-        
-  //write response handshake
-  task check_wrt_resp();
-        if(req.BREADY==1 && vif.drv_cb.BVALID==1)
-          begin
-            wrt_data_done=0;
-            wrt_addr_done=0;       
-          end
+  // Write Response Handshake
+  task check_wrt_resp(axi4_seq_item req);
+    int timer = 0;
+    `uvm_info("DRV", $sformatf("Write Resp Ch : BREADY = 1"), UVM_HIGH)
+    vif.drv_cb.BREADY <= req.BREADY; 
+    
+    do begin
+      @(vif.drv_cb);
+      timer++;
+      if (timer > timeout) `uvm_fatal("DRV", "Slave never asserted BVALID")
+    end while (!vif.drv_cb.BVALID); 
+    
+    vif.drv_cb.BREADY <= 1'b0;
   endtask
 
+  // Read Address Handshake
+  task check_rd_addr(axi4_seq_item req);
+    int timer = 0;
+    `uvm_info("DRV", $sformatf("Read Addr Ch  : ARADDR = 0x%0h | ARVALID = 1", req.ARADDR), UVM_HIGH)
+    vif.drv_cb.ARADDR  <= req.ARADDR;
+    vif.drv_cb.ARVALID <= 1'b1;
+    
+    do begin
+      @(vif.drv_cb);
+      timer++;
+      if (timer > timeout) `uvm_fatal("DRV", "Slave never asserted ARREADY")
+    end while (!vif.drv_cb.ARREADY);
+    
+    vif.drv_cb.ARVALID <= 1'b0;
+  endtask
+
+  // Read Data Handshake
+  task check_rd_data(axi4_seq_item req);
+    int timer = 0;
+    `uvm_info("DRV", $sformatf("Read Data Ch  : RREADY = 1"), UVM_HIGH)
+    vif.drv_cb.RREADY <= req.RREADY; 
+    
+    do begin
+      @(vif.drv_cb);
+      timer++;
+      if (timer > timeout) `uvm_fatal("DRV", "Slave never asserted RVALID")
+    end while (!vif.drv_cb.RVALID);
+    
+    vif.drv_cb.RREADY <= 1'b0;
+  endtask
+  
 endclass
-

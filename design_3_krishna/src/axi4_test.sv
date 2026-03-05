@@ -8,6 +8,11 @@ class axi4_base_test extends uvm_test;
     super.new(name, parent);
   endfunction
 
+  function void start_of_simulation_phase(uvm_phase phase);
+    axi4_report_server custom_server = new();
+    uvm_report_server::set_server(custom_server);
+  endfunction
+
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     env = axi4_environment::type_id::create("env", this);

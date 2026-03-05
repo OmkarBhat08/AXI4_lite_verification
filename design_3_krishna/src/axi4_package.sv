@@ -13,5 +13,6 @@ import uvm_pkg::*;
 `include "axi4_scoreboard.sv"
 `include "axi4_subscriber.sv"
 `include "axi4_environment.sv"
+`include "axi4_report_server.sv"
 `include "axi4_test.sv"
 endpackage

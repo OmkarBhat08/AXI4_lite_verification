@@ -14,6 +14,11 @@ all:
 	make compile
 	make simulate
 
+r:
+	make clean
+	make compile
+	make simulate
+
 main:
 	source $(QUESTA)
 	make clean

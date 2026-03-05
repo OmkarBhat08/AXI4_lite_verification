@@ -1,3 +1,4 @@
+`timescale 1ns / 1ns
 `include "define.sv"
 
 interface axi4_if (input bit ACLK,input bit ARESETn);
@@ -44,7 +45,8 @@ interface axi4_if (input bit ACLK,input bit ARESETn);
   // ================= DRIVER CLOCKING BLOCK =================
   clocking drv_cb @(posedge ACLK);
 
-    default input #0 output #0;
+    //default input #0 output #0;
+    default input #1 output #1;
 
     output AWADDR, AWPROT, AWVALID;
     input  AWREADY;
@@ -69,8 +71,10 @@ interface axi4_if (input bit ACLK,input bit ARESETn);
   // ================= MONITOR CLOCKING BLOCK =================
   clocking mon_cb @(posedge ACLK);
     
-    default input #0 output #0;
+    default input #2;
     
+    input ARESETn;
+
     input AWADDR, AWPROT, AWVALID, AWREADY;
     input WDATA, WSTRB, WVALID, WREADY;
     input BRESP, BVALID, BREADY;
