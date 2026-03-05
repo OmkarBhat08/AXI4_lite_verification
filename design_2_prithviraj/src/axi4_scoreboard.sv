@@ -78,7 +78,6 @@ class axi4_scoreboard extends uvm_scoreboard;
       if(monitor_txn.AWVALID && monitor_txn.AWREADY)
       begin
         exp_txn.AWADDR = monitor_txn.AWADDR;
-        exp_txn.AWREADY = monitor_txn.AWREADY;
         `uvm_info("AW Channel", $sformatf("Received AWADDR = %0h when AWVALID = %b and AWREADY = %b", monitor_txn.AWADDR, monitor_txn.AWVALID, monitor_txn.AWREADY), UVM_MEDIUM)
         write_states = 1;
       end
@@ -86,7 +85,6 @@ class axi4_scoreboard extends uvm_scoreboard;
       // W Channel
       if(monitor_txn.WVALID && monitor_txn.WREADY)
       begin
-        exp_txn.WREADY = monitor_txn.WREADY;
         if(exp_txn.AWADDR == 0) // LED_CTRL
         begin
           if(monitor_txn.WSTRB[0])
@@ -134,6 +132,7 @@ class axi4_scoreboard extends uvm_scoreboard;
           end
         else
           `uvm_error("W Channel", $sformatf("Writing to the address %0h is not allowed", monitor_txn.AWADDR))
+
         //Printing
         `uvm_info("W Channel", "Writing WDATA", UVM_MEDIUM)
         $display("WVALID \t %b", monitor_txn.WVALID);
@@ -147,7 +146,6 @@ class axi4_scoreboard extends uvm_scoreboard;
       // B Channel
       if(monitor_txn.BVALID)
       begin
-        exp_txn.BVALID = 1;
         if(write_states != 3)
         begin
           if(!write_states[0])
@@ -156,17 +154,21 @@ class axi4_scoreboard extends uvm_scoreboard;
             `uvm_error("B Channel", "Handshake Failed: BVALID asserted before W Channel Operation completed")
           else
             `uvm_error("B Channel", "Handshake Failed: BVALID asserted before AW or W Channel Operation completed")
+          write_states = 0;
         end
         else
         begin
           if(monitor_txn.BREADY)
           begin
-            exp_txn.BRESP = monitor_txn.BRESP;
             `uvm_info("B Channel", $sformatf("Received BRESP = %b when BVALID = %b and BREADY = %b", monitor_txn.BRESP, monitor_txn.BVALID, monitor_txn.BREADY), UVM_MEDIUM)
+						if(monitor_txn.BRESP === 0)
+      				`uvm_info("CHECKER", $sformatf("CHECKER PASSED : BRESP\n Expected: 0 \n Received: %0d", monitor_txn.BRESP), UVM_MEDIUM)
+    				else
+      				`uvm_error("CHECKER", $sformatf("CHECKER FAILED : BRESP\n Expected: 0 \n Received: %0d", monitor_txn.BRESP))
+
             write_states = 0;
 						write_done = 1;
             `uvm_info("B Channel", "Write handshake completed", UVM_MEDIUM)
-						$display("#######################################################################################################################################################################");
             `uvm_info("get_type_name()", "SUCCESSFULLY WRITTEN INTO THE REGISTER BANK", UVM_MEDIUM)
           end
         end
@@ -188,7 +190,7 @@ class axi4_scoreboard extends uvm_scoreboard;
       if(monitor_txn.ARVALID && monitor_txn.ARREADY)
       begin
         exp_txn.ARADDR = monitor_txn.ARADDR;
-        exp_txn.ARREADY = monitor_txn.ARREADY;
+        exp_txn.RDATA = mem[exp_txn.ARADDR];
         `uvm_info("AR Channel", $sformatf("Received ARADDR = %0h when ARVALID = %b and ARREADY = %b", monitor_txn.ARADDR, monitor_txn.ARVALID, monitor_txn.ARREADY), UVM_MEDIUM)
         read_states = 1;
       end
@@ -203,17 +205,31 @@ class axi4_scoreboard extends uvm_scoreboard;
         begin
           if(monitor_txn.RREADY)
           begin
-            exp_txn.RDATA = mem[exp_txn.ARADDR];
             exp_txn.RRESP = monitor_txn.RRESP;
             `uvm_info("B Channel", "Read handshake completed", UVM_MEDIUM)
 						read_done = 1;
 
             //Printing
-            `uvm_info("R Channel", "Writing RDATA", UVM_MEDIUM)
+            `uvm_info("R Channel", "Read RDATA", UVM_MEDIUM)
             $display("RVALID \t %b", monitor_txn.RVALID);
             $display("RREADY \t %b", monitor_txn.RREADY);
-            $display("RDATA \t %0h", exp_txn.RDATA);
-            $display("RRESP \t %0h", exp_txn.RRESP);
+            $display("RDATA \t %0h", monitor_txn.RDATA);
+            $display("RRESP \t %0h", monitor_txn.RRESP);
+
+    				if(monitor_txn.RDATA === exp_txn.RDATA)
+      				`uvm_info("CHECKER", $sformatf("CHECKER PASSED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA), UVM_MEDIUM)
+    				else
+      				`uvm_error("CHECKER", $sformatf("CHECKER FAILED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA))
+
+    				if(monitor_txn.RRESP === 0)
+      				`uvm_info("CHECKER", $sformatf("CHECKER PASSED : RRESP\n Expected: 0 \n Received: %0d", monitor_txn.RRESP), UVM_MEDIUM)
+    				else
+      				`uvm_error("CHECKER", $sformatf("CHECKER FAILED : RRESP\n Expected: 0 \n Received: %0d", monitor_txn.RRESP))
+
+						if((exp_txn.RDATA === monitor_txn.RDATA) && (monitor_txn.RRESP == 0))
+							$display("Read transaction PASSED");
+						else
+							$display("Read transaction FAILED");
           end
         end
       end
@@ -282,65 +298,7 @@ class axi4_scoreboard extends uvm_scoreboard;
   //------------------- checker ------------------//
   task transaction_checker();
     `uvm_info(get_type_name(), $sformatf("--------------------CHECKER Scoreboard @ %0t-----------------------------", $time), UVM_MEDIUM)
-    if(exp_txn.AWREADY !== monitor_txn.AWREADY)
-      `uvm_error("CHECKER", "CHECKER FAILED : AWREADY")
-    else
-      `uvm_info("CHECKER", "CHECKER PASSED : AWREADY", UVM_MEDIUM)
 
-    if(exp_txn.WREADY !== monitor_txn.WREADY)
-      `uvm_error("CHECKER", "CHECKER FAILED : WREADY")
-    else
-      `uvm_info("CHECKER", "CHECKER PASSED : RREADY", UVM_MEDIUM)
-
-    if(exp_txn.BRESP !== monitor_txn.BRESP)
-      `uvm_error("CHECKER", $sformatf("CHECKER FAILED : BRESP\n Expected: %b \n Received: %b",exp_txn.BRESP, monitor_txn.BRESP))
-    else
-      `uvm_info("CHECKER", $sformatf("CHECKER PASSED : BRESP\n Expected: %b \n Received: %b",exp_txn.BRESP, monitor_txn.BRESP), UVM_MEDIUM)
-
-    if(exp_txn.BVALID !== monitor_txn.BVALID)
-      `uvm_error("CHECKER", "CHECKER FAILED : BVALID")
-    else
-      `uvm_info("CHECKER", "CHECKER PASSED : BVALID", UVM_MEDIUM)
-
-    if(exp_txn.ARREADY !== monitor_txn.ARREADY)
-      `uvm_error("CHECKER", "CHECKER FAILED : ARREADY")
-    else
-      `uvm_info("CHECKER", "CHECKER PASSED : ARREADY", UVM_MEDIUM)
-
-    if(exp_txn.RDATA !== monitor_txn.RDATA)
-      `uvm_error("CHECKER", $sformatf("CHECKER FAILED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA))
-    else
-      `uvm_info("CHECKER", $sformatf("CHECKER PASSED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA), UVM_MEDIUM)
-
-    if(exp_txn.RRESP !== monitor_txn.RRESP)
-      `uvm_error("CHECKER", $sformatf("CHECKER FAILED : RRESP\n Expected: %b \n Received: %b",exp_txn.RRESP, monitor_txn.RRESP))
-    else
-      `uvm_info("CHECKER", $sformatf("CHECKER PASSED : RRESP\n Expected: %b \n Received: %b",exp_txn.RRESP, monitor_txn.RRESP), UVM_MEDIUM)
-
-    if(exp_txn.RVALID !== monitor_txn.RVALID)
-      `uvm_error("CHECKER", "CHECKER FAILED : RVALID")
-    else
-      `uvm_info("CHECKER", "CHECKER PASSED : RVALID", UVM_MEDIUM)
-
-		if((exp_txn.RDATA === monitor_txn.RDATA) && (monitor_txn.RRESP == 0) && (monitor_txn.RVALID == 1))
-		begin
-			if(read_done)
-			begin
-				$display("##############################################################################################################################");
-				$display("Read transaction PASSED with correct output");
-      	`uvm_info("CHECKER", $sformatf("CHECKER PASSED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA), UVM_MEDIUM)
-				read_done = 0;
-			end
-			else
-			begin
-				$display("##############################################################################################################################");
-				`uvm_error("CHECKER", "Read transaction FAILED");
-      	`uvm_error("CHECKER", $sformatf("CHECKER FAILED : RDATA\n Expected: %b \n Received: %b",exp_txn.RDATA, monitor_txn.RDATA))
-				read_done = 0;
-			end
-		end
-
-		
     if(exp_txn.leds !== monitor_txn.leds)
       `uvm_error("CHECKER", $sformatf("CHECKER FAILED : leds\n Expected: %b \n Received: %b",exp_txn.leds, monitor_txn.leds))
     else
@@ -360,7 +318,7 @@ class axi4_scoreboard extends uvm_scoreboard;
       `uvm_error("CHECKER", $sformatf("CHECKER FAILED : irq_out\n Expected: %b \n Received: %b",exp_txn.irq_out, monitor_txn.irq_out))
     else
       `uvm_info("CHECKER", $sformatf("CHECKER PASSED : irq_out\n Expected: %b \n Received: %b",exp_txn.irq_out, monitor_txn.irq_out), UVM_MEDIUM)
-		$display("#######################################################################################################################################################################");
+		$display("#########################################################################################################################################################################");
   endtask : transaction_checker
 
 endclass
