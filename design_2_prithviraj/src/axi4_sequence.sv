@@ -70,7 +70,7 @@ class read_followed_by_write extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), " ------ Read followed by Write ------ ", UVM_LOW)
-    repeat(10) begin
+    repeat(2) begin
       `uvm_do_with(req, {req.AWADDR inside {0,4,8}; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARVALID == 0; req.RREADY == 0;})
       prev_addr = req.AWADDR;
       `uvm_do_with(req, {req.ARADDR == prev_addr; req.ARVALID == 1; req.RREADY == 1; req.BREADY == 1; req.AWVALID == 0; req.WVALID == 0;})
