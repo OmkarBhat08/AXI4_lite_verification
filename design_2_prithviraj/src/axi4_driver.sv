@@ -89,7 +89,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
       // read
       check_rd_addr(); 
     join
-    @(vif.drv_cb);// one delay after completing one transaction 
+    
   endtask
 
   //read address handshake
@@ -121,7 +121,8 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
       begin
         wait(vif.drv_cb.RVALID);
         rd_addr_done=0;
-        vif.drv_cb.RREADY<=0;
+        vif.drv_cb.RVALID<=0;
+        @(vif.drv_cb);
       end
   endtask
   
@@ -138,7 +139,11 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
             fork
               if(wrt_data_done && wrt_addr_done)
                 check_wrt_resp();
-              vif.drv_cb.AWVALID<=0;
+            
+              @(vif.drv_cb)
+              begin
+                vif.drv_cb.AWVALID<=0;
+              end
               
             join
             
@@ -158,9 +163,11 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
             fork 
               if(wrt_data_done && wrt_addr_done)
                 check_wrt_resp();
-
-              vif.drv_cb.WVALID<=0;
               
+              @(vif.drv_cb)
+              begin
+                vif.drv_cb.WVALID<=0;
+              end
             join
             
           end
@@ -172,10 +179,10 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
         if(req.BREADY==1 && vif.drv_cb.BVALID==1)
           begin
             wrt_data_done=0;
-            wrt_addr_done=0; 
+            wrt_addr_done=0;
             vif.drv_cb.BREADY<=0;
+            @(vif.drv_cb);
           end
   endtask
   
 endclass
-
