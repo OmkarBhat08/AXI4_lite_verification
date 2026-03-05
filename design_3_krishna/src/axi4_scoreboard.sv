@@ -49,7 +49,6 @@ class axi4_scoreboard extends uvm_scoreboard;
 
     forever begin
       item_fifo.get(txn);
-
       if(txn.ARESETn === 1'b0) begin
         handle_reset();
         store_prev_val(txn);
@@ -172,7 +171,7 @@ class axi4_scoreboard extends uvm_scoreboard;
   function void update_peripheral_timers(axi4_seq_item txn);
     exp_led = reg_led_arr[4][3:0];
 
-    if(seg_counter == `COUNTER_MAX) begin
+    if(seg_counter == COUNTER_MAX) begin
       seg_counter = 0;
       seg_digit_sel = seg_digit_sel + 2'b01;
     end
@@ -186,7 +185,7 @@ class axi4_scoreboard extends uvm_scoreboard;
       debounce_counter = 0;
     end
     else begin
-      if(debounce_counter == `IRQ_COUNTER_MAX) begin
+      if(debounce_counter == IRQ_COUNTER_MAX) begin
         ext_irq_stable = ext_irq_sync[1];
         debounce_counter = 0;
       end

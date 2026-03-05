@@ -2,6 +2,7 @@
 `include "define.sv"
 package axi4_pkg;
 import uvm_pkg::*;
+import define::*;
 `include "axi4_seq_item.sv"
 `include "axi4_sequence.sv"
 `include "axi4_sequencer.sv"
