@@ -303,6 +303,17 @@ class irq_seq_1 extends base_seq;
     super.new(name);
   endfunction
 
+
+  task body();
+    `uvm_info(get_type_name(), $sformatf(" ------ Interrupt High ------ "), UVM_LOW)
+    repeat(4) begin
+      `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.WDATA[0] == 1; req.ext_irq_in == 1;})
+      #1ms;
+      `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.WDATA[0] == 1; req.ext_irq_in == 1;})
+    end
+  endtask
+
+/*
   task body();
     `uvm_info(get_type_name(), $sformatf(" ------ Interrupt High ------ "), UVM_LOW)
     repeat(1) begin
@@ -311,6 +322,7 @@ class irq_seq_1 extends base_seq;
       `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.ext_irq_in == 1;})
     end
   endtask
+*/
 endclass
 
 // -----------------------------------------------------------------
@@ -323,7 +335,7 @@ class irq_seq_2 extends base_seq;
   endfunction
 
   task body();
-    `uvm_info(get_type_name(), " ------ Interrupt High ------ ", UVM_LOW)
+    `uvm_info(get_type_name(), " ------ Interrupt ------ ", UVM_LOW)
     repeat(3) begin
       `uvm_do_with(req, {req.AWADDR == 8; req.AWVALID == 1; req.WSTRB[0] == 1; req.WVALID == 1; req.BREADY == 1; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.ext_irq_in == 1;})
       #10_000;
@@ -345,7 +357,7 @@ class seven_seg_seq extends base_seq;
     `uvm_info(get_type_name(), " ------ 7 segment ------ ", UVM_LOW)
     repeat(1) begin
       `uvm_do_with(req, {req.AWADDR == 4; req.AWVALID == 1; req.WSTRB == 4'b1111; req.WVALID == 1; req.BREADY == 1; req.WDATA == 32'h9876cdef; req.ARADDR inside {0,4,8}; req.ARVALID == 1; req.RREADY == 1; req.ext_irq_in == 1;})
-      #4ms;
+      #2ms;
     end
   endtask
 endclass

@@ -17,6 +17,7 @@ class axi4_base_test extends uvm_test;
     super.run_phase(phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = base_seq::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -37,6 +38,7 @@ class simple_write_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = simple_write::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -56,6 +58,7 @@ class simple_read_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = simple_read::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -295,6 +298,7 @@ class irq_test_1 extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = irq_seq_1::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -314,6 +318,7 @@ class irq_test_2 extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = irq_seq_2::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -333,6 +338,7 @@ class seven_seg_test extends axi4_base_test;
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = seven_seg_seq::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
@@ -345,13 +351,14 @@ class regression_test extends axi4_base_test;
 
   regression seq;
 
-  function new(string name = "seven_seg_test", uvm_component parent = null);
+  function new(string name = "regression_test", uvm_component parent = null);
     super.new(name, parent);
   endfunction
 
   task run_phase(uvm_phase phase);
 
     phase.raise_objection(this);
+    phase.phase_done.set_drain_time(this, 30ns);
     seq = regression::type_id::create("seq");
     seq.start(env.act_agent.sqr_h);
     phase.drop_objection(this);
