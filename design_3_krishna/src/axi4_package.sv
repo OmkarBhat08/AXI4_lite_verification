@@ -2,6 +2,7 @@
 `include "define.sv"
 package axi4_pkg;
 import uvm_pkg::*;
+import define::*;
 `include "axi4_seq_item.sv"
 `include "axi4_sequence.sv"
 `include "axi4_sequencer.sv"
@@ -13,5 +14,6 @@ import uvm_pkg::*;
 `include "axi4_scoreboard.sv"
 `include "axi4_subscriber.sv"
 `include "axi4_environment.sv"
+`include "axi4_report_server.sv"
 `include "axi4_test.sv"
 endpackage

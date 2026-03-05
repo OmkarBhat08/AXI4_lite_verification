@@ -28,7 +28,7 @@ class simple_write extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), " ------ Simple write with strobe = 'b1111 ------ ", UVM_LOW)
-    repeat(1) begin
+    repeat(9) begin
       req = axi4_seq_item::type_id::create("req");
       `uvm_do_with(req, {req.AWADDR == 0; req.AWVALID == 1; req.WVALID == 1; req.BREADY == 1; req.WSTRB == 4'b1111; req.ARVALID == 0; req.RREADY == 0;})
       `uvm_do_with(req, {req.AWADDR == 4; req.AWVALID == 1; req.WVALID == 1; req.BREADY == 1; req.WSTRB == 4'b1111; req.ARVALID == 0; req.RREADY == 0;})

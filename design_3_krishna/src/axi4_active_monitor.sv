@@ -30,6 +30,8 @@ class axi4_active_monitor extends uvm_monitor;
 
         out_item = axi4_seq_item::type_id::create("out_item");
         
+        out_item.ARESETn = vif.mon_cb.ARESETn;
+
         // write address channel //
         out_item.AWADDR=vif.mon_cb.AWADDR;
         out_item.AWVALID=vif.mon_cb.AWVALID;

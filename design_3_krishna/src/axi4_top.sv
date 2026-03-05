@@ -16,6 +16,10 @@ module top;
   always #5 ACLK = ~ACLK;
 
   initial begin
+    $timeformat(-9, 0, " ns", 8);
+  end
+
+  initial begin
     ARESETn = 0;
     #20;
     ARESETn = 1;
