@@ -89,7 +89,7 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
       // read
       check_rd_addr(); 
     join
-    
+    @(vif.drv_cb);// one delay after completing one transaction 
   endtask
 
   //read address handshake
