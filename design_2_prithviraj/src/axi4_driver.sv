@@ -121,6 +121,8 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
       begin
         wait(vif.drv_cb.RVALID);
         rd_addr_done=0;
+        @(vif.drv_cb);
+        vif.drv_cb.RREABY<=0;
       end
   endtask
   
@@ -137,9 +139,8 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
             fork
               if(wrt_data_done && wrt_addr_done)
                 check_wrt_resp();
-            
-              @(vif.drv_cb)
               begin
+                @(vif.drv_cb);
                 vif.drv_cb.AWVALID<=0;
               end
               
@@ -161,11 +162,11 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
             fork 
               if(wrt_data_done && wrt_addr_done)
                 check_wrt_resp();
-              
-              @(vif.drv_cb)
               begin
+                @(vif.drv_cb);
                 vif.drv_cb.WVALID<=0;
               end
+              
             join
             
           end
@@ -177,7 +178,9 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
         if(req.BREADY==1 && vif.drv_cb.BVALID==1)
           begin
             wrt_data_done=0;
-            wrt_addr_done=0;       
+            wrt_addr_done=0; 
+            @(vif.drv_cb);
+            vif.drv_cb.BREADY<=0;
           end
   endtask
   
