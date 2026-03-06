@@ -22,7 +22,7 @@ class axi4_scoreboard extends uvm_scoreboard;
 
   // For LED driver
 	bit [(`DATA_WIDTH)-1:0] led_data;
- 	bit [7:0]	temp_leds, prev_led_data;
+ 	bit [23:0]	temp_leds;
 
   // For Interrupt generation
   longint irq_counter;
@@ -320,14 +320,9 @@ class axi4_scoreboard extends uvm_scoreboard;
   //------------------- LED driver ------------------//
   task led_driver();
     led_data = mem[0];
-	if(led_data != prev_led_data)
-	begin
-		//if(~monitor_txn.wvalid && ~monitor_txn.wready)
-			temp_leds = led_data[7:0];
-	end
-	exp_txn.leds = temp_leds;
-	prev_led_data = led_data;
-//    exp_txn.leds = led_data[7:0];
+    exp_txn.leds = temp_leds[15:8];
+		temp_leds[15:8] = temp_leds[7:0];
+		temp_leds[7:0] = led_data[7:0];
   endtask : led_driver
 
   //------------------- checker ------------------//
