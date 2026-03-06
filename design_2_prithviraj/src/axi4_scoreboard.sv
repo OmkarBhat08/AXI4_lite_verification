@@ -21,7 +21,8 @@ class axi4_scoreboard extends uvm_scoreboard;
   longint segment_counter;
 
   // For LED driver
-  bit [(`DATA_WIDTH)-1:0] led_data;
+	bit [(`DATA_WIDTH)-1:0] led_data;
+ 	bit [7:0]	temp_leds, prev_led_data;
 
   // For Interrupt generation
   longint irq_counter;
@@ -120,7 +121,7 @@ class axi4_scoreboard extends uvm_scoreboard;
           if(monitor_txn.WSTRB[0])
           begin
             `uvm_info("W Channel", "Accessing IRQ_EN", UVM_MEDIUM)
-            mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-2){1'b1}},monitor_txn.WDATA[0]};
+            mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-2){1'b0}},monitor_txn.WDATA[0]};
           end
         end
         else if(exp_txn.AWADDR == 12) // IRQ_STATUS
@@ -319,7 +320,14 @@ class axi4_scoreboard extends uvm_scoreboard;
   //------------------- LED driver ------------------//
   task led_driver();
     led_data = mem[0];
-    exp_txn.leds = led_data[7:0];
+	if(led_data != prev_led_data)
+	begin
+		//if(~monitor_txn.wvalid && ~monitor_txn.wready)
+			temp_leds = led_data[7:0];
+	end
+	exp_txn.leds = temp_leds;
+	prev_led_data = led_data;
+//    exp_txn.leds = led_data[7:0];
   endtask : led_driver
 
   //------------------- checker ------------------//
