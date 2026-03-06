@@ -97,93 +97,94 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
   //read address handshake
   task check_rd_addr();
     if (rd_addr_done == 0)
+    begin
+
+      if(req.ARVALID == 1)
       begin
 
-        if(req.ARVALID == 1)
-          begin
-
-            wait(vif.drv_cb.ARREADY);
-            rd_addr_done=1;
-
-            vif.drv_cb.ARVALID<=0;
-            check_rd_data();
-        end
-    end
-    else
-      begin
+        wait(vif.drv_cb.ARREADY);
+        rd_addr_done=1;
+        @(vif.drv_cb);
+        vif.drv_cb.ARVALID<=0;
         check_rd_data();
       end
+    end
+    else
+    begin
+      check_rd_data();
+    end
 
   endtask
 
   // read data handshake
   task check_rd_data();
     if (req.RREADY == 1)
-      begin
-          wait(vif.drv_cb.RVALID);
-        rd_addr_done=0;
-        vif.drv_cb.RREADY<=0;
-      end
+    begin
+      wait(vif.drv_cb.RVALID);
+      rd_addr_done=0;
+      @(vif.drv_cb);
+      vif.drv_cb.RREADY<=0;
+    end
   endtask
 
   //write address handshake
   task check_wrt_addr();
 
     if(wrt_addr_done==0)
+    begin
+      if(req.AWVALID==1)
       begin
-        if(req.AWVALID==1)
+        wait(vif.drv_cb.AWREADY);
+        wrt_addr_done=1;
+
+        fork
+          if(wrt_data_done && wrt_addr_done)
+            check_wrt_resp();
+          @(vif.drv_cb)
           begin
-            wait(vif.drv_cb.AWREADY);
-            wrt_addr_done=1;
-
-            fork
-              if(wrt_data_done && wrt_addr_done)
-                check_wrt_resp();
-            @(vif.drv_cb)
-            begin
-              vif.drv_cb.AWVALID<=0;
-            end
-
-            join
-
+            vif.drv_cb.AWVALID<=0;
           end
+
+        join
+
       end
+    end
   endtask
 
   //write data handshake
   task check_wrt_data();
     if(wrt_data_done==0)
+    begin
+      if(req.WVALID==1)
       begin
-        if(req.WVALID==1)
+        wait(vif.drv_cb.WREADY);
+        wrt_data_done=1;
+
+        fork
+          if(wrt_data_done && wrt_addr_done)
+            check_wrt_resp();
+
+          @(vif.drv_cb)
           begin
-            wait(vif.drv_cb.WREADY);
-            wrt_data_done=1;
-
-            fork
-              if(wrt_data_done && wrt_addr_done)
-                check_wrt_resp();
-
-            @(vif.drv_cb)
-            begin
-              vif.drv_cb.WVALID<=0;
-            end
-
-            join
-
+            vif.drv_cb.WVALID<=0;
           end
+
+        join
+
       end
+    end
   endtask
 
   //write response handshake
   task check_wrt_resp();
-        if(req.BREADY==1)
-        begin
-            @(vif.drv_cb);
-           // `uvm_info("DRV",$sformatf("DRV got BVLID = %0d",$time,vif.drv_cb.BVALID),UVM_LOW);
-            wrt_data_done=0;
-            wrt_addr_done=0;
-            vif.drv_cb.BREADY<=0;
-          end
+    if(req.BREADY==1)
+    begin
+      repeat(2)@(vif.drv_cb);
+      // `uvm_info("DRV",$sformatf("DRV got BVLID = %0d",$time,vif.drv_cb.BVALID),UVM_LOW);
+      wrt_data_done=0;
+      wrt_addr_done=0;
+      vif.drv_cb.BREADY<=0;
+    end
   endtask
 
 endclass
