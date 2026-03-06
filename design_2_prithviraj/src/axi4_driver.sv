@@ -139,8 +139,10 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
             fork
               if(wrt_data_done && wrt_addr_done)
                 check_wrt_resp();
-
+            @(vif.drv_cb)
+            begin
               vif.drv_cb.AWVALID<=0;
+            end
 
             join
 
@@ -161,7 +163,11 @@ class axi4_driver extends uvm_driver #(axi4_seq_item);
               if(wrt_data_done && wrt_addr_done)
                 check_wrt_resp();
 
+            @(vif.drv_cb)
+            begin
               vif.drv_cb.WVALID<=0;
+            end
+
             join
 
           end
