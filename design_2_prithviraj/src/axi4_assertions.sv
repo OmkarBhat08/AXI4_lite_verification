@@ -1,67 +1,78 @@
-program axi4_assertions(ACLK,ARESETn,bit [31:0]AWADDR,AWVALID,AWREADY,bit [31:0]WDATA,WVALID,WREADY,BRESP,BVALID,BREADY,bit [31:0]ARADDR,ARVALID,ARREADY,bit [31:0]RDATA,RVALID,RREADY);
-        input ACLK,RESETn;
-        input bit [31:0]AWADDR;
-        input AWVALID,AWREADY;
-        input bit [31:0]WDATA,
-        input WVALID,WREADY;
-        input BRESP,BVALID,BREADY;
-        input bit [31:0]ARADDR,
-        input ARVALID,ARREADY;
-        input bit [31:0]RDATA,
-        input RVALID,RREADY;
+module axi4_assertions(
+
+        input logic ACLK,ARESETn,
+
+        input logic [31:0]AWADDR,
+
+        input logic AWVALID,AWREADY,
+
+        input logic [31:0]WDATA,
+
+        input logic WVALID,WREADY,
+
+        input logic[1:0]BRESP,
+
+        input logic BVALID,BREADY,
+
+        input logic [31:0]ARADDR,
+
+        input logic ARVALID,ARREADY,
+
+        input logic [31:0]RDATA,
+
+        input logic RVALID,RREADY
+
+);
 
         property p1;
                 @(posedge ACLK) disable iff(!ARESETn)
-                $rose(AWVALID) |-> ($stable(AWADDR) && AWVALID) until_with (AWREADY);
+                $rose(AWVALID) |=> ($stable(AWADDR) && $stable(AWVALID)) until_with (AWREADY);
         endproperty
 
         property p2;
                 @(posedge ACLK) disable iff(!ARESETn)
-                $rose(WVALID) |-> ($stable(WDATA) && WVALID) until_with (WREADY);
+                $rose(WVALID) |=> ($stable(WDATA) && $stable(WVALID)) until_with (WREADY);
         endproperty
 
         property p3;
                 @(posedge ACLK) disable iff(!ARESETn)
-                $rose(BVALID) |-> ($stable(BRESP) && BVALID) until_with (BREADY);
+                $rose(BVALID) |=> ($stable(BRESP) && $stable(BVALID)) until_with (BREADY);
         endproperty
 
         property p4;
                 @(posedge ACLK) disable iff(!ARESETn)
-                $rose(ARVALID) |-> ($stable(ARADDR) && ARVALID) until_with (ARREADY);
+                $rose(ARVALID) |=> ($stable(ARADDR) && $stable(ARVALID)) until_with (ARREADY);
         endproperty
 
         property p5;
                 @(posedge ACLK) disable iff(!ARESETn)
-                $rose(RVALID) |-> ($stable(RDATA) && RVALID) until_with (RREADY);
+                $rose(RVALID) |=> ($stable(RDATA) && $stable(RVALID)) until_with (RREADY);
         endproperty
 
         write_address_handshake:assert property(p1)
-        $info("write address handshake assertion passed");
+                                $info("p1-write address handshake assertion passed ADDR=%0h  AWVALID=%0h   AWREADY=%0h ",AWADDR, AWVALID, AWREADY);
         else
-                $info("write address handshake assertion failed");
+                $info("p1-write address handshake assertion failed ADDR=%0h  AWVALID=%0h  AWREADY=%0h ",AWADDR, AWVALID, AWREADY);
 
         write_data_handshake:assert property(p2)
-        $info("write data handshake assertion passed");
+        $info("p2-write data handshake assertion passed WVALID=%0h WREADY=%0h WDATA=%0h",WVALID,WREADY,WDATA);
         else
-                $info("write data handshake assertion failed");
+                $info("p2-write data handshake assertion failed WVALID=%0h WREADY=%0h WDATA=%0h",WVALID,WREADY,WDATA);
 
-        read_address_handshake:assert property(p3)
-        $info("read address handshake assertion passed");
+        write_response_handshake:assert property(p3)
+        $info("p3-write response handshake assertion passed BVALID=%0h BREADY=%0h BRESP=%0h",BVALID,BREADY,BRESP);
         else
-                $info("read address handshake assertion failed");
+                $info("p3-write response handshake assertion failed BVALID = %0h BREADY = %0h BRESP=%0h",BVALID,BREADY,BRESP);
 
         read_data_handshake:assert property(p4)
-        $info("read data handshake assertion passed");
+        $info("p4-read data handshake assertion passed ARVALID =%0h ARADDR =%0h ARREADY=%0h",ARVALID,ARADDR,ARREADY);
         else
-                $info("read data handshake assertion failed");
+                $info("p4-read data handshake assertion failed ARVALID=%0h ARADDR=%0h  ARREADY=%0h",ARVALID,ARADDR,ARREADY);
 
         read_response_handshake:assert property(p5)
-        $info("read response handshake assertion passed");
+        $info("p5-read response handshake assertion passed RVALID=%0h RREADY=%0h RDATA=%0h",RVALID,RREADY,RDATA);
         else
-                $info("read response handshake assertion failed");
-        read_data_handshake:assert property(p4)
-	      $info("read data handshake assertion passed");
-	      else
-		         $info("read data handshake assertion failed");
+                $info("p5-read response handshake assertion failed RVALID = %0h RREADY =%0h RDATA=%0h",RVALID,RREADY,RDATA);
 
-endprogram
+endmodule
+ 

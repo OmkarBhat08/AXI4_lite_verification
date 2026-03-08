@@ -15,3 +15,7 @@
 **/transcript
 *.ucdb
 **/vsim.wlf
+*.wlf
+*.ini
+*.vcd
+*.vstf
