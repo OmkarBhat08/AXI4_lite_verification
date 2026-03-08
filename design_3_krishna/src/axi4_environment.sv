@@ -29,7 +29,7 @@ class axi4_environment extends uvm_env;
 
     // monitors to scoreboard fifos
     act_agent.a_mon_h.a_mon_port.connect(scb.item_fifo.analysis_export);
-    //pas_agent.p_mon_h.p_mon_port.connect(scb.passive_fifo.analysis_export);
+    act_agent.a_mon_h.a_mon_cg_port.connect(cov.inp_fifo.analysis_export);
 
     // monitors to suscriber fifos
     act_agent.a_mon_h.a_mon_port.connect(cov.inp_fifo.analysis_export);

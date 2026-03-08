@@ -4,6 +4,7 @@ class axi4_active_monitor extends uvm_monitor;
 
   virtual axi4_if vif;
   uvm_analysis_port #(axi4_seq_item)a_mon_port;
+  uvm_analysis_port #(axi4_seq_item)a_mon_cg_port;
   axi4_seq_item out_item;
 
 //---------------------------------new constructor----------------------------//
@@ -16,6 +17,7 @@ class axi4_active_monitor extends uvm_monitor;
     super.build_phase(phase);
 
     a_mon_port = new("a_mon_port", this);
+    a_mon_cg_port = new("a_mon_cg_port", this);
 
     if (!(uvm_config_db #(virtual axi4_if)::get(this, "", "vif", vif)))
       `uvm_fatal("PASSIVE_MONITOR","NO VIRTUAL INTERFACE IN PASSIVE MONITOR")
@@ -83,6 +85,7 @@ class axi4_active_monitor extends uvm_monitor;
         `uvm_info("MON",$sformatf("[external signals] captured : EXT_IRQ_IN=%0b | LED=%0h | SEG_CATHODE=%0h | SEG_ANODE = %0h | IRQ_OUT = %0b ",out_item.EXT_IRQ_IN,out_item.LED,out_item.SEG_CATHODE,out_item.SEG_ANODE,out_item.IRQ_OUT),UVM_LOW)
         
         a_mon_port.write(out_item);
+        a_mon_cg_port.write(out_item);
         
         repeat(1) @(vif.mon_cb);
 
