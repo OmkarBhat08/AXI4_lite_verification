@@ -9,8 +9,11 @@ class axi4_scoreboard extends uvm_scoreboard;
 	bit write_done, read_done;
   bit [3:0] wstrb;
   int index;
-  bit [(`DATA_WIDTH)-1:0] temp_data, mask, masked_data;
+  bit [(`DATA_WIDTH)-1:0] temp_data, mask, masked_data, temp_wdata;
 	int write_pass_count, write_fail_count, read_pass_count, read_fail_count, led_fail_count, seg_anode_fail_count, seg_cathode_fail_count, irq_out_fail_count;
+	bit data_first;
+  bit [3:0] temp_wstrb;
+	int transaction_count;
 
   // Register bank
   bit [(`DATA_WIDTH)-1:0] mem [0:25];
@@ -23,6 +26,8 @@ class axi4_scoreboard extends uvm_scoreboard;
   // For LED driver
 	bit [(`DATA_WIDTH)-1:0] led_data;
  	bit [23:0]	temp_leds;
+	bit segment_changed;
+	bit segment_loop_completed = 0;
 
   // For Interrupt generation
   longint irq_counter;
@@ -63,6 +68,7 @@ class axi4_scoreboard extends uvm_scoreboard;
       seven_segment_driver();
       led_driver();
       transaction_checker();
+			transaction_count++;
     end
   endtask : run_phase
 
@@ -78,74 +84,49 @@ class axi4_scoreboard extends uvm_scoreboard;
     end
     else
     begin
+			$display("Write state = %b | temp_wdata = %0h | data_first = %0d", write_states,temp_wdata, data_first);
       // AW CHANNEL
       if(monitor_txn.AWVALID && monitor_txn.AWREADY)
       begin
         exp_txn.AWADDR = monitor_txn.AWADDR;
         `uvm_info("AW Channel", $sformatf("Received AWADDR = %0h when AWVALID = %b and AWREADY = %b", monitor_txn.AWADDR, monitor_txn.AWVALID, monitor_txn.AWREADY), UVM_MEDIUM)
-        write_states = 1;
+        write_states = write_states | 1;
+				if(data_first)
+				begin
+					write_into_register_bank();
+					data_first = 0;
+					temp_wdata = 0;
+					temp_wstrb = 0;
+				end
       end
 
       // W Channel
       if(monitor_txn.WVALID && monitor_txn.WREADY)
       begin
-        if(exp_txn.AWADDR == 0) // LED_CTRL
-        begin
-          if(monitor_txn.WSTRB[0])
-          begin
-            mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-8){1'b0}}, monitor_txn.WDATA[7:0]};
-            `uvm_info("W Channel", $sformatf("Writing WDATA = %0h to LED when WVALID = %b and WREADY = %b", monitor_txn.WDATA, monitor_txn.WVALID, monitor_txn.WREADY), UVM_MEDIUM)
-          end
-        end
-        else if(exp_txn.AWADDR == 4 )  // SEG_DATA
-        begin
-          wstrb = monitor_txn.WSTRB;
-          index = 0;
-          for(int i=0; i<(`DATA_WIDTH/8); i++) // For each strobe bit
-          begin
-            for(int j=0; j<8;j++) // for each byte
-            begin
-              if((wstrb>>i)&'d1)
-                mask[index] = 1;
-              else
-                mask[index] = 0;
-              index++;
-            end
-          end
-          masked_data = (mem[exp_txn.AWADDR] & (~mask)) | (monitor_txn.WDATA & mask);
-          mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-16){1'b0}}, masked_data[15:0]};
-          `uvm_info("W Channel", $sformatf("Writing WDATA = %0h to 7 segment when WVALID = %b and WREADY = %b", monitor_txn.WDATA, monitor_txn.WVALID, monitor_txn.WREADY), UVM_MEDIUM)
-        end
-        else if(exp_txn.AWADDR == 8) // IRQ_EN
-        begin
-          if(monitor_txn.WSTRB[0])
-          begin
-            `uvm_info("W Channel", "Accessing IRQ_EN", UVM_MEDIUM)
-            mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-2){1'b0}},monitor_txn.WDATA[0]};
-          end
-        end
-        else if(exp_txn.AWADDR == 12) // IRQ_STATUS
-        begin
-          `uvm_error("W Channel", $sformatf("Writing to the address %0h is not allowed, address is readonly", monitor_txn.AWADDR))
-        end
-        else if(exp_txn.AWADDR == 16) // IRQ_CLEAR
-          if(monitor_txn.WSTRB[0] && monitor_txn.WDATA[0])
-          begin
-            mem[12] = 0;
-            `uvm_info("W Channel", "Clearing IRQ STATUS", UVM_MEDIUM)
-          end
-        else
-          `uvm_error("W Channel", $sformatf("Writing to the address %0h is not allowed", monitor_txn.AWADDR))
+				if(write_states == 0)
+				begin
+					data_first = 1;
+					temp_wdata = monitor_txn.WDATA;
+					temp_wstrb = monitor_txn.WSTRB;
+  	      write_states = write_states | 2;
+				end
+				else
+				begin
+					write_into_register_bank();
+	        //Printing
+  	      `uvm_info("W Channel", "Writing WDATA", UVM_MEDIUM)
+    	    $display("WVALID \t %b", monitor_txn.WVALID);
+      	  $display("WREADY \t %b", monitor_txn.WREADY);
+        	$display("WSTRB \t %b", monitor_txn.WSTRB);
+	        $display("WDATA \t %0h", monitor_txn.WDATA);
 
-        //Printing
-        `uvm_info("W Channel", "Writing WDATA", UVM_MEDIUM)
-        $display("WVALID \t %b", monitor_txn.WVALID);
-        $display("WREADY \t %b", monitor_txn.WREADY);
-        $display("WSTRB \t %b", monitor_txn.WSTRB);
-        $display("WDATA \t %0h", monitor_txn.WDATA);
-
-        write_states = 3;
-      end
+  	      write_states = write_states | 2;
+					/*
+					if(data_first == 1)
+						data_first = 0;
+					*/
+    	  end
+			end
 
       // B Channel
       if(monitor_txn.BVALID)
@@ -252,47 +233,198 @@ class axi4_scoreboard extends uvm_scoreboard;
 		end
   endtask : read_operation
 
+  //------------------- Write data into register bank ------------------//
+  task write_into_register_bank();
+	        if(exp_txn.AWADDR == 0) // LED_CTRL
+  	      begin
+						if(~data_first)
+						begin
+    	      	if(monitor_txn.WSTRB[0])
+        	    	mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-8){1'b0}}, monitor_txn.WDATA[7:0]};
+          	  `uvm_info("W Channel", $sformatf("Writing WDATA = %0h to LED when WVALID = %b and WREADY = %b", monitor_txn.WDATA, monitor_txn.WVALID, monitor_txn.WREADY), UVM_MEDIUM)
+						end
+						else
+						begin
+    	      	if(temp_wstrb[0])
+        	    	mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-8){1'b0}}, temp_wdata[7:0]};
+          	  `uvm_info("W Channel", $sformatf("Writing WDATA = %0h to LED", temp_wdata), UVM_MEDIUM)
+						end
+  	      end
+    	    else if(exp_txn.AWADDR == 4 )  // SEG_DATA
+      	  begin
+						if(~data_first)
+        	  	wstrb = monitor_txn.WSTRB;
+						else
+							wstrb = temp_wstrb;
+
+	          index = 0;
+  	        for(int i=0; i<(`DATA_WIDTH/8); i++) // For each strobe bit
+    	      begin
+      	      for(int j=0; j<8;j++) // for each byte
+        	    begin
+          	    if((wstrb>>i)&'d1)
+            	    mask[index] = 1;
+              	else
+	                mask[index] = 0;
+  	            index++;
+    	        end
+      	    end
+
+						if(~data_first)
+						begin
+	          	masked_data = (mem[exp_txn.AWADDR] & (~mask)) | (monitor_txn.WDATA & mask);
+							segment_counter = 0;
+    	      `uvm_info("W Channel", $sformatf("Writing WDATA = %0h to 7 segment when WVALID = %b and WREADY = %b", monitor_txn.WDATA, monitor_txn.WVALID, monitor_txn.WREADY), UVM_MEDIUM)
+						end
+						else
+						begin
+	          	masked_data = (mem[exp_txn.AWADDR] & (~mask)) | (temp_wdata & mask);
+							segment_counter = 0;
+    	      `uvm_info("W Channel", $sformatf("Writing WDATA = %0h to 7 segment when WVALID = %b and WREADY = %b", temp_wdata, monitor_txn.WVALID, monitor_txn.WREADY), UVM_MEDIUM)
+							$display("INSIDE");
+						end
+
+
+  	        mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-16){1'b0}}, masked_data[15:0]};
+      	  end
+        	else if(exp_txn.AWADDR == 8) // IRQ_EN
+	        begin
+						if(~data_first)
+						begin
+  	        	if(monitor_txn.WSTRB[0])
+    	      	begin
+      	      	`uvm_info("W Channel", "Accessing IRQ_EN", UVM_MEDIUM)
+        	    	mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-2){1'b0}},monitor_txn.WDATA[0]};
+							end
+						end
+						else
+						begin
+  	        	if(temp_wstrb[0])
+    	      	begin
+      	      	`uvm_info("W Channel", "Accessing IRQ_EN", UVM_MEDIUM)
+        	    	mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-2){1'b0}},temp_wdata[0]};
+							end
+						end
+  	      end
+	        else if(exp_txn.AWADDR == 12) // IRQ_STATUS
+  	      begin
+    	      `uvm_error("W Channel", $sformatf("Writing to the address %0h is not allowed, address is readonly", monitor_txn.AWADDR))
+      	  end
+        	else if(exp_txn.AWADDR == 16) // IRQ_CLEAR
+					begin
+						if(~data_first)
+						begin
+        	  	if(monitor_txn.WSTRB[0] && monitor_txn.WDATA[0])
+	          	begin
+  	          	mem[12] = 0;
+    	        	`uvm_info("W Channel", "Clearing IRQ STATUS", UVM_MEDIUM)
+      	   		 end
+						end
+						else
+						begin
+        	  	if(temp_wstrb[0] && temp_wdata[0])
+	          	begin
+  	          	mem[12] = 0;
+    	        	`uvm_info("W Channel", "Clearing IRQ STATUS", UVM_MEDIUM)
+      	   		 end
+						end
+					end
+      	  else
+        	  `uvm_error("W Channel", $sformatf("Writing to the address %0h is not allowed", monitor_txn.AWADDR))
+	endtask : write_into_register_bank
+
   //------------------- Seven Segment driver ------------------//
   task seven_segment_driver();
-		$display("segment_counter: %0d", segment_counter);
+		$display("segment_counter: %0d | segment_loop_completed =%b", segment_counter, segment_loop_completed);
+		$display("segment_changed=%b", segment_changed);
     segment_data = mem[4];
-		if(!monitor_txn.ARESETn || segment_counter==0)
+		if(!monitor_txn.ARESETn)
 		begin
       exp_txn.seg_cathode = decode_7_segment(0);
 			temp_seg_cathode = decode_7_segment(segment_data[3:0]);
       exp_txn.seg_anode = 4'b1110;
+			segment_counter = 0;
+			segment_changed = 0;
 		end	
-		else if(segment_counter < 25000) // Digit 1
-    begin
-      exp_txn.seg_cathode = temp_seg_cathode;
-			temp_seg_cathode = decode_7_segment(segment_data[3:0]);
-      exp_txn.seg_anode = 4'b1110;
-    end
-    else if((segment_counter > 25000) && (segment_counter < 50000)) // Digit 2
-    begin
-      exp_txn.seg_cathode = temp_seg_cathode;
-      temp_seg_cathode = decode_7_segment(segment_data[7:4]);
-      exp_txn.seg_anode = 4'b1101;
-    end
-    else if((segment_counter > 50000) && (segment_counter < 75000)) // Digit 3
-    begin
-      exp_txn.seg_cathode = temp_seg_cathode;
-      temp_seg_cathode = decode_7_segment(segment_data[11:8]);
-      exp_txn.seg_anode = 4'b1011;
-    end
-    else if(segment_counter > 75000)  // Digit 4
-    begin
-      exp_txn.seg_cathode = temp_seg_cathode;
-      temp_seg_cathode = decode_7_segment(segment_data[15:12]);
-      exp_txn.seg_anode = 4'b0111;
-    end
-    else  // ALl off
-    begin
-      exp_txn.seg_cathode = temp_seg_cathode;
-      temp_seg_cathode =  7'hFF;
-      exp_txn.seg_anode = 4'b1111;
-    end
-    segment_counter++;
+		else
+		begin
+			/*
+			if((segment_counter== 0))// && (segment_changed = 0))
+			begin
+				$display("Entered the count 0");
+      	exp_txn.seg_cathode = decode_7_segment(0);
+				temp_seg_cathode = decode_7_segment(segment_data[3:0]);
+      	exp_txn.seg_anode = 4'b1110;
+			end	
+			else 
+			*/	
+
+
+					/*
+			if(segment_changed == 1)
+			begin
+      	exp_txn.seg_cathode = temp_seg_cathode;
+				temp_seg_cathode = decode_7_segment(0);
+    	  exp_txn.seg_anode = 4'b1110;
+				segment_changed = 0;
+			end
+			*/
+			if(segment_counter <= (25000 - 4 +(2*segment_loop_completed))) // Digit 1
+    	begin
+				if(transaction_count==0)
+				begin
+					$display("\n\n In here 1");
+					exp_txn.seg_cathode = decode_7_segment(0);
+      		temp_seg_cathode = decode_7_segment(segment_data[3:0]);
+    	  	exp_txn.seg_anode = 4'b1110;
+					segment_changed = 0;
+				end
+				else
+				begin
+      		exp_txn.seg_cathode = temp_seg_cathode;
+					$display("\n\n In here 2");
+					temp_seg_cathode = decode_7_segment(segment_data[3:0]);
+    	  	exp_txn.seg_anode = 4'b1110;
+				end
+
+	    end
+  	  else if((segment_counter > (25000 - 4 +(2*segment_loop_completed))) && (segment_counter <= (50000 - 4+(2*segment_loop_completed)))) // Digit 2
+    	begin
+				exp_txn.seg_cathode = temp_seg_cathode;
+				temp_seg_cathode = decode_7_segment(segment_data[7:4]);
+    	  exp_txn.seg_anode = 4'b1101;
+	    end
+  	  else if((segment_counter > (50000 - 4+(2*segment_loop_completed))) && (segment_counter <= (75000 - 3+(2*segment_loop_completed)))) // Digit 3
+    	begin
+				exp_txn.seg_cathode = temp_seg_cathode;
+      	temp_seg_cathode = decode_7_segment(segment_data[11:8]);
+  	    exp_txn.seg_anode = 4'b1011;
+    	end
+	    else if((segment_counter > (75000 - 3+(2*segment_loop_completed))) &&(segment_counter <= (100000 - 3+(2*segment_loop_completed))))  // Digit 4
+	    begin
+				exp_txn.seg_cathode = temp_seg_cathode;
+	      exp_txn.seg_cathode = decode_7_segment(segment_data[15:12]);
+    	  exp_txn.seg_anode = 4'b0111;
+				segment_changed = 1;
+	    end
+  	  else  // ALl off
+    	begin
+	      exp_txn.seg_cathode = 7'b1111111;
+  	    temp_seg_cathode =  7'hFF;
+    	  exp_txn.seg_anode = 4'b1111;
+	    end
+
+			if(segment_counter == (100000 - 3+(2*segment_loop_completed)))
+			begin
+				segment_counter = 0;
+	      temp_seg_cathode = decode_7_segment(segment_data[3:0]);
+				segment_loop_completed = 1;
+			end
+			else
+     		segment_counter++;
+		end
+
+
   endtask : seven_segment_driver
 
   //------------------- 7 segment decoder------------------//
@@ -314,7 +446,7 @@ class axi4_scoreboard extends uvm_scoreboard;
         4'hD: return(7'b0100001);  // D  hex  21
         4'hE: return(7'b0000110);  // E  hex  6
         4'hF: return(7'b0001110);  // F  hex  e
-        default: return(7'b1111111);  // hex  7F
+        default: return(7'b1111111);  // blank
     endcase
   endfunction : decode_7_segment
   //------------------- LED driver ------------------//
