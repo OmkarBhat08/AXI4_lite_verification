@@ -287,9 +287,10 @@ class invalid_addr extends base_seq;
 
   task body();
     `uvm_info(get_type_name(), $sformatf(" ------ invalid address write and read ------ "), UVM_LOW)
-    repeat(10) begin
+    repeat(5) begin
       req = axi4_seq_item::type_id::create("req");
-      `uvm_do_with(req, {req.ARVALID == 1; req.RREADY == 1; req.AWADDR inside {0,4,8}; req.AWVALID == 1; req.WVALID == 1; req.BREADY == 1; req.WSTRB == 4'b1111;})
+      `uvm_do_with(req, {!(req.AWADDR inside {0,4,8,12}); req.AWVALID == 1; req.WVALID == 1; req.BREADY == 1; req.WSTRB == 4'b1111; req.ARVALID == 0; req.RREADY == 0;})
+      `uvm_do_with(req, {!(req.ARADDR inside {0,4,8,12}); req.AWVALID == 0; req.WVALID == 0; req.BREADY == 1; req.WSTRB == 4'b1111; req.ARVALID == 1; req.RREADY == 1;})
     end
   endtask
 endclass
