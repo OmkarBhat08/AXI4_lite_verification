@@ -19,3 +19,4 @@
 *.ini
 *.vcd
 *.vstf
+*.compile_stamp

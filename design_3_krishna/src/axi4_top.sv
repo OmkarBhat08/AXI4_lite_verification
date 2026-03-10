@@ -110,7 +110,7 @@ module top;
   // ================= UVM START =================
   initial begin
     uvm_config_db #(virtual axi4_if)::set(null, "*", "vif", axi_if);
-    run_test("seven_seg_test");
+    run_test();
   end
 
 endmodule
