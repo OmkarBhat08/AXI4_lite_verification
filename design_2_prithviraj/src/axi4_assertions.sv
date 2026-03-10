@@ -20,7 +20,9 @@ module axi4_assertions(
 
         input logic [31:0]RDATA,
 
-        input logic RVALID,RREADY
+        input logic RVALID,RREADY,
+
+        input logic[1:0]RRESP
 
 );
 
@@ -36,7 +38,7 @@ module axi4_assertions(
 
         property p3;
                 @(posedge ACLK) disable iff(!ARESETn)
-                $rose(BVALID) |=> ($stable(BRESP) && $stable(BVALID)) until_with (BREADY);
+                $rose(BVALID) |-> ((BVALID && BRESP==2'b00) until_with (BREADY));
         endproperty
 
         property p4;
@@ -46,7 +48,7 @@ module axi4_assertions(
 
         property p5;
                 @(posedge ACLK) disable iff(!ARESETn)
-                $rose(RVALID) |=> ($stable(RDATA) && $stable(RVALID)) until_with (RREADY);
+                $rose(RVALID) |-> ((RVALID && RRESP==2'b00 ) until_with (RREADY));
         endproperty
 
         write_address_handshake:assert property(p1)
@@ -60,7 +62,7 @@ module axi4_assertions(
                 $info("p2-write data handshake assertion failed WVALID=%0h WREADY=%0h WDATA=%0h",WVALID,WREADY,WDATA);
 
         write_response_handshake:assert property(p3)
-        $info("p3-write response handshake assertion passed BVALID=%0h BREADY=%0h BRESP=%0h",BVALID,BREADY,BRESP);
+         $info("p3-write response handshake assertion passed BVALID=%0h BREADY=%0h BRESP=%0h",BVALID,BREADY,BRESP);
         else
                 $info("p3-write response handshake assertion failed BVALID = %0h BREADY = %0h BRESP=%0h",BVALID,BREADY,BRESP);
 

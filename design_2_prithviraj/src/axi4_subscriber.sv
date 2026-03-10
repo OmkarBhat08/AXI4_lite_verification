@@ -58,10 +58,7 @@ class axi4_subscriber extends uvm_component;
 
     // Read data
     RDATA_CP: coverpoint trans.RDATA {
-      bins MAX    = {32'hFFFF_FFFF};
-      bins ZERO   = {32'h0000_0000};
-      bins TOGGLE = {32'hAAAA_AAAA};
-      bins ANY    = {[1:$]};
+      bins rdata[4] = {[1:$]};
     }
 
     // Read response

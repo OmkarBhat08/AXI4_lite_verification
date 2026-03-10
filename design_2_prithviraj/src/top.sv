@@ -87,7 +87,8 @@ module top;
 
      .RDATA       (S_AXI_RDATA),
      .RVALID      (S_AXI_RVALID),
-     .RREADY      (S_AXI_RREADY)
+     .RREADY      (S_AXI_RREADY),
+     .RRESP       (S_AXI_RRESP)
    );
 
 
@@ -95,7 +96,7 @@ module top;
   initial begin
     uvm_config_db #(virtual axi4_if)::set(null, "*", "vif", axi_if);
     //run_test("simple_read_test");
-		run_test("read_followed_by_write_test");
+		run_test("regression_test");
   end
 
 endmodule
