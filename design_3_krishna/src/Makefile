@@ -50,11 +50,9 @@ read:
 view:
 	firefox ./covReport/index.html
 
-# Simple compile – no stamp tracking
 compile:
 	/bin/bash -c 'vlog -sv $(UVM_INCDIR) axi4_package.sv axi4_top.sv'
 
-# Simulate – assumes design already compiled
 simulate:
 	vsim -c top +UVM_VERBOSITY=UVM_MEDIUM $(UVM_TEST_ARG) -do "run -all;exit"
 
