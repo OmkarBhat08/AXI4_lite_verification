@@ -26,7 +26,6 @@ class axi4_scoreboard extends uvm_scoreboard;
   // For LED driver
 	bit [(`DATA_WIDTH)-1:0] led_data;
  	bit [23:0]	temp_leds;
-	bit segment_changed;
 	bit segment_loop_completed = 0;
 
   // For Interrupt generation
@@ -57,7 +56,7 @@ class axi4_scoreboard extends uvm_scoreboard;
       else
         irq_counter = 0;
 
-      if(irq_counter == 1_00_001)
+      if(irq_counter == 1000001)
           mem[12] = 1;
 
     	`uvm_info(get_type_name(), $sformatf("\n--------------------------------------------Scoreboard @ %0t---------------------------------------------", $time), UVM_MEDIUM)
@@ -67,6 +66,7 @@ class axi4_scoreboard extends uvm_scoreboard;
       join
       seven_segment_driver();
       led_driver();
+			irq_driver();
       transaction_checker();
 			transaction_count++;
     end
@@ -283,8 +283,6 @@ class axi4_scoreboard extends uvm_scoreboard;
     	      `uvm_info("W Channel", $sformatf("Writing WDATA = %0h to 7 segment when WVALID = %b and WREADY = %b", temp_wdata, monitor_txn.WVALID, monitor_txn.WREADY), UVM_MEDIUM)
 							$display("INSIDE");
 						end
-
-
   	        mem[exp_txn.AWADDR] = {{(`DATA_WIDTH-16){1'b0}}, masked_data[15:0]};
       	  end
         	else if(exp_txn.AWADDR == 8) // IRQ_EN
@@ -336,83 +334,65 @@ class axi4_scoreboard extends uvm_scoreboard;
   //------------------- Seven Segment driver ------------------//
   task seven_segment_driver();
 		$display("segment_counter: %0d | segment_loop_completed =%b", segment_counter, segment_loop_completed);
-		$display("segment_changed=%b", segment_changed);
     segment_data = mem[4];
 		if(!monitor_txn.ARESETn)
 		begin
       exp_txn.seg_cathode = decode_7_segment(0);
 			temp_seg_cathode = decode_7_segment(segment_data[3:0]);
-      exp_txn.seg_anode = 4'b1110;
 			segment_counter = 0;
-			segment_changed = 0;
 		end	
 		else
 		begin
-			/*
-			if((segment_counter== 0))// && (segment_changed = 0))
-			begin
-				$display("Entered the count 0");
-      	exp_txn.seg_cathode = decode_7_segment(0);
-				temp_seg_cathode = decode_7_segment(segment_data[3:0]);
-      	exp_txn.seg_anode = 4'b1110;
-			end	
-			else 
-			*/	
-
-
-					/*
-			if(segment_changed == 1)
-			begin
-      	exp_txn.seg_cathode = temp_seg_cathode;
-				temp_seg_cathode = decode_7_segment(0);
-    	  exp_txn.seg_anode = 4'b1110;
-				segment_changed = 0;
-			end
-			*/
 			if(segment_counter <= (25000 - 4 +(2*segment_loop_completed))) // Digit 1
     	begin
 				if(transaction_count==0)
 				begin
-					$display("\n\n In here 1");
 					exp_txn.seg_cathode = decode_7_segment(0);
       		temp_seg_cathode = decode_7_segment(segment_data[3:0]);
-    	  	exp_txn.seg_anode = 4'b1110;
-					segment_changed = 0;
 				end
 				else
 				begin
       		exp_txn.seg_cathode = temp_seg_cathode;
-					$display("\n\n In here 2");
 					temp_seg_cathode = decode_7_segment(segment_data[3:0]);
-    	  	exp_txn.seg_anode = 4'b1110;
 				end
-
 	    end
   	  else if((segment_counter > (25000 - 4 +(2*segment_loop_completed))) && (segment_counter <= (50000 - 4+(2*segment_loop_completed)))) // Digit 2
     	begin
 				exp_txn.seg_cathode = temp_seg_cathode;
 				temp_seg_cathode = decode_7_segment(segment_data[7:4]);
-    	  exp_txn.seg_anode = 4'b1101;
 	    end
   	  else if((segment_counter > (50000 - 4+(2*segment_loop_completed))) && (segment_counter <= (75000 - 3+(2*segment_loop_completed)))) // Digit 3
     	begin
 				exp_txn.seg_cathode = temp_seg_cathode;
       	temp_seg_cathode = decode_7_segment(segment_data[11:8]);
-  	    exp_txn.seg_anode = 4'b1011;
     	end
 	    else if((segment_counter > (75000 - 3+(2*segment_loop_completed))) &&(segment_counter <= (100000 - 3+(2*segment_loop_completed))))  // Digit 4
 	    begin
 				exp_txn.seg_cathode = temp_seg_cathode;
 	      exp_txn.seg_cathode = decode_7_segment(segment_data[15:12]);
-    	  exp_txn.seg_anode = 4'b0111;
-				segment_changed = 1;
 	    end
   	  else  // ALl off
     	begin
 	      exp_txn.seg_cathode = 7'b1111111;
   	    temp_seg_cathode =  7'hFF;
-    	  exp_txn.seg_anode = 4'b1111;
 	    end
+
+			// Segment anode
+			if(!monitor_txn.ARESETn)
+      	exp_txn.seg_anode = 4'b1110;
+			else
+			begin
+				if(segment_counter <= (25000 - 3 +(2*segment_loop_completed))) // Digit 1
+    	  	exp_txn.seg_anode = 4'b1110;
+  	  	else if((segment_counter > (25000 - 3 +(2*segment_loop_completed))) && (segment_counter <= (50000 - 3+(2*segment_loop_completed)))) // Digit 2
+    	  	exp_txn.seg_anode = 4'b1101;
+  	  	else if((segment_counter > (50000 - 3+(2*segment_loop_completed))) && (segment_counter <= (75000 - 3+(2*segment_loop_completed)))) // Digit 3
+  	    	exp_txn.seg_anode = 4'b1011;
+	    	else if((segment_counter > (75000 - 3+(2*segment_loop_completed))) &&(segment_counter <= (100000 - 3+(2*segment_loop_completed))))  // Digit 4
+    	  	exp_txn.seg_anode = 4'b0111;
+				else
+    	  	exp_txn.seg_anode = 4'b1111;
+			end
 
 			if(segment_counter == (100000 - 3+(2*segment_loop_completed)))
 			begin
@@ -457,10 +437,20 @@ class axi4_scoreboard extends uvm_scoreboard;
 		temp_leds[7:0] = led_data[7:0];
   endtask : led_driver
 
+  //------------------- IRQ driver ------------------//
+  task irq_driver();
+		if(irq_counter == 100001)
+		begin
+			mem[12] = 1;
+			irq_counter = 0;
+		end
+		exp_txn.irq_out = mem[12] & mem[8];
+	endtask
+
   //------------------- checker ------------------//
   task transaction_checker();
 			$display("ARESETn:  %b", monitor_txn.ARESETn);
-			$display("Expected ARADDR:  %0h", exp_txn.ARADDR);
+			$display("irq_counter:  %0d", irq_counter);
 		
 		foreach(mem[i])
 			$display("Address:  %0h |  Data: %0h", i, mem[i]);
