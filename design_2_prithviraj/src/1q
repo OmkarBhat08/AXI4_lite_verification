@@ -30,8 +30,6 @@ class axi4_scoreboard extends uvm_scoreboard;
 
   // For Interrupt generation
   longint irq_counter;
-	bit prev_irq_in;
-	int button_pressed;
 
   //----Analysis FIFO's for collecting transactions---//
   uvm_tlm_analysis_fifo #(axi4_seq_item) monitor_fifo;
@@ -53,17 +51,11 @@ class axi4_scoreboard extends uvm_scoreboard;
     begin
       monitor_fifo.get(monitor_txn);
       // IRQ_STATUS updation
-
-			if((prev_irq_in==0) && (monitor_txn.ext_irq_in ==1))
-				button_pressed = 1;
-
       if(monitor_txn.ext_irq_in)
         irq_counter++;
       else
-			begin
         irq_counter = 0;
-				button_pressed = 0;
-			end
+
 
     	`uvm_info(get_type_name(), $sformatf("\n--------------------------------------------Scoreboard @ %0t---------------------------------------------", $time), UVM_MEDIUM)
       fork
@@ -75,7 +67,6 @@ class axi4_scoreboard extends uvm_scoreboard;
 			irq_driver();
       transaction_checker();
 			transaction_count++;
-			prev_irq_in = monitor_txn.ext_irq_in;
     end
   endtask : run_phase
 
@@ -446,19 +437,12 @@ class axi4_scoreboard extends uvm_scoreboard;
 
   //------------------- IRQ driver ------------------//
   task irq_driver();
-		
-		if((irq_counter == 100006))
+		if(irq_counter == 100006)
 		begin
-			if(button_pressed == 1)
-			begin
-				mem[12] = 1;
-				irq_counter = 0;
-				button_pressed = button_pressed+1;
-			end
+			mem[12] = 1;
+			irq_counter = 0;
 		end
-		
-		exp_txn.irq_out = mem[8] & mem[12];
-
+		exp_txn.irq_out = mem[12] & mem[8];
 		if(exp_txn.irq_out)
 			mem[12] = 0;
 
@@ -466,6 +450,9 @@ class axi4_scoreboard extends uvm_scoreboard;
 
   //------------------- checker ------------------//
   task transaction_checker();
+			$display("ARESETn:  %b", monitor_txn.ARESETn);
+			$display("irq_counter:  %0d", irq_counter);
+			$display("mem[12]:  %0d | mem[8] : %0d", mem[12],  mem[8]);
 		
 		foreach(mem[i])
 			$display("Address:  %0h |  Data: %0h", i, mem[i]);
